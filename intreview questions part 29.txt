@@ -1,0 +1,162 @@
+Company - HCL
+Share the screen and write a python script for a scenario?
+
+json_data = {
+    "repo1": ["branch1", "branch3", "branch5", "branch6", "branch4"],
+    "repo2": ["branch2", "branch3", "branch4"],
+    "repo3": ["branch2", "branch10"],
+    "repo4": ["branch5", "branch1"],
+    "repo5": ["branch6", "branch10"]
+}
+ 
+write a python script to read a csv file which contains branch names and compare with the json_data provided and pull the repo name and print.
+ 
+Branch Names in CSV file.
+"branch1","branch5","branch2","branch10"
+
+1) Explain your project? What was your role?
+2) Different data types in python?
+3) Different python libraries?
+4) What automation have you done using python?
+5) Have you used tuples?
+6) What is master and cluster nodes in kubernetes?
+7) How will you use python to fetch monitoring data from grafana?
+8) Describe configmaps and how secrets are handled in kubernetes?
+9) How to pass built in values from Git or gitlab to your deployment pipeline?
+10) How do you protect the release branch?
+11) Have you worked on Azure?
+12) Have you worked on gitlab?
+13) Have you written any python scripts to fetch data from pipeline?
+14) How did you configure loadbalancer in your application?
+15) I need to delete a pod, what approach do you follow?
+16) What is a pickle and unpickle in Python?
+
+
+Python Script
+Script to Read CSV and Compare with JSON Data
+
+Here's a Python script to read branch names from a CSV file and compare them with the JSON data to pull the corresponding repo names:
+
+python
+Copy code
+import csv
+import json
+
+# JSON data
+json_data = {
+    "repo1": ["branch1", "branch3", "branch5", "branch6", "branch4"],
+    "repo2": ["branch2", "branch3", "branch4"],
+    "repo3": ["branch2", "branch10"],
+    "repo4": ["branch5", "branch1"],
+    "repo5": ["branch6", "branch10"]
+}
+
+# CSV file containing branch names
+csv_file = 'branches.csv'
+
+# Read branches from CSV file
+def read_branches_from_csv(file_path):
+    branches = []
+    with open(file_path, 'r') as file:
+        reader = csv.reader(file)
+        for row in reader:
+            branches.extend(row)
+    return branches
+
+# Compare branches with JSON data
+def compare_branches_with_json(branches, json_data):
+    repo_names = []
+    for repo, repo_branches in json_data.items():
+        if any(branch in branches for branch in repo_branches):
+            repo_names.append(repo)
+    return repo_names
+
+# Main function
+def main():
+    branches = read_branches_from_csv(csv_file)
+    repo_names = compare_branches_with_json(branches, json_data)
+    print("Repositories containing the branches from the CSV file:")
+    for repo in repo_names:
+        print(repo)
+
+if __name__ == "__main__":
+    main()
+Interview Questions
+1. Explain your project. What was your role?
+
+Provide an overview of a recent project you worked on, detailing the objectives, technologies used, and your specific responsibilities.
+2. Different data types in Python?
+
+Numeric: int, float, complex
+Sequence: list, tuple, range
+Text: str
+Mapping: dict
+Set: set, frozenset
+Boolean: bool
+Binary: bytes, bytearray, memoryview
+3. Different Python libraries?
+
+Data Manipulation: pandas, numpy
+Web Development: flask, django
+Machine Learning: scikit-learn, tensorflow, keras
+Web Scraping: beautifulsoup4, scrapy
+Automation: selenium, pyautogui
+4. What automation have you done using Python?
+
+Examples might include automating data processing tasks, generating reports, interacting with APIs, or web scraping.
+5. Have you used tuples?
+
+Yes, tuples are immutable sequences used to store multiple items in a single variable. They are often used for fixed collections of items.
+6. What are master and cluster nodes in Kubernetes?
+
+Master Node: Manages the Kubernetes cluster, running control plane components like the API server, scheduler, and controller manager.
+Worker Nodes: Run containerized applications and manage pods.
+7. How will you use Python to fetch monitoring data from Grafana?
+
+You can use the Grafana HTTP API with Python’s requests library to fetch monitoring data. Example:
+python
+Copy code
+import requests
+
+url = 'http://<grafana-url>/api/dashboards/uid/<dashboard-uid>'
+headers = {'Authorization': 'Bearer <api-key>'}
+response = requests.get(url, headers=headers)
+data = response.json()
+8. Describe ConfigMaps and how secrets are handled in Kubernetes.
+
+ConfigMaps: Store configuration data as key-value pairs that can be used by applications.
+Secrets: Store sensitive information such as passwords or API keys in base64-encoded form to keep them secure.
+9. How to pass built-in values from Git or GitLab to your deployment pipeline?
+
+Use environment variables, pipeline variables, or predefined variables available in the CI/CD tools.
+10. How do you protect the release branch?
+
+Implement branch protection rules, such as requiring code reviews, status checks, or restricting who can push to the branch.
+11. Have you worked on Azure?
+
+If yes, discuss the services and tools you used, such as Azure VMs, Azure Kubernetes Service (AKS), Azure DevOps, etc.
+12. Have you worked on GitLab?
+
+Yes, explain your experience with GitLab CI/CD, repository management, and any customizations or integrations you’ve implemented.
+13. Have you written any Python scripts to fetch data from the pipeline?
+
+Example:
+python
+Copy code
+import requests
+
+gitlab_url = 'https://gitlab.com/api/v4/projects/<project-id>/pipelines'
+headers = {'PRIVATE-TOKEN': '<your-access-token>'}
+response = requests.get(gitlab_url, headers=headers)
+pipelines = response.json()
+14. How did you configure a load balancer in your application?
+
+Use AWS ELB/NLB, Azure Load Balancer, or similar services. Configure listeners, target groups, and health checks based on the application needs.
+15. How do you delete a pod?
+
+Use kubectl delete pod <pod-name> to remove a pod from the cluster.
+16. What is pickle and unpickle in Python?
+
+Pickle: Serialize Python objects to a byte stream.
+Unpickle: Deserialize byte streams back into Python objects.
+Let me know if you need further details or if there’s anything else you’d like to cover!

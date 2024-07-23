@@ -1,0 +1,243 @@
+company: UST
+share screen 
+1.write ansible playbook if application generate wrong file need to read that file extract and store some where in date wise
+2.write ansible playbook to schedule and run script every day 11 clock
+3.Write a shell script to monitor specific service and display message.
+4.you want to set up a new jenkins instance, what setup you will follow
+5.write pipeline to generate the build, save the build output to the artifactory and I want to get the mail notification that build is successfull or failed.
+6.write a script in directory multiple file are present find and read all the file more than 30 days
+7.explain about ci/cd pipeline
+8.if one server goes down we need to take the second instance and work on what you use and how you work on explain the steps
+9.after one / 2 hours of release happended they will get to know this is wrong relase and how do you handle it? explain the steps?
+10.explain nginx?
+11.what is unicorn and explain?
+12.explain microserver architecture?
+13. how to deploy API into server?
+14.explain about docker?
+15.difference between soft link and hard link
+16.explain IAM role
+17.need to search a word in a file
+18.concept of jenkins pipeline
+19.have you created any jenkins alone
+20.Write a jenkins pipeline to schedule the job, like 15 days once.
+21.suppose there are 2 -3 jenkins jobs and each one is depended on other how do you configure the jenkins job
+22.suppose today is release all the deployment is done tomo issues come in production what will be your approach
+
+
+
+Write Ansible playbook if application generates the wrong file; need to read that file, extract, and store somewhere date-wise
+yaml
+Copy code
+---
+- name: Handle application-generated wrong file
+  hosts: localhost
+  tasks:
+    - name: Check if the file exists
+      stat:
+        path: /path/to/wrongfile.txt
+      register: file_stat
+
+    - name: Read the wrong file and store content
+      command: cat /path/to/wrongfile.txt
+      register: file_content
+      when: file_stat.stat.exists
+
+    - name: Create directory for today's date
+      file:
+        path: "/backup/{{ ansible_date_time.date }}"
+        state: directory
+
+    - name: Copy the wrong file to the backup location
+      copy:
+        content: "{{ file_content.stdout }}"
+        dest: "/backup/{{ ansible_date_time.date }}/wrongfile.txt"
+      when: file_stat.stat.exists
+Write Ansible playbook to schedule and run a script every day at 11 o'clock
+yaml
+Copy code
+---
+- name: Schedule script to run daily at 11 o'clock
+  hosts: localhost
+  tasks:
+    - name: Create the script file
+      copy:
+        dest: /usr/local/bin/myscript.sh
+        content: |
+          #!/bin/bash
+          echo "This is my script running daily at 11 o'clock."
+
+    - name: Make the script executable
+      file:
+        path: /usr/local/bin/myscript.sh
+        mode: '0755'
+
+    - name: Schedule the cron job
+      cron:
+        name: "Run myscript.sh daily at 11 o'clock"
+        minute: "0"
+        hour: "11"
+        job: "/usr/local/bin/myscript.sh"
+Write a shell script to monitor a specific service and display a message
+bash
+Copy code
+#!/bin/bash
+
+SERVICE="nginx"
+
+if pgrep -x "$SERVICE" > /dev/null
+then
+    echo "$SERVICE is running"
+else
+    echo "$SERVICE is not running"
+fi
+Set up a new Jenkins instance, what setup you will follow
+
+Install Jenkins:
+sh
+Copy code
+sudo apt update
+sudo apt install openjdk-11-jdk -y
+wget -q -O - https://pkg.jenkins.io/debian-stable/jenkins.io.key | sudo apt-key add -
+sudo sh -c 'echo deb http://pkg.jenkins.io/debian-stable binary/ > /etc/apt/sources.list.d/jenkins.list'
+sudo apt update
+sudo apt install jenkins -y
+sudo systemctl start jenkins
+sudo systemctl enable jenkins
+Access Jenkins Web UI:
+Open http://<your_server_ip>:8080 in a browser.
+Unlock Jenkins:
+sh
+Copy code
+sudo cat /var/lib/jenkins/secrets/initialAdminPassword
+Install plugins:
+Recommended plugins during setup.
+Create an admin user and configure Jenkins.
+Write Jenkins pipeline to generate the build, save the build output to the artifactory, and get mail notification
+
+groovy
+Copy code
+pipeline {
+    agent any
+
+    stages {
+        stage('Build') {
+            steps {
+                script {
+                    try {
+                        // Simulate build process
+                        sh 'echo "Building the project..."'
+                        
+                        // Save build output to Artifactory
+                        sh 'curl -u $ARTIFACTORY_USER:$ARTIFACTORY_PASS -T build/output.tar.gz "https://artifactory.example.com/artifactory/libs-release-local/build/output.tar.gz"'
+
+                        // Send success notification
+                        mail to: 'user@example.com',
+                             subject: "Build Success",
+                             body: "The build was successful."
+                    } catch (Exception e) {
+                        // Send failure notification
+                        mail to: 'user@example.com',
+                             subject: "Build Failure",
+                             body: "The build failed."
+                        throw e
+                    }
+                }
+            }
+        }
+    }
+}
+Write a script in the directory; multiple files are present, find and read all the files more than 30 days old
+bash
+Copy code
+#!/bin/bash
+
+DIR="/path/to/directory"
+
+find "$DIR" -type f -mtime +30 -exec cat {} \;
+Explain about CI/CD pipeline
+
+Continuous Integration (CI): Automates the process of integrating code changes from multiple contributors into a shared repository. Typically includes automated builds and tests to ensure code quality.
+Continuous Delivery (CD): Extends CI by automating the deployment of code changes to staging or production environments. It ensures that software can be reliably released at any time.
+Continuous Deployment: An extension of CD where code changes are automatically deployed to production as soon as they pass through the CI/CD pipeline.
+If one server goes down, we need to take the second instance and work on it. What do you use and how do you work on it? Explain the steps
+
+Use Auto Scaling and Elastic Load Balancer (ELB) in AWS:
+Auto Scaling Group: Configure an Auto Scaling Group to launch new instances when an instance becomes unhealthy.
+Health Checks: Set up health checks to detect unhealthy instances.
+ELB: Use ELB to distribute traffic across multiple instances, ensuring high availability.
+Failover: When an instance goes down, Auto Scaling launches a new instance, and ELB redirects traffic to the healthy instance.
+After one/two hours of release, it is found to be wrong. How do you handle it? Explain the steps
+
+Rollback process:
+Identify the issue: Determine the nature of the problem.
+Switch to previous stable release: Use version control to check out the last known good version.
+Deploy rollback: Deploy the previous stable version using the CI/CD pipeline.
+Test: Verify that the rollback resolves the issue.
+Root cause analysis: Investigate the cause of the problem to prevent future occurrences.
+Explain Nginx
+
+Nginx is a high-performance web server, reverse proxy server, and load balancer. It is known for its scalability and ability to handle many concurrent connections.
+What is Unicorn? Explain
+
+Unicorn is a Rack HTTP server for Ruby applications, designed to handle multiple requests simultaneously by spawning worker processes.
+Explain microservices architecture
+
+Microservices architecture is an approach where an application is composed of small, loosely coupled services, each responsible for a specific business function. Services communicate over APIs and can be developed, deployed, and scaled independently.
+How to deploy API into the server?
+
+Steps:
+Package the API: Create a deployable package (e.g., JAR, WAR, Docker image).
+Prepare the server: Ensure the server environment is ready (e.g., application server, Docker runtime).
+Deploy: Transfer the package to the server and start the service (e.g., java -jar myapi.jar or docker run -d myapi).
+Configure: Set up necessary environment variables, configurations, and dependencies.
+Explain Docker
+
+Docker is a platform for developing, shipping, and running applications in containers. Containers are lightweight, portable, and consistent across environments, ensuring that applications run the same way in development, testing, and production.
+Difference between soft link and hard link
+
+Soft Link (Symbolic Link): Points to a file or directory and can span across file systems. If the target is deleted, the link becomes invalid.
+Hard Link: Directly references the physical data on disk. Multiple hard links can point to the same data, and the data remains until all links are deleted.
+Explain IAM role
+
+IAM roles in AWS are a way to grant permissions to entities (e.g., users, applications) without sharing long-term access keys. Roles have a set of permissions and can be assumed by trusted entities.
+Need to search a word in a file
+
+bash
+Copy code
+grep "search_term" /path/to/file
+Concept of Jenkins pipeline
+
+Jenkins Pipeline is a suite of plugins that supports implementing and integrating continuous delivery pipelines into Jenkins. It defines stages and steps to automate build, test, and deployment processes.
+Have you created any Jenkins alone
+
+Yes, I have set up Jenkins instances, installed required plugins, and configured jobs and pipelines.
+Write a Jenkins pipeline to schedule the job, like 15 days once
+
+groovy
+Copy code
+pipeline {
+    agent any
+    triggers {
+        cron('H H 15 * *')
+    }
+    stages {
+        stage('Example') {
+            steps {
+                echo 'This job runs every 15 days.'
+            }
+        }
+    }
+}
+Suppose there are 2-3 Jenkins jobs and each one is dependent on the other, how do you configure the Jenkins job
+
+Use upstream and downstream jobs configuration or Pipeline:
+Configure the downstream job to trigger after the upstream job completes.
+Use build step in a pipeline script to trigger jobs sequentially.
+groovy
+Copy code
+pipeline {
+
+
+
+
+

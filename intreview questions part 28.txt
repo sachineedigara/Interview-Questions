@@ -1,0 +1,215 @@
+what is your roles and responsibility
+Explain in CICD step by step
+Branching strategy 
+which tool you used for logging information in k8s
+How are you seggregating the environment example I have dev,qa, prod. How would you differenciate I want to deploy on to the dev environment.
+In pipeline after CI it is asking for any approval for deploy?
+Explain the process of involved in migration from onpremise to aws?
+Have you worked on Route 53, why it is route 53, why it is not called route 54 or 55?
+what is MX record ? we use A record when we use CNAME record?
+I have 2 EC2 instance running, there is a ALB before that. In this case which record you use to map your request to EC2 instance--> we use CNAME record
+Explain about autoscaling group
+There are 5 ec2 running, let say there are more traffic comming need to increase ec2 instance from 5 to 10. Based on what your ASG comes to know, that it has to increase the number of ec2 instance? 
+what is the configuration we tell ASG to increase EC2 instance
+I have an EC2 instance  running, I stop that ec2 instance and come back after 2 days and start it back , what will happen to the data?
+When you use ALB and NLB?
+what is sidecar?
+Consider there is a issue with application, manager ask you to send logs? There are 100s of pods how you take logs of these pods ?which log tool guys are using ? How you share logs to the manager?
+I have 5 master node and 10 worker node. My master node crashes what happen to the worker node? what will happen to the running application?
+What are private modules in terraform?
+What is state locking in terraform?
+we have terraform configuration that has no resources, if I execute the terraform apply command what will happen
+there some resources created earlier using some terraform configuration file? If I go the configuration file and modify it I will all resources in the configuration file, now I perform terraform apply command what happens
+Write a sample docker file 
+Write a Deployment yml file?
+Write a jenkin file to login to docker registry and push image to docker registry
+Jenkins server is not running how do fix it, What are the linux commands you use , how do you fix it
+
+
+
+General Questions
+1. What are your roles and responsibilities?
+
+My roles and responsibilities involve managing infrastructure, developing CI/CD pipelines, monitoring and troubleshooting applications, ensuring security compliance, and leading a team of DevOps professionals. This includes working with cloud services, container orchestration, automation, and infrastructure as code.
+2. Explain the CI/CD process step by step.
+
+Continuous Integration (CI):
+Code Commit: Developers commit code changes to a version control system (e.g., Git).
+Build: Automated build process is triggered to compile the code.
+Test: Automated tests are run to verify code quality and functionality.
+Package: The application is packaged into deployable artifacts (e.g., Docker images).
+Continuous Deployment (CD):
+Deploy: Automated deployment process deploys the application to a staging or production environment.
+Monitor: Application performance and logs are monitored.
+Feedback: Issues are identified, and feedback is provided to developers for further improvements.
+3. Branching Strategy
+
+Git Flow: Uses branches for features, releases, and hotfixes.
+GitHub Flow: Simplified model with a main branch and feature branches.
+GitLab Flow: Combines feature branches and environment branches.
+Trunk-Based Development: Developers work on a single branch with frequent commits.
+4. Which tool do you use for logging information in Kubernetes?
+
+Common tools include Fluentd, Logstash, Elasticsearch, Kibana, and Grafana Loki.
+5. How are you segregating the environment (e.g., dev, QA, prod)?
+
+By using different namespaces, environments, or Kubernetes contexts. Each environment has its own configuration files, deployment pipelines, and access controls.
+6. In a pipeline, after CI, is there any approval required for deployment?
+
+Yes, it can be configured to require manual approval before deploying to production or sensitive environments.
+7. Explain the process involved in migration from on-premises to AWS.
+
+Assessment: Evaluate current infrastructure and dependencies.
+Planning: Design the AWS architecture and migration strategy.
+Preparation: Set up AWS environment and tools.
+Migration: Use services like AWS Migration Hub, DMS, or third-party tools to move data and applications.
+Testing: Validate that applications and data are functioning correctly.
+Cutover: Transition to AWS and decommission on-premises systems.
+Optimization: Monitor and optimize the new environment.
+8. Have you worked on Route 53? Why is it called Route 53, and not Route 54 or 55?
+
+Yes, Amazon Route 53 is a scalable DNS service. It's named "53" because it is a reference to the standard DNS port number (53).
+9. What is an MX record? When do you use an A record and CNAME record?
+
+MX (Mail Exchange) Record: Directs email to the correct mail server.
+A Record: Maps a domain to an IPv4 address.
+CNAME Record: Maps a domain to another domain name, useful for aliasing.
+10. I have 2 EC2 instances running, with an ALB before that. Which record do you use to map your request to EC2 instances?
+
+A Record or ALIAS Record is used to map the domain name to the ALB, which then directs traffic to the EC2 instances.
+11. Explain about Auto Scaling Group (ASG).
+
+Auto Scaling Group: Automatically adjusts the number of EC2 instances based on demand. It scales in or out based on policies and metrics such as CPU utilization or request count.
+12. When you increase EC2 instances from 5 to 10 due to traffic, how does ASG know to increase the number of instances?
+
+Scaling Policies are defined to trigger the scaling action based on metrics (e.g., CPU usage). ASG monitors these metrics and performs scaling actions according to the policy.
+13. What happens to the data when you stop and then start an EC2 instance after 2 days?
+
+Instance Store Volumes: Data is lost.
+EBS Volumes: Data persists, as EBS volumes are independent of the instance lifecycle.
+14. When to use ALB and NLB?
+
+ALB (Application Load Balancer): Layer 7 load balancing for HTTP/HTTPS traffic.
+NLB (Network Load Balancer): Layer 4 load balancing for TCP/UDP traffic.
+15. What is a sidecar?
+
+Sidecar Container: A container running alongside the main application container in a pod to provide auxiliary functions (e.g., logging, monitoring).
+16. If there is an issue with the application, and the manager asks for logs from 100s of pods, how do you handle this?
+
+Centralized Logging Solution: Use tools like Fluentd, ELK Stack, or Grafana Loki to aggregate logs. Query the logs from the centralized system and provide them to the manager.
+17. If you have 5 master nodes and 10 worker nodes, what happens if a master node crashes?
+
+The cluster continues to function as long as there are remaining master nodes. Applications running on worker nodes remain operational.
+18. What are private modules in Terraform?
+
+Private Modules: Terraform modules that are stored in private repositories or Terraform private module registries.
+19. What is state locking in Terraform?
+
+State Locking: Ensures that only one person or process can modify the Terraform state at a time to avoid conflicts.
+20. If you execute terraform apply on a configuration file with no resources, what happens?
+
+Terraform will confirm that no changes are needed and will report that there is nothing to apply.
+21. If resources were created earlier using a Terraform configuration file, and you modify the configuration file and run terraform apply, what happens?
+
+Terraform will update the resources to match the new configuration.
+22. Write a sample Dockerfile.
+
+dockerfile
+Copy code
+# Use an official Python runtime as a parent image
+FROM python:3.8-slim
+
+# Set the working directory in the container
+WORKDIR /app
+
+# Copy the current directory contents into the container at /app
+COPY . /app
+
+# Install any needed packages specified in requirements.txt
+RUN pip install --no-cache-dir -r requirements.txt
+
+# Make port 80 available to the world outside this container
+EXPOSE 80
+
+# Define environment variable
+ENV NAME World
+
+# Run app.py when the container launches
+CMD ["python", "app.py"]
+23. Write a Deployment YAML file.
+
+yaml
+Copy code
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: my-deployment
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: my-app
+  template:
+    metadata:
+      labels:
+        app: my-app
+    spec:
+      containers:
+      - name: my-container
+        image: my-image:latest
+        ports:
+        - containerPort: 80
+24. Write a Jenkinsfile to login to Docker registry and push an image.
+
+groovy
+Copy code
+pipeline {
+    agent any
+    stages {
+        stage('Build') {
+            steps {
+                script {
+                    docker.build('my-image')
+                }
+            }
+        }
+        stage('Login') {
+            steps {
+                script {
+                    docker.withRegistry('https://my-registry', 'my-credentials-id') {
+                        docker.image('my-image').push('latest')
+                    }
+                }
+            }
+        }
+    }
+}
+25. Jenkins server is not running. How do you fix it? What Linux commands do you use?
+
+Check Status: systemctl status jenkins
+Start Jenkins: systemctl start jenkins
+Restart Jenkins: systemctl restart jenkins
+Check Logs: journalctl -u jenkins
+Additional Questions
+1. Git stash?
+
+Git Stash: Temporarily saves changes in your working directory that are not ready to be committed.
+2. Difference between git pull and git clone?
+
+Git Pull: Fetches and integrates changes from a remote repository into your local branch.
+Git Clone: Creates a local copy of a remote repository.
+3. Explain the process of a Pull Request (PR).
+
+Create PR: Developer pushes a branch to a remote repository and creates a pull request.
+Review: Other team members review the code changes.
+Merge: Once approved, the PR is merged into the target branch.
+4. Difference between ADD and COPY in Dockerfile.
+
+ADD: Can copy files from URL and extract archives.
+COPY: Only copies files or directories from the build context to the container.
+5. How will you create a secret in Kubernetes?
+
+Use the kubectl create secret command or define a secret in a YAML file and apply it.
+6. What is nodeSelector in Kubernetes?
+
+nodeSelector: A field in a pod spec to constrain the pod

@@ -1,0 +1,208 @@
+1. How do you provision resources using AWS?
+
+Answer: Provisioning resources using AWS can be done through various methods such as AWS Management Console, AWS CLI, or Infrastructure as Code (IaC) tools like Terraform. Terraform is commonly used to automate the creation, modification, and deletion of AWS resources.
+
+2. Share your screen and open PowerPoint. Open a new page and write the structure of Terraform script how you will define the resource and deploy.
+
+Answer:
+Here’s the structure of a basic Terraform script for provisioning an AWS EC2 instance:
+
+hcl
+Copy code
+# Define the provider
+provider "aws" {
+  region = "us-west-2"
+}
+
+# Define a variable
+variable "instance_type" {
+  description = "Type of EC2 instance"
+  default     = "t2.micro"
+}
+
+# Define the resource (EC2 instance)
+resource "aws_instance" "example" {
+  ami           = "ami-0c55b159cbfafe1f0"  # Example AMI ID
+  instance_type = var.instance_type
+
+  tags = {
+    Name = "example-instance"
+  }
+}
+
+# Output the public IP
+output "instance_ip" {
+  value = aws_instance.example.public_ip
+}
+
+
+3. Explain the lines of Terraform script and how it works
+
+Answer:
+provider "aws": Configures the AWS provider with the specified region.
+variable "instance_type": Defines a variable for the instance type, with a default value of t2.micro.
+resource "aws_instance" "example": Defines an EC2 instance resource using a specified AMI and instance type.
+output "instance_ip": Outputs the public IP address of the created EC2 instance.
+
+4. What all things you have done with CI and CD?
+Answer:
+
+CI (Continuous Integration): Implemented automated build and test processes using Jenkins and GitLab CI.
+CD (Continuous Deployment): Deployed applications to staging and production environments using Jenkins pipelines, Docker, and Kubernetes.
+
+5. Open a new page and write the pipeline
+Answer:
+
+groovy
+Copy code
+pipeline {
+    agent any
+
+    stages {
+        stage('Checkout') {
+            steps {
+                git 'https://github.com/your-repo.git'
+            }
+        }
+        stage('Build') {
+            steps {
+                sh './build.sh'
+            }
+        }
+        stage('Test') {
+            steps {
+                sh './test.sh'
+            }
+        }
+        stage('Deploy') {
+            steps {
+                sh './deploy.sh'
+            }
+        }
+    }
+}
+6. What is SAST and DAST?
+
+Answer:
+
+SAST (Static Application Security Testing): Examines source code for security vulnerabilities without executing the code.
+DAST (Dynamic Application Security Testing): Tests a running application to identify security vulnerabilities by simulating external attacks.
+
+7. How will do automated performance testing and where it will fit in the CI and CD pipeline?
+Answer:
+
+Automated Performance Testing: Tools like JMeter or Gatling can be used.
+Integration in CI/CD Pipeline: Typically, performance tests are included after the functional testing stage in the CI/CD pipeline.
+groovy
+Copy code
+stage('Performance Test') {
+    steps {
+        sh './run-performance-tests.sh'
+    }
+}
+
+
+8. What kind of role you prefer? What is your expectation?
+Answer:
+
+Preferred Role: A role that involves designing and implementing scalable CI/CD pipelines, managing infrastructure as code, and integrating various DevOps tools to streamline the development process.
+Expectations: Opportunities for continuous learning, collaboration with a skilled team, and involvement in challenging projects that drive innovation.
+
+
+9. Any scripting language I am aware of?
+Answer:
+
+Python
+Bash
+Groovy (for Jenkins pipelines)
+
+
+10. Do you have knowledge on Bamboo and Puppet?
+Answer:
+
+Bamboo: Familiar with setting up build plans and deployment projects.
+Puppet: Experience in writing Puppet manifests to manage configuration state across servers.
+
+
+11. Explain how you used Ansible?
+Answer:
+Ansible Usage:
+
+Provisioning servers
+Deploying applications
+Managing configurations
+Example Playbook:
+
+yaml
+Copy code
+- name: Install and start Apache
+  hosts: webservers
+  become: yes
+
+  tasks:
+    - name: Install Apache
+      apt: name=apache2 state=latest
+
+    - name: Start Apache
+      service: name=apache2 state=started
+
+12. Have you worked on JIRA?
+
+Answer: Yes, I have worked on JIRA for project management, tracking issues, and coordinating tasks across teams.
+
+13. How integration of JIRA with Jenkins and GitHub?
+
+Answer:
+
+Use JIRA plugins for Jenkins to link build status with JIRA issues.
+Configure GitHub webhooks to update JIRA issues on code commits.
+Example: Link commits with JIRA issues using commit messages like JIRA-123: Fixed bug.
+
+14. There are tasks related to code. How you will track which tasks correspond to which code related to that task?
+Answer:
+
+Tracking Tasks and Code in JIRA: Use JIRA issues keys in commit messages.
+Example: git commit -m "JIRA-123: Implemented new feature"
+Linking Tasks and Code: This links the commit to the JIRA issue, allowing you to track code changes related to specific tasks.
+Example Pipeline for Tracking JIRA Issues:
+
+Commit: Developer includes JIRA issue key in the commit message.
+Build and Test: Jenkins builds the code and runs tests.
+Deploy: Jenkins deploys the application.
+Update JIRA: Jenkins updates JIRA with the build status and links to the related commits.
+Automated Script Example for JIRA Update:
+
+groovy
+Copy code
+pipeline {
+    agent any
+
+    stages {
+        stage('Checkout') {
+            steps {
+                git 'https://github.com/your-repo.git'
+            }
+        }
+        stage('Build') {
+            steps {
+                sh './build.sh'
+            }
+        }
+        stage('Test') {
+            steps {
+                sh './test.sh'
+            }
+        }
+        stage('Deploy') {
+            steps {
+                sh './deploy.sh'
+            }
+        }
+        stage('Update JIRA') {
+            steps {
+                sh './update-jira.sh'
+            }
+        }
+    }
+}
+This approach ensures that every code change is tracked back to the corresponding JIRA task, maintaining a clear linkage between development work and project management.

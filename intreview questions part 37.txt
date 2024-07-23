@@ -1,0 +1,235 @@
+Company - Nielsen
+1.Introduction
+2.Total year of experience,education details
+3.Share the screen and write sample multistagedocker file.
+4.write the command to build the docker image and push image to docker hub.
+5.How will you create the container.
+6.Write a stage to perform docker login
+7.What technologies you build and deploy?
+8.What is the technology you used to store data?
+9.If you want to connect to database , what and all the information required?
+10.Difference between git clone and git pull
+11.What is pull rwquest process?
+12.How will you add scretes in k8s?
+13.What is difference between COPY and ADD?
+14.What is difference between RUN and CMD?
+15.What is node-selector in k8s? How does it work
+16.What are livliness and readiness prob in kubernetes?
+17.Write some example script in linux.
+18.Jenkins is not working in linux machine.How will you troubleshoot?
+19.What are the types of EC2 instances in AWS?
+20.What are types of storages in AWS?
+21.What is the difference between EBS and EFS?
+22.What are s3 storage classes in AWS?
+23.What id s3 life cycle policy?
+24.Can you explain terraform work flow.
+25.How do you secure the state file ?
+
+Introduction
+
+I am a DevOps professional with extensive experience in managing and automating infrastructure, implementing CI/CD pipelines, and working with containerization and orchestration tools. I have a strong background in AWS services, Jenkins, Docker, Kubernetes, Terraform, and Ansible. In my current role, I ensure seamless application deployments and maintain a highly available and scalable infrastructure.
+Total years of experience, education details
+
+I have X years of experience in DevOps and cloud engineering. I hold a [Your Degree] in [Your Major] from [Your University].
+Share the screen and write a sample multistage Dockerfile
+
+Dockerfile
+Copy code
+# Stage 1: Build the application
+FROM maven:3.6.3-jdk-8 as builder
+WORKDIR /app
+COPY src /app/src
+COPY pom.xml /app
+RUN mvn -f /app/pom.xml clean package
+
+# Stage 2: Run the application
+FROM openjdk:8-jre-alpine
+WORKDIR /app
+COPY --from=builder /app/target/myapp.jar /app/myapp.jar
+ENTRYPOINT ["java", "-jar", "/app/myapp.jar"]
+Write the command to build the Docker image and push the image to Docker Hub
+
+sh
+Copy code
+# Build the Docker image
+docker build -t myusername/myapp:latest .
+
+# Log in to Docker Hub
+docker login --username myusername --password mypassword
+
+# Push the Docker image to Docker Hub
+docker push myusername/myapp:latest
+How will you create the container
+
+sh
+Copy code
+docker run -d -p 8080:8080 --name myapp-container myusername/myapp:latest
+Write a stage to perform Docker login
+
+groovy
+Copy code
+pipeline {
+  agent any
+  environment {
+    DOCKER_HUB_CREDENTIALS = credentials('docker-hub-credentials-id')
+  }
+  stages {
+    stage('Login to Docker Hub') {
+      steps {
+        script {
+          docker.withRegistry('https://index.docker.io/v1/', DOCKER_HUB_CREDENTIALS) {
+            echo 'Logged in to Docker Hub'
+          }
+        }
+      }
+    }
+  }
+}
+What technologies you build and deploy?
+
+Technologies include Docker for containerization, Kubernetes for orchestration, Jenkins for CI/CD, Terraform for infrastructure as code, and AWS services for cloud infrastructure.
+What is the technology you used to store data?
+
+Technologies used include AWS RDS for relational databases, DynamoDB for NoSQL, and S3 for object storage.
+If you want to connect to a database, what information is required?
+
+Database hostname or IP address
+Port number
+Database name
+Username and password
+Connection protocol (e.g., JDBC, ODBC)
+Difference between git clone and git pull
+
+git clone: Copies an entire repository to a new directory.
+git pull: Fetches changes from a remote repository and merges them into the current branch.
+What is the pull request process?
+
+Developers create a feature branch and make changes.
+A pull request (PR) is created to merge changes into the main branch.
+Code reviews are performed, and feedback is provided.
+Once approved, the PR is merged, and the branch is typically deleted.
+How will you add secrets in K8s?
+
+yaml
+Copy code
+apiVersion: v1
+kind: Secret
+metadata:
+  name: my-secret
+type: Opaque
+data:
+  username: YWRtaW4=
+  password: MWYyZDFlMmU2N2Rm
+Use kubectl create secret to add secrets from the command line.
+What is the difference between COPY and ADD?
+
+COPY: Copies files/directories from the host to the container.
+ADD: Copies files/directories and can also extract compressed files and download remote files.
+What is the difference between RUN and CMD?
+
+RUN: Executes commands to build the image (used in the Dockerfile's build stage).
+CMD: Specifies the command to run when the container starts (runtime stage).
+What is nodeSelector in K8s? How does it work?
+
+nodeSelector is used to constrain a pod to only be scheduled on nodes with specific labels. It works by specifying the label selector in the pod's specification.
+yaml
+Copy code
+spec:
+  nodeSelector:
+    disktype: ssd
+What are liveness and readiness probes in Kubernetes?
+
+Liveness Probe: Checks if a container is running. If the liveness probe fails, Kubernetes restarts the container.
+Readiness Probe: Checks if a container is ready to accept traffic. If the readiness probe fails, the container is removed from service endpoints.
+yaml
+Copy code
+livenessProbe:
+  httpGet:
+    path: /healthz
+    port: 8080
+  initialDelaySeconds: 3
+  periodSeconds: 3
+readinessProbe:
+  httpGet:
+    path: /ready
+    port: 8080
+  initialDelaySeconds: 3
+  periodSeconds: 3
+Write some example script in Linux.
+
+Example Bash script to monitor a service:
+bash
+Copy code
+#!/bin/bash
+
+SERVICE="nginx"
+
+if pgrep -x "$SERVICE" >/dev/null
+then
+    echo "$SERVICE is running"
+else
+    echo "$SERVICE is not running"
+fi
+Jenkins is not working in Linux machine. How will you troubleshoot?
+
+Check the Jenkins service status: systemctl status jenkins
+Review Jenkins logs located at /var/log/jenkins/jenkins.log
+Verify system resources (CPU, memory)
+Check network connectivity
+Restart the Jenkins service: systemctl restart jenkins
+What are the types of EC2 instances in AWS?
+
+General Purpose (e.g., T3, M5)
+Compute Optimized (e.g., C5)
+Memory Optimized (e.g., R5)
+Storage Optimized (e.g., I3)
+GPU Instances (e.g., P3)
+What are the types of storages in AWS?
+
+S3, EBS, EFS, Glacier, Storage Gateway
+What is the difference between EBS and EFS?
+
+EBS: Block storage, single instance attachment, suitable for databases and applications.
+EFS: File storage, multiple instance attachments, scalable, suitable for file sharing and big data.
+What are S3 storage classes in AWS?
+
+Standard: General-purpose storage for frequently accessed data.
+Intelligent-Tiering: Automatically moves data between two access tiers.
+Standard-IA: Infrequently accessed data, lower cost, retrieval fee.
+One Zone-IA: Infrequently accessed data in a single AZ, lower cost.
+Glacier: Low-cost storage for archival, retrieval time in minutes to hours.
+Glacier Deep Archive: Lowest-cost storage, retrieval time in hours.
+What is S3 lifecycle policy?
+
+S3 lifecycle policies allow you to define actions (transition or expiration) for objects based on their age, enabling automated tiering and cleanup of objects.
+json
+Copy code
+{
+  "Rules": [
+    {
+      "ID": "Transition to Glacier",
+      "Prefix": "",
+      "Status": "Enabled",
+      "Transitions": [
+        {
+          "Days": 30,
+          "StorageClass": "GLACIER"
+        }
+      ]
+    }
+  ]
+}
+Can you explain the Terraform workflow?
+
+Write: Define infrastructure as code in .tf files.
+Plan: Generate an execution plan with terraform plan.
+Apply: Execute the plan with terraform apply.
+Destroy: Remove infrastructure with terraform destroy.
+How do you secure the state file?
+
+Use remote state backends like S3 with encryption, enable state locking, and limit access via IAM policies.
+
+
+
+
+

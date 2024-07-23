@@ -1,0 +1,187 @@
+Incture
+1.Introduction, role and responsibilities
+2.Do you have any idea about SAP?
+3.Do ypu have any idea of multicloud deployments?
+4.Can we deploy in multicloud?
+5.The user has no access to the portal,he has onlu CLI access.He deployed a service via s3 and he wanted to access through the web url.But you want to access it from website.
+  What kind of services you use in AWS so you can get as ww.xyz.com?
+6.Is their any other services can be used to get  proper output? (EKS,clodfront,AWS certificate manager)
+7.Do you have any idea bout application gateway?
+8.Do you have any idea on azure cloud?
+9.Explain about helm charts.
+10.Can you explain about the cost management involved in monitoring of grafana and prometheus
+11.User has to get only access for EC2 console and What kind of access you can give in IAM roles?
+12.Give example for docker multistage build.
+13.Their is code in 2 different branches in 2 different repo of the github.You have to take details from one branch and use that in other branch.How you modify the code in jenkins.
+14.Do you have knowledge in bitbucket?
+15.Can you explain where you used argoCD?
+16.Do you worked with managed or unmanaged cluster?
+17.What are the components inside your k8s cluster?
+18.There is already a managed cluster.What will the ingress do, explain.
+19.How do you host the website using the k8s cluster example www.xyz.com give me the overview.
+
+
+
+ntroduction, Role, and Responsibilities
+
+Introduction: Provide a brief overview of your professional background, including your current role and experience in DevOps and cloud technologies.
+Role and Responsibilities: Describe your role, including key responsibilities such as managing CI/CD pipelines, deploying applications, monitoring systems, and ensuring infrastructure stability.
+Do You Have Any Idea About SAP?
+
+SAP Knowledge: Yes, I am familiar with SAP. It is a leading enterprise resource planning (ERP) software used for managing business operations and customer relations. SAP provides various modules for finance, logistics, human resources, and more.
+Do You Have Any Idea of Multicloud Deployments?
+
+Multicloud Deployments: Yes, multicloud deployments involve using cloud services from multiple cloud providers to avoid vendor lock-in, enhance redundancy, and leverage the best features from different providers.
+Can We Deploy in Multicloud?
+
+Multicloud Deployment: Yes, deploying applications in a multicloud environment is possible. This can be achieved using tools and services that support integration across multiple cloud platforms, such as Kubernetes, Terraform, and multi-cloud management platforms.
+The User Has No Access to the Portal, Only CLI Access. He Deployed a Service via S3 and Wanted to Access Through the Web URL. How Can You Access It from a Website?
+
+Accessing via Web URL: To access the deployed service from a web URL, you can use AWS services such as:
+Amazon CloudFront: To create a CDN for distributing content.
+AWS Route 53: To manage domain names and route traffic.
+Amazon S3 with Static Website Hosting: To serve static content.
+Is There Any Other Service That Can Be Used to Get Proper Output? (EKS, CloudFront, AWS Certificate Manager)
+
+Additional Services:
+Amazon EKS: To deploy and manage containerized applications in Kubernetes.
+AWS Certificate Manager: To manage and deploy SSL/TLS certificates for secure access.
+AWS Application Load Balancer: To route traffic and provide a domain-based URL.
+Do You Have Any Idea About Application Gateway?
+
+Application Gateway: Yes, an Application Gateway is a web traffic load balancer that enables you to manage traffic to your web applications. It provides application-layer (HTTP/HTTPS) routing and SSL termination.
+Do You Have Any Idea on Azure Cloud?
+
+Azure Cloud Knowledge: Yes, Azure is Microsoft’s cloud computing platform offering a wide range of services, including virtual machines, databases, AI, and more. It supports both Windows and Linux environments.
+Explain About Helm Charts
+
+Helm Charts: Helm charts are packages of pre-configured Kubernetes resources that simplify the deployment and management of applications on Kubernetes clusters. They include YAML templates for Kubernetes manifests and configuration files.
+Can You Explain About the Cost Management Involved in Monitoring of Grafana and Prometheus?
+
+Cost Management:
+Grafana: Typically involves costs related to the infrastructure running Grafana (e.g., EC2 instances) and any data storage.
+Prometheus: Costs are associated with the storage of time-series data and the infrastructure needed to run Prometheus servers. You may use managed services like Amazon Managed Prometheus to simplify cost management.
+User Has to Get Only Access to EC2 Console. What Kind of Access Can You Give in IAM Roles?
+
+IAM Roles for EC2 Access:
+EC2ReadOnlyAccess: Provides read-only access to EC2 resources.
+EC2FullAccess: Provides full access to manage EC2 instances, if more extensive permissions are needed.
+Give Example for Docker Multistage Build
+
+Docker Multistage Build Example:
+dockerfile
+Copy code
+# Stage 1: Build
+FROM maven:3.6.3-jdk-11 AS build
+WORKDIR /app
+COPY . /app
+RUN mvn clean package
+
+# Stage 2: Run
+FROM openjdk:11-jre-slim
+COPY --from=build /app/target/myapp.jar /app/myapp.jar
+CMD ["java", "-jar", "/app/myapp.jar"]
+There Is Code in 2 Different Branches in 2 Different Repos of GitHub. You Have to Take Details from One Branch and Use That in the Other Branch. How You Modify the Code in Jenkins?
+
+Modifying Code in Jenkins:
+Use Jenkins pipeline steps to check out code from both repositories.
+Example Jenkinsfile snippet:
+groovy
+Copy code
+pipeline {
+  agent any
+  stages {
+    stage('Checkout Repo 1') {
+      steps {
+        git url: 'https://github.com/yourorg/repo1.git', branch: 'branch1'
+      }
+    }
+    stage('Checkout Repo 2') {
+      steps {
+        git url: 'https://github.com/yourorg/repo2.git', branch: 'branch2'
+      }
+    }
+    stage('Build and Deploy') {
+      steps {
+        // Use code from both repos
+      }
+    }
+  }
+}
+Do You Have Knowledge in Bitbucket?
+
+Bitbucket Knowledge: Yes, Bitbucket is a Git repository management tool that provides features for source code and development project management. It supports both Git and Mercurial.
+Can You Explain Where You Used ArgoCD?
+
+ArgoCD Usage: ArgoCD is used for continuous delivery in Kubernetes. It synchronizes Kubernetes manifests stored in Git repositories to your clusters, enabling declarative application deployments and management.
+Did You Work with Managed or Unmanaged Clusters?
+
+Managed vs. Unmanaged Clusters: Describe your experience with both managed clusters (e.g., Amazon EKS, Google GKE) and unmanaged clusters (self-managed Kubernetes clusters).
+What Are the Components Inside Your Kubernetes Cluster?
+
+Kubernetes Cluster Components:
+Control Plane: API server, scheduler, controller manager, etcd.
+Nodes: Worker nodes running pods.
+Pods, Services, Deployments, ConfigMaps, Secrets.
+There Is Already a Managed Cluster. What Will the Ingress Do, Explain?
+
+Ingress: Ingress manages external access to services within a Kubernetes cluster. It provides HTTP/HTTPS routing and load balancing to your services based on URL paths or hostnames.
+How Do You Host the Website Using the Kubernetes Cluster? Give Me the Overview.
+
+Hosting a Website on Kubernetes:
+Deployments: Deploy your web application as pods.
+Services: Expose your pods via a Kubernetes Service (e.g., LoadBalancer or ClusterIP).
+Ingress: Use an Ingress resource to manage external access and route traffic to the Service.
+Example:
+yaml
+Copy code
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: web-deployment
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: web
+  template:
+    metadata:
+      labels:
+        app: web
+    spec:
+      containers:
+      - name: web
+        image: your-web-image
+        ports:
+        - containerPort: 80
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: web-service
+spec:
+  type: LoadBalancer
+  selector:
+    app: web
+  ports:
+    - port: 80
+      targetPort: 80
+
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: web-ingress
+spec:
+  rules:
+  - host: www.xyz.com
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: web-service
+            port:
+              number: 80

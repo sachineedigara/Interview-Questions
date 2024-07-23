@@ -1,0 +1,85 @@
+
+comapny_name:global logic
+1.introduction
+2.expalin ci/cd
+3.how do u maintain secrets in ci/cd
+4.what is blue green deployment?
+5.what is pod
+6.how network communication happend in k8s
+7.what is lambda functiom?
+8.what is lac tool
+9.do u know other than terraform tool?
+10.what is probe
+11.what is IAM in aws?
+12.expalin crashloop back off?
+13.when pod is in pending state why it will go to pending state explain
+14.what is Kubernetes operators?
+15.what are docker object?
+
+
+Introduction
+
+Introduction: Provide a brief overview of your professional background, including your experience in DevOps, cloud technologies, and any relevant projects or roles.
+Explain CI/CD
+
+CI/CD: Continuous Integration (CI) and Continuous Deployment (CD) are practices used to automate the process of software development and delivery. CI involves regularly integrating code changes into a shared repository and running automated tests to ensure code quality. CD extends this by automating the deployment of code to production environments, allowing for frequent and reliable releases.
+How Do You Maintain Secrets in CI/CD?
+
+Maintaining Secrets: Secrets in CI/CD can be managed using several methods:
+Environment Variables: Store secrets as environment variables in CI/CD pipelines.
+Secret Management Tools: Use tools like AWS Secrets Manager, HashiCorp Vault, or Azure Key Vault to securely manage and access secrets.
+Encrypted Files: Store secrets in encrypted files and decrypt them as needed during the pipeline execution.
+What Is Blue-Green Deployment?
+
+Blue-Green Deployment: Blue-Green Deployment is a strategy for minimizing downtime and risk during application updates. It involves maintaining two environments (Blue and Green). The Blue environment is the current live version, while the Green environment is where the new version is deployed. After testing the Green environment, traffic is switched from Blue to Green, making Green the new live environment.
+What Is a Pod?
+
+Pod: In Kubernetes, a Pod is the smallest deployable unit that can contain one or more containers. Pods share the same network namespace and storage, allowing them to communicate with each other and share data.
+How Does Network Communication Happen in Kubernetes?
+
+Network Communication in Kubernetes:
+Pod-to-Pod Communication: Pods communicate within the same namespace using their IP addresses. Kubernetes provides a flat network model, so every Pod can communicate with every other Pod.
+Service Communication: Services provide stable endpoints for Pods, enabling communication between Pods across different deployments or namespaces.
+Network Policies: Define rules to control traffic between Pods and services.
+What Is a Lambda Function?
+
+Lambda Function: AWS Lambda is a serverless compute service that allows you to run code in response to events without provisioning or managing servers. Lambda functions can be triggered by various AWS services or HTTP requests and automatically scale based on demand.
+What Is a LAC Tool?
+
+LAC Tool: "LAC" might refer to different tools or concepts depending on the context. For example, in some contexts, it could mean "Logging and Analytics Center" or a similar tool. Please provide more context if "LAC" refers to a specific tool.
+Do You Know Other Than Terraform Tools?
+
+Alternative Tools to Terraform:
+AWS CloudFormation: AWS's native infrastructure-as-code service for managing AWS resources.
+Ansible: Primarily used for configuration management but can also manage infrastructure.
+Pulumi: Infrastructure-as-code tool that supports multiple programming languages.
+Chef and Puppet: Configuration management tools with infrastructure automation capabilities.
+What Is a Probe?
+
+Probe: In Kubernetes, probes are used to determine the health of containers. There are three types of probes:
+Liveness Probe: Checks if a container is still running. If it fails, the container is restarted.
+Readiness Probe: Checks if a container is ready to accept traffic. If it fails, the container is removed from service endpoints.
+Startup Probe: Used to check if an application within a container has started successfully.
+What Is IAM in AWS?
+
+IAM (Identity and Access Management): IAM is a service in AWS that allows you to manage access to AWS resources securely. It enables you to create and manage users, groups, roles, and permissions to control who can access and perform actions on AWS resources.
+Explain CrashLoopBackOff
+
+CrashLoopBackOff: This status indicates that a Pod in Kubernetes is failing to start or crash repeatedly. It means the container in the Pod has started, failed, and Kubernetes is attempting to restart it but continues to encounter failures.
+When a Pod Is in Pending State, Why Might It Stay in That State?
+
+Reasons for Pending State:
+Resource Constraints: There may not be enough resources (CPU, memory) available in the cluster.
+Scheduling Issues: No suitable nodes are available to schedule the Pod.
+Node Affinity/Selector Issues: The Pod's node affinity or selector requirements are not met.
+What Are Kubernetes Operators?
+
+Kubernetes Operators: Operators are a method of packaging, deploying, and managing Kubernetes applications. They use custom resources and controllers to automate tasks such as deployment, scaling, and management of applications based on business logic.
+What Are Docker Objects?
+
+Docker Objects:
+Images: Read-only templates used to create containers.
+Containers: Instances of Docker images that run applications.
+Volumes: Persistent storage used by containers.
+Networks: Virtual networks that enable communication between containers.
+Dockerfiles: Scripts used to build Docker images.

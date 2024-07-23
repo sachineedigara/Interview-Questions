@@ -1,0 +1,369 @@
+Company: Smc2
+
+
+1. Introduce yourself.
+
+Answer: I am a DevOps Engineer with experience in managing and automating infrastructure, continuous integration, and deployment pipelines. My expertise includes working with cloud platforms like AWS, container orchestration with Kubernetes, and configuration management with tools like Terraform and Ansible. I am skilled in implementing CI/CD pipelines, monitoring systems, and ensuring high availability and scalability of applications.
+
+2. Replace the word "sudha" with "devops" in sudha.txt file. Find the occurrence of the "sudha" word in the file.
+
+Answer:
+
+bash
+Copy code
+# Replace the word "sudha" with "devops"
+sed -i 's/sudha/devops/g' sudha.txt
+
+# Find the occurrence of the word "sudha"
+grep -o 'sudha' sudha.txt | wc -l
+
+3. There is a directory with n number of files. Delete files older than 27 days.
+
+Answer:
+
+bash
+Copy code
+find /path/to/directory -type f -mtime +27 -exec rm {} \;
+Containerization
+
+4. Have you worked on Containerization?
+
+Answer: Yes, I have worked with containerization technologies such as Docker. I have experience creating Docker images, managing containers, and deploying applications using Docker.
+
+
+5. What type of project have you worked on: is it Java-based or .NET-based?
+
+Answer: I have worked on both Java-based and .NET-based projects. My experience includes deploying Java applications in Docker containers and managing .NET applications in a CI/CD pipeline.
+
+6. Need to deploy a Java-based application inside a POD and for that, you have to use any base image and the Java image as the custom-based image. How will you deploy?
+
+Answer:
+
+Create a Dockerfile:
+
+Dockerfile
+Copy code
+FROM openjdk:11-jre
+COPY target/myapp.jar /app/myapp.jar
+ENTRYPOINT ["java", "-jar", "/app/myapp.jar"]
+Build the Docker image:
+
+bash
+Copy code
+docker build -t my-java-app .
+Write a Pod Manifest:
+
+yaml
+Copy code
+apiVersion: v1
+kind: Pod
+metadata:
+  name: java-app-pod
+spec:
+  containers:
+  - name: java-app
+    image: my-java-app
+    ports:
+    - containerPort: 8080
+Deploy the Pod:
+
+bash
+Copy code
+kubectl apply -f pod-manifest.yaml
+
+
+7. Please write a Dockerfile.
+
+Answer:
+
+Dockerfile
+Copy code
+# Use an official base image
+FROM ubuntu:20.04
+
+# Install necessary packages
+RUN apt-get update && apt-get install -y \
+    curl \
+    vim
+
+# Set environment variables
+ENV APP_HOME /app
+
+# Create application directory
+RUN mkdir -p $APP_HOME
+
+# Set working directory
+WORKDIR $APP_HOME
+
+# Copy application files
+COPY . .
+
+# Expose port
+EXPOSE 8080
+
+# Define the command to run the application
+CMD ["./myapp"]
+
+8. During deployment, you will pull the image from ECR. What will you mention in the Manifest?
+
+Answer:
+
+yaml
+Copy code
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: my-app
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: my-app
+  template:
+    metadata:
+      labels:
+        app: my-app
+    spec:
+      containers:
+      - name: my-app-container
+        image: <aws_account_id>.dkr.ecr.<region>.amazonaws.com/my-app:latest
+        ports:
+        - containerPort: 8080
+9. Please write a Pod Manifest for the same.
+
+Answer:
+
+yaml
+Copy code
+apiVersion: v1
+kind: Pod
+metadata:
+  name: my-app-pod
+spec:
+  containers:
+  - name: my-app-container
+    image: <aws_account_id>.dkr.ecr.<region>.amazonaws.com/my-app:latest
+    ports:
+    - containerPort: 8080
+
+10. What if the POD is not running fine? What is the reason it went to CrashLoopBack?
+
+Answer:
+
+Possible Reasons:
+Incorrect image or tag.
+Application crashes due to configuration issues or missing dependencies.
+Resource constraints.
+Troubleshooting Steps:
+Check pod logs: kubectl logs <pod-name>
+Describe the pod: kubectl describe pod <pod-name>
+Check for events or errors in the pod description.
+
+
+11. What deployment strategy have you used in your project? What other strategies do you know?
+
+Answer:
+
+Used Strategy: Rolling Update
+Other Strategies:
+Blue/Green Deployment
+Canary Release
+Recreate Deployment
+
+12. What is namespace? What is the use of namespace?
+
+Answer:
+
+Namespace: A Kubernetes object used to divide cluster resources between multiple users or teams.
+Use: Helps in organizing and isolating resources within a cluster, provides access control, and helps in managing resources for different environments.
+
+
+13. Container running inside the pod. During deployment, you have copied some properties file related to the application. You found some files are missing, and the issue is with properties files. How will you check all the properties files?
+
+Answer:
+
+Verify: Check the Dockerfile or deployment configuration to ensure all necessary files are copied.
+Inspect: Use kubectl exec to access the running pod and verify the presence of properties files.
+bash
+Copy code
+kubectl exec -it <pod-name> -- /bin/bash
+ls /app/config
+AWS Services and Security
+
+
+14. In AWS, what services have you used?
+
+Answer:
+
+EC2
+S3
+VPC
+RDS
+ALB
+EKS
+IAM
+
+15. How will you secure an S3 bucket?
+
+Answer:
+
+Set bucket policies and access controls.
+Enable encryption (server-side or client-side).
+Use IAM roles and policies for fine-grained access.
+Enable logging and monitoring.
+
+16. What is the term PTR in Route53?
+
+Answer:
+
+PTR Record: A DNS record used for reverse DNS lookups. It maps an IP address to a domain name.
+
+17. What is the difference between a domain and a hosted zone?
+
+Answer:
+
+Domain: A user-friendly address (e.g., example.com) that maps to an IP address.
+Hosted Zone: A container in Route 53 that holds DNS records for a domain.
+
+18. Where have you kept your state file in your project?
+
+Answer:
+
+The state file is typically stored in a remote backend such as AWS S3 with state locking provided by DynamoDB.
+
+19. You have to create 4 EC2 instances in the London region. Execute the Terraform commands.
+
+Answer:
+
+hcl
+Copy code
+# main.tf
+provider "aws" {
+  region = "eu-west-2" # London region
+}
+
+resource "aws_instance" "example" {
+  count = 4
+  ami           = "ami-12345678"
+  instance_type = "t2.micro"
+}
+bash
+Copy code
+terraform init
+terraform plan
+terraform apply
+
+
+20. At which stage is the state file created?
+
+Answer:
+
+The state file is created during the terraform apply stage after Terraform has applied the configuration changes.
+Ansible and Jenkins
+
+21. Do you have knowledge of Ansible? Can you do provisioning in Ansible?
+
+Answer: Yes, I have knowledge of Ansible and can perform provisioning tasks such as configuring servers, deploying applications, and managing infrastructure.
+
+22. Can you write a Jenkins pipeline? What stages have you created in your project?
+
+Answer:
+
+groovy
+Copy code
+pipeline {
+    agent any
+    stages {
+        stage('Build') {
+            steps {
+                sh 'mvn clean install'
+            }
+        }
+        stage('Test') {
+            steps {
+                sh 'mvn test'
+            }
+        }
+        stage('Deploy') {
+            steps {
+                sh './deploy.sh'
+            }
+        }
+        stage('Ansible') {
+            steps {
+                ansiblePlaybook(playbook: 'deploy.yml')
+            }
+        }
+    }
+}
+
+
+23. What is the difference between continuous deployment and delivery?
+
+Answer:
+
+Continuous Deployment: Automatically deploys every change that passes the CI process to production.
+Continuous Delivery: Automatically prepares code changes for a release but requires manual approval to deploy to production.
+
+24. We are decommissioning your Jenkins master today. I will provide the server name, and from tomorrow you can migrate. How will you do the migration?
+
+Answer:
+
+Backup: Take a backup of the Jenkins master configuration and job data.
+Setup New Server: Install Jenkins on the new server.
+Restore: Restore the backup on the new Jenkins server.
+Verify: Test the new setup to ensure it works correctly.
+
+
+25. How do the old Jenkins server and new Jenkins server talk to each other?
+
+Answer:
+
+Backup & Restore: Use backup and restore methods to transfer data between servers.
+Networking: Ensure proper network configurations and access controls.
+Troubleshooting
+
+
+26. How to check if the DB is able to communicate with your backend? How do you troubleshoot?
+
+Answer:
+
+Test Connectivity: Use tools like telnet or nc to check connectivity to the database port.
+Logs: Review application and database logs for errors.
+Configuration: Verify database connection settings and credentials.
+
+
+27. When you hit the URL and it shows Internal Server Error, how will you troubleshoot?
+
+Answer:
+
+Check Logs: Review web server and application logs for error details.
+Configuration: Verify server configuration and application settings.
+Debug: Use debugging tools or code inspection to identify issues.
+
+
+28. How to check if DB connectivity is there or not?
+
+Answer:
+
+Direct Test: Use database client tools or commands to test connectivity.
+Application Logs: Check application logs for database connection errors.
+
+
+29. What monitoring tools are you using in your project?
+
+Answer:
+
+Prometheus: For metrics collection.
+Grafana: For visualizing metrics.
+ELK Stack: For logging and search capabilities.
+
+
+30. I am running 4 pods. I want to check if the memory assigned is free or not.
+
+Answer:
+
+bash
+Copy code
+kubectl top pods
+This command shows the resource usage of pods, including memory and CPU.

@@ -1,0 +1,152 @@
+Tech Mahindra -Questions:
+
+1. CloudWatch: What Have You Worked on, and What is CloudWatch Insights?
+
+Amazon CloudWatch is a monitoring and observability service designed for DevOps engineers, developers, site reliability engineers (SREs), and IT managers. It provides data and actionable insights to monitor applications, understand and respond to system-wide performance changes, optimize resource utilization, and get a unified view of operational health.
+
+CloudWatch Insights is a feature within Amazon CloudWatch that allows you to interactively search and analyze your log data in Amazon CloudWatch Logs. It is used to query logs, perform calculations, and create visualizations to gain insights from your logs.
+
+2. Setting Up CloudWatch to Monitor CPU Usage and Restrict User Login
+Steps to monitor CPU usage of 100 servers to 80% and restrict user login to max 20 users for the next 20 days:
+
+Create CloudWatch Alarms for CPU Usage:
+
+Go to the CloudWatch console.
+Navigate to Alarms > Create Alarm.
+Select Metrics and choose the EC2 namespace.
+Select Per-Instance Metrics and choose the metric for CPU utilization for each of the 100 servers.
+Set the alarm condition to trigger when CPU utilization is greater than or equal to 80% for a specified period.
+Choose the actions to take when the alarm state is triggered, such as sending a notification to an SNS topic.
+Create Custom Metric for User Logins:
+
+Write a script on each server to count user logins and push this metric to CloudWatch using the PutMetricData API.
+Example script (Python):
+python
+Copy code
+import boto3
+import subprocess
+
+client = boto3.client('cloudwatch', region_name='your-region')
+
+def get_user_count():
+    result = subprocess.run(['who', '-q'], stdout=subprocess.PIPE)
+    user_count = int(result.stdout.decode().split('=')[1].strip())
+    return user_count
+
+def put_metric_data(count):
+    client.put_metric_data(
+        Namespace='Custom/UserLogins',
+        MetricData=[
+            {
+                'MetricName': 'UserLoginCount',
+                'Dimensions': [
+                    {
+                        'Name': 'InstanceId',
+                        'Value': 'your-instance-id'
+                    },
+                ],
+                'Value': count,
+                'Unit': 'Count'
+            },
+        ]
+    )
+
+user_count = get_user_count()
+put_metric_data(user_count)
+Create CloudWatch Alarms for User Logins:
+
+Go to the CloudWatch console.
+Navigate to Alarms > Create Alarm.
+Select Metrics and choose the Custom/UserLogins namespace.
+Select the metric for user logins and set the alarm condition to trigger when user logins are greater than or equal to 20.
+Choose the actions to take when the alarm state is triggered.
+Set the Alarm Duration:
+
+For both alarms, set the evaluation period and the threshold condition.
+Ensure that the alarms are active for the next 20 days by setting appropriate start and end times or manually disabling them after 20 days.
+
+
+3. Jenkins Pipeline with Ansible Playbook Stage
+groovy
+Copy code
+pipeline {
+    agent any
+    stages {
+        stage('Checkout') {
+            steps {
+                git 'https://github.com/myrepo.git'
+            }
+        }
+        stage('Build') {
+            steps {
+                script {
+                    docker.build('myapp')
+                }
+            }
+        }
+        stage('Test') {
+            steps {
+                script {
+                    docker.image('myapp').inside {
+                        sh 'npm test'
+                    }
+                }
+            }
+        }
+        stage('Deploy') {
+            steps {
+                script {
+                    docker.image('myapp').inside {
+                        sh 'kubectl apply -f k8s/'
+                    }
+                }
+            }
+        }
+        stage('Run Ansible Playbook') {
+            steps {
+                ansiblePlaybook(
+                    playbook: 'playbook.yml',
+                    inventory: 'inventory.ini'
+                )
+            }
+        }
+    }
+    post {
+        always {
+            cleanWs()
+        }
+    }
+}
+
+
+4. Kubernetes Architecture and kubectl
+Kubernetes Architecture:
+
+Master Node: Controls the Kubernetes cluster. It has components like API server, Controller Manager, Scheduler, and etcd.
+Worker Nodes: Where the actual applications run, each with a kubelet, kube-proxy, and a container runtime.
+kubectl: Command-line tool to interact with the Kubernetes API server. It performs actions like deploying applications, inspecting and managing cluster resources, and viewing logs.
+
+
+5. Types of Autoscaling in AWS
+EC2 Auto Scaling: Automatically adjusts the number of EC2 instances.
+Application Auto Scaling: Scales services like DynamoDB, ECS, and Lambda.
+Elastic Load Balancing (ELB): Distributes incoming application traffic across multiple targets.
+
+
+6. What is Route 53 and How It Works?
+Amazon Route 53 is a scalable and highly available DNS and domain name registration service. It translates domain names into IP addresses and routes end-user requests to the appropriate resources in AWS.
+
+7. Current Project and AWS Services Used
+Current Project:
+
+Project Overview: Implementing a multi-region architecture for a web application with containerized microservices, automated CI/CD pipelines, and continuous monitoring.
+AWS Services Used:
+EC2: For running web servers and application servers.
+S3: For storing static content and backups.
+RDS: For managed relational databases.
+ECS/EKS: For container orchestration.
+CloudWatch: For monitoring and logging.
+IAM: For managing access and permissions.
+VPC: For network isolation and security.
+Route 53: For DNS and domain management.
+If you need more detailed explanations or additional questions answered, feel free to ask!

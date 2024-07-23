@@ -1,0 +1,92 @@
+Company - UST
+
+1. Introduction 
+2. Have you worked on prometheus and grafana
+3. Can you tell me about grafana and prometheus
+4. How many cluster were you having ?
+5. Have you heard about thanos ? Have got any chance to work on it ?
+6. Can you tell me the components of Prometheus
+7. Can you tell something about alert manager in prometheus ?
+8. What are the types of metrics in Prometheus you have came across?
+9. What is the default retention period of Prometheus?
+10. Prometheus version and grafana version ?
+11. In Grafana how will create a dashboard and tell the steps ?
+12. What and all dashboard have you came across ?
+13. Components of master node ?
+14. Explain about node affinity and pod affinity ?
+15. How can i deploy a pod tainted node ?
+
+
+Introduction
+
+Introduction: Briefly introduce yourself, highlighting your background in DevOps, cloud technologies, and any specific projects or technologies you've worked with.
+Have You Worked on Prometheus and Grafana?
+
+Experience: Yes, I have experience working with both Prometheus and Grafana. I have used them for monitoring and visualization in various projects.
+Can You Tell Me About Grafana and Prometheus?
+
+Prometheus: An open-source monitoring and alerting toolkit designed for reliability and scalability. It collects metrics from configured endpoints at specified intervals, stores them in a time-series database, and provides a powerful query language (PromQL) for querying the data.
+Grafana: An open-source platform for monitoring and observability that integrates with various data sources, including Prometheus. It provides rich visualizations, dashboards, and alerts based on the data it pulls from these sources.
+How Many Clusters Were You Having?
+
+Clusters: Provide details on the number of clusters you managed or interacted with, including any specific configurations or purposes they served (e.g., production, staging, development).
+Have You Heard About Thanos? Have You Got Any Chance to Work on It?
+
+Thanos: Yes, I am familiar with Thanos. It is an open-source project that extends Prometheus's capabilities for long-term storage, global querying, and high availability. I have worked with Thanos to aggregate data from multiple Prometheus instances and provide a unified view.
+Can You Tell Me the Components of Prometheus?
+
+Components of Prometheus:
+Prometheus Server: Collects and stores metrics data.
+Prometheus Client Libraries: Libraries for instrumenting code to expose metrics.
+Prometheus Exporters: Tools that expose metrics from third-party systems.
+PromQL: Query language for retrieving metrics.
+Alertmanager: Handles alerts sent by Prometheus.
+Can You Tell Something About Alertmanager in Prometheus?
+
+Alertmanager: Alertmanager handles alerts sent by Prometheus, including grouping, deduplication, and routing of alerts. It also manages silencing and inhibition of alerts and can send notifications via various channels like email, Slack, or custom webhooks.
+What Are the Types of Metrics in Prometheus You Have Come Across?
+
+Types of Metrics:
+Counter: A monotonically increasing value (e.g., number of requests).
+Gauge: A value that can go up and down (e.g., current CPU usage).
+Histogram: Measures the distribution of values over a set of buckets (e.g., request latencies).
+Summary: Similar to histograms but with pre-calculated quantiles.
+What Is the Default Retention Period of Prometheus?
+
+Retention Period: The default retention period for Prometheus data is 15 days. This can be adjusted by configuring the --storage.tsdb.retention.time flag.
+Prometheus Version and Grafana Version?
+
+Versions: Provide the versions of Prometheus and Grafana that you have worked with, including any specific features or improvements introduced in those versions.
+In Grafana, How Will You Create a Dashboard and Tell the Steps?
+
+Creating a Dashboard in Grafana:
+Log In: Access your Grafana instance.
+Create Dashboard: Click on the "+" icon in the sidebar and select "Dashboard."
+Add Panels: Click "Add New Panel" to create and configure panels for visualizing metrics.
+Configure Panels: Use the query editor to pull data from your data source (e.g., Prometheus) and configure the visualization type.
+Save Dashboard: Once configured, click "Save" to save the dashboard and provide a name and folder for it.
+What and All Dashboards Have You Come Across?
+
+Dashboards: Share examples of dashboards you've created or used, including monitoring application performance, infrastructure health, and custom metrics.
+Components of Master Node?
+
+Master Node Components:
+API Server: Handles API requests from clients.
+Controller Manager: Manages controllers that regulate the state of the cluster.
+Scheduler: Assigns Pods to Nodes based on resource availability.
+etcd: Key-value store for cluster state and configuration.
+Explain About Node Affinity and Pod Affinity?
+
+Node Affinity: Node Affinity is a set of rules used to determine which nodes a Pod can be scheduled on based on node labels. It helps in scheduling Pods on nodes with specific characteristics.
+Pod Affinity: Pod Affinity allows you to specify rules for placing Pods based on the labels of other Pods. It helps in co-locating Pods that need to communicate frequently.
+How Can I Deploy a Pod to a Tainted Node?
+
+Deploying to a Tainted Node: To schedule a Pod on a tainted node, you need to use tolerations in your Pod specification. Tolerations allow Pods to be scheduled onto nodes with specific taints. Example:
+yaml
+Copy code
+tolerations:
+- key: "key"
+  operator: "Equal"
+  value: "value"
+  effect: "NoSchedule"
+Taints: Nodes are tainted to prevent Pods from being scheduled unless they tolerate the taint.

@@ -1,0 +1,85 @@
+Company:-SourceFuse
+1)introduce your self?
+2)on which cloud your project was on?
+3)explain you project? how this application was deployed?
+4)aws services you worked on?
+5)what is DNS?
+6)explain about ArgoCD
+7)how SQS works?
+8)Explain Cloud formation?
+9)explain LB and auto scaling?
+10)terraform lifecycle?
+11)have you worked on grafana and prometheus?
+12)what is alert manager in prometheus?
+13)how do you manage environemnt varibles in k8s?
+14)explain about helm chart in detail.
+15)how to upgrade the helm charts?
+16)explain auto scaling in ec2 instances
+17)explain about auto scaling in k8s in detail
+18)how the load balacer work?
+
+Introduce Yourself:
+
+Provide a brief summary of your professional background, highlighting your roles, key responsibilities, and achievements. Mention your experience with cloud technologies, DevOps practices, and any specific projects or tools relevant to the role you're applying for.
+On Which Cloud Was Your Project:
+
+Specify the cloud provider used (AWS, Azure, Google Cloud, etc.) for your project. Mention why that particular cloud provider was chosen and any specific features or services you leveraged.
+Explain Your Project: How This Application Was Deployed:
+
+Describe the project’s objective, architecture, and deployment process. Explain how the application was deployed, including the use of CI/CD pipelines, infrastructure as code (IaC), containerization, orchestration tools, and any specific deployment strategies.
+AWS Services You Worked On:
+
+List the AWS services you’ve used, such as EC2, S3, RDS, Lambda, VPC, CloudFormation, IAM, etc. Mention how you utilized each service and the role it played in your projects.
+What is DNS:
+
+DNS (Domain Name System) translates human-readable domain names (like www.example.com) into IP addresses that computers use to identify each other on the network. It allows users to access websites and services using easy-to-remember names.
+Explain About ArgoCD:
+
+ArgoCD is a declarative, GitOps continuous delivery tool for Kubernetes. It synchronizes the state of Kubernetes applications with configurations stored in a Git repository, enabling automated deployment and rollbacks.
+How SQS Works:
+
+Amazon Simple Queue Service (SQS) is a fully managed message queuing service that allows you to decouple and scale microservices, distributed systems, and serverless applications. It stores messages in a queue until they are processed and deleted, ensuring reliable communication between components.
+Explain CloudFormation:
+
+AWS CloudFormation is a service that allows you to define and provision AWS infrastructure using code. You create templates in JSON or YAML format, which describe the resources and their configurations. CloudFormation then automates the provisioning and management of these resources.
+Explain LB and Auto Scaling:
+
+Load Balancer (LB): Distributes incoming traffic across multiple instances to ensure high availability and reliability. AWS provides Elastic Load Balancing (ELB) options like ALB (Application Load Balancer) and NLB (Network Load Balancer).
+Auto Scaling: Automatically adjusts the number of EC2 instances in response to traffic demand or other metrics. It helps maintain application performance and reduce costs by scaling in and out based on defined policies.
+Terraform Lifecycle:
+
+The Terraform lifecycle includes the stages of provisioning and managing infrastructure. Key stages are:
+Init: Initializes the Terraform working directory.
+Plan: Creates an execution plan to show changes.
+Apply: Applies the changes required to reach the desired state.
+Destroy: Removes the infrastructure managed by Terraform.
+Have You Worked on Grafana and Prometheus:
+
+Mention your experience with Grafana (for visualizing metrics) and Prometheus (for monitoring and alerting). Describe how you used these tools to collect, visualize, and analyze metrics and set up alerts.
+What is Alertmanager in Prometheus:
+
+Alertmanager is a component of Prometheus used to handle alerts. It groups, deduplicates, and routes alerts to various notification channels (like email, Slack) and manages alert silencing and inhibition.
+How Do You Manage Environment Variables in K8s:
+
+Environment variables in Kubernetes are managed using ConfigMaps and Secrets. ConfigMaps store non-sensitive configuration data, while Secrets store sensitive information such as passwords or API keys.
+Explain About Helm Chart in Detail:
+
+Helm is a package manager for Kubernetes that uses Helm Charts to define, install, and manage Kubernetes applications. Charts are collections of YAML files that describe the resources needed for an application, including deployments, services, and configurations.
+How to Upgrade the Helm Charts:
+
+To upgrade Helm charts:
+Update the chart version or modify the values file.
+Use helm upgrade command to apply the changes to your Kubernetes cluster.
+Verify the upgrade using helm status and monitor the application for stability.
+Explain Auto Scaling in EC2 Instances:
+
+EC2 Auto Scaling automatically adjusts the number of instances based on demand. It uses scaling policies, such as target tracking or scheduled scaling, to add or remove instances to maintain performance and cost-efficiency.
+Explain Auto Scaling in K8s in Detail:
+
+Kubernetes Auto Scaling includes:
+Horizontal Pod Autoscaler (HPA): Scales the number of pods based on CPU utilization or custom metrics.
+Vertical Pod Autoscaler (VPA): Adjusts the resource requests and limits for individual pods.
+Cluster Autoscaler: Scales the number of nodes in the cluster based on pod resource requirements and pending pods.
+How the Load Balancer Works:
+
+Load balancers distribute incoming traffic across multiple backend instances to ensure high availability and reliability. They use algorithms like round-robin or least connections to balance the load and can also handle SSL termination, health checks, and routing based on URL paths or hostnames.

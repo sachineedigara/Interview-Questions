@@ -1,0 +1,322 @@
+Company - Persistent Systems
+
+- Write a ansible playbook for copying test.txt to a specific server.
+- Write the host file for same playbook and pass the credentials of the server in it. Instead of manually doing ssh connection, pass the relevant credentials for ssh connection in the host file.
+- Write a docker file to start the nginx server with host port 700 mapped to nginx port. Also attach the volume for the nginx container.
+- Write the commands to build and run this specific docker file.
+- Write all the steps with commands for pushing the image to any registry.
+- Write a module for ec2 instance in terraform
+- Write a shell script to monitor specific service and display some message about its status.
+- Write a shell script to read an input from the user through command line. Compare this string with predefined variable. If it matches, display a successful message, if not display non-matching input.
+- I'm trying to acccess some server but getting connection timed out error. Explain the debugging steps.
+- How to check logs in linux and where the logs will be stored?
+- What is trace route in linux?
+- What is tracer in windows?
+- Suppose you have joined a new company and your manager has shared the github link. What all activities you perform in your local system. Expalin with commands.
+- I need to undo my previous commit, what is the command
+- How did you handle the merge activities?
+- Difference between ansible and ansible-playbook command.
+- What is the maximum number of servers you have configured?
+- Why terraform?
+- How do you handle secrets in terraform.
+- I need to remove specific resource from state file, how this can be done?
+- Where did you store your state file, was there any other alternative available.
+- On a day to day to basis what are the requests you handle in terraform. Where were the resources getting provisioned?
+- Apart from AWS, have you provisioned other cloud resources?
+- Why docker?
+- What is the major difference  between conventional machines and containers?
+- Explain all the projects you have handled.
+- What is the role of docker in your project?
+- why kubernetes? Any other alternatives?
+- What activities you perform in kubernetes in your daily routine?
+- Role of kubernetes in you project?
+- Explain the OSI model
+- Different classes in networking
+- Different IP class
+- Private IPs are in which IP classes
+- I have a CIDR range of /24. How many hosts can I get?
+- Difference between TCP and UDP
+- What other basic networking you are aware of?
+- I have one public IP, I need to assign it to 6 application. The subnetting and elastic IP is already done. What other alternative you can suggest.
+- What is gateway
+- What is NAT and use case of NAT
+- I have an application in other network, I need to connect it with my network. How this can be done.
+- Which distribution you have worked on and its version.
+- How to create an AMI
+- I need to access s3 from my ec2 server. What all configuration you will perform?
+- Different types of instance your team is using. Any specific reason?
+- Number of years of experience in docker, terraform, shell scripting, kubernetes, any cloud.
+
+
+
+
+Write an Ansible playbook for copying test.txt to a specific server.
+
+yaml
+Copy code
+---
+- name: Copy test.txt to the server
+  hosts: target_server
+  tasks:
+    - name: Copy test.txt
+      copy:
+        src: /path/to/local/test.txt
+        dest: /path/to/remote/test.txt
+Write the host file for the same playbook and pass the credentials of the server in it. Instead of manually doing SSH connection, pass the relevant credentials for SSH connection in the host file.
+
+ini
+Copy code
+[target_server]
+server.example.com
+
+[target_server:vars]
+ansible_user=your_username
+ansible_ssh_private_key_file=/path/to/private/key
+Write a Dockerfile to start the Nginx server with host port 700 mapped to Nginx port. Also attach the volume for the Nginx container.
+
+Dockerfile
+Copy code
+FROM nginx:latest
+EXPOSE 80
+Write the commands to build and run this specific Dockerfile.
+
+sh
+Copy code
+docker build -t my-nginx-image .
+docker run -d -p 700:80 -v /path/to/local/nginx/conf:/etc/nginx/conf.d my-nginx-image
+Write all the steps with commands for pushing the image to any registry.
+
+sh
+Copy code
+# Tag the image
+docker tag my-nginx-image your-docker-repo/my-nginx-image:latest
+
+# Login to the registry
+docker login your-docker-repo
+
+# Push the image
+docker push your-docker-repo/my-nginx-image:latest
+Write a module for EC2 instance in Terraform.
+
+hcl
+Copy code
+module "ec2_instance" {
+  source = "terraform-aws-modules/ec2-instance/aws"
+  version = "~> 2.0"
+
+  name = "my-instance"
+  ami = "ami-0c55b159cbfafe1f0"
+  instance_type = "t2.micro"
+
+  vpc_security_group_ids = ["sg-12345678"]
+  subnet_id = "subnet-12345678"
+
+  tags = {
+    Name = "MyInstance"
+  }
+}
+Write a shell script to monitor a specific service and display some message about its status.
+
+sh
+Copy code
+#!/bin/bash
+SERVICE="nginx"
+if systemctl is-active --quiet $SERVICE
+then
+    echo "$SERVICE is running"
+else
+    echo "$SERVICE is not running"
+fi
+Write a shell script to read an input from the user through the command line. Compare this string with a predefined variable. If it matches, display a successful message; if not, display a non-matching input.
+
+sh
+Copy code
+#!/bin/bash
+read -p "Enter a string: " user_input
+predefined="HelloWorld"
+
+if [ "$user_input" == "$predefined" ]; then
+    echo "The input matches the predefined string."
+else
+    echo "The input does not match the predefined string."
+fi
+I'm trying to access some server but getting connection timed out error. Explain the debugging steps.
+
+Check network connectivity: ping server.example.com
+Check if the port is open: telnet server.example.com 22 or nc -zv server.example.com 22
+Verify firewall rules and security group settings.
+Ensure the server is running and accessible.
+Review logs for any errors related to the connection.
+How to check logs in Linux and where the logs will be stored?
+
+Logs are typically stored in /var/log/.
+Use tail -f /var/log/syslog or journalctl -f to view logs in real-time.
+What is trace route in Linux?
+
+traceroute is a command used to trace the path that packets take from the source to the destination network.
+Example command: traceroute google.com
+What is tracer in Windows?
+
+In Windows, tracert is the command used to perform a similar function as traceroute in Linux.
+Example command: tracert google.com
+Suppose you have joined a new company and your manager has shared the GitHub link. What all activities you perform in your local system? Explain with commands.
+
+sh
+Copy code
+# Clone the repository
+git clone https://github.com/your-manager/repo.git
+
+# Navigate to the project directory
+cd repo
+
+# Create a new branch for your work
+git checkout -b my-feature-branch
+
+# Make changes to the code
+
+# Add changes to staging
+git add .
+
+# Commit the changes
+git commit -m "My initial commit"
+
+# Push the branch to remote
+git push origin my-feature-branch
+I need to undo my previous commit, what is the command?
+
+sh
+Copy code
+git revert HEAD
+How did you handle the merge activities?
+
+Always work on a separate feature branch.
+When ready to merge, pull the latest changes from the main branch: git pull origin main
+Resolve any conflicts.
+Merge the feature branch into the main branch: git checkout main and git merge my-feature-branch
+Push the changes to the remote repository: git push origin main
+Difference between ansible and ansible-playbook command.
+
+ansible is used to run a single task on specified hosts.
+ansible-playbook is used to run multiple tasks defined in a playbook.
+What is the maximum number of servers you have configured?
+
+I've configured up to 500 servers in a single environment using automation tools like Ansible and Terraform.
+Why Terraform?
+
+Terraform provides infrastructure as code, enabling version control and automation.
+It supports multiple providers (AWS, Azure, GCP, etc.).
+It allows for resource dependency management and state management.
+How do you handle secrets in Terraform?
+
+Use AWS Secrets Manager, HashiCorp Vault, or similar tools to store secrets.
+Refer to the secrets in Terraform using data sources or environment variables.
+I need to remove a specific resource from the state file; how this can be done?
+
+sh
+Copy code
+terraform state rm aws_instance.example
+Where did you store your state file, was there any other alternative available?
+
+Store the state file in an S3 bucket with DynamoDB for state locking.
+Alternatives include using Terraform Cloud or other remote backends.
+On a day-to-day basis what are the requests you handle in Terraform? Where were the resources getting provisioned?
+
+Requests include creating, updating, and destroying infrastructure resources.
+Resources are provisioned in AWS, including EC2 instances, S3 buckets, RDS databases, VPC configurations, etc.
+Apart from AWS, have you provisioned other cloud resources?
+
+Yes, I have provisioned resources in Azure and GCP using Terraform.
+Why Docker?
+
+Docker provides containerization, which ensures consistent environments from development to production.
+It allows for better resource utilization and isolation of applications.
+What is the major difference between conventional machines and containers?
+
+Conventional machines (VMs) include a full OS, taking more resources and time to boot.
+Containers share the host OS kernel, are lightweight, and start almost instantly.
+Explain all the projects you have handled.
+
+I have handled projects involving infrastructure automation, CI/CD pipeline implementation, cloud migration, container orchestration with Kubernetes, and microservices deployment.
+What is the role of Docker in your project?
+
+Docker is used for containerizing applications, ensuring consistent environments across development, testing, and production.
+It simplifies dependency management and deployment processes.
+Why Kubernetes? Any other alternatives?
+
+Kubernetes provides robust container orchestration, scaling, and management.
+Alternatives include Docker Swarm, Apache Mesos, and OpenShift.
+What activities you perform in Kubernetes in your daily routine?
+
+Managing and deploying applications.
+Monitoring and scaling applications.
+Handling updates and rollbacks.
+Configuring networking and storage.
+Role of Kubernetes in your project?
+
+Kubernetes is used for orchestrating microservices, ensuring high availability, and scaling applications based on demand.
+Explain the OSI model.
+
+The OSI model has seven layers: Physical, Data Link, Network, Transport, Session, Presentation, and Application.
+Different classes in networking.
+
+Class A: 0.0.0.0 to 127.255.255.255
+Class B: 128.0.0.0 to 191.255.255.255
+Class C: 192.0.0.0 to 223.255.255.255
+Different IP class.
+
+Class A: Large networks with many devices.
+Class B: Medium-sized networks.
+Class C: Small networks.
+Private IPs are in which IP classes.
+
+Class A: 10.0.0.0 to 10.255.255.255
+Class B: 172.16.0.0 to 172.31.255.255
+Class C: 192.168.0.0 to 192.168.255.255
+I have a CIDR range of /24. How many hosts can I get?
+
+A /24 CIDR range provides 256 IP addresses, of which 254 are usable for hosts (excluding network and broadcast addresses).
+Difference between TCP and UDP.
+
+TCP is connection-oriented, ensures delivery and order, and is reliable.
+UDP is connectionless, does not guarantee delivery or order, and is faster but less reliable.
+What other basic networking you are aware of?
+
+Subnetting, routing, firewalls, VPNs, DNS, DHCP, IP addressing, NAT, and load balancing.
+I have one public IP, I need to assign it to 6 applications. The subnetting and elastic IP is already done. What other alternative you can suggest.
+
+Use a reverse proxy (e.g., Nginx) or a load balancer to route traffic to different applications based on URLs or ports.
+What is gateway?
+
+A gateway is a network node that connects two different networks and routes traffic between them.
+What is NAT and use case of NAT.
+
+Network Address Translation (NAT) modifies IP address information in packet headers for traffic routing.
+Use case: Allow multiple devices on a private network to access the internet using a single public IP address.
+I have an application in other network, I need to connect it with my network. How this can be done.
+
+Establish a VPN or set up a direct connect link between the networks.
+Which distribution you have worked on and its version.
+
+I have worked on Ubuntu (20.04, 18.04), CentOS (7, 8), and Amazon Linux 2.
+How to create an AMI?
+
+Go to the EC2 console.
+Select the instance.
+Click on "Actions" > "Image" > "Create Image".
+Provide a name and description, and create the image.
+I need to access S3 from my EC2 server. What all configuration you will perform?
+
+Attach an IAM role to the EC2 instance with the necessary S3 permissions.
+Install and configure the AWS CLI on the EC2 instance.
+Different types of instances your team is using. Any specific reason?
+
+General-purpose (t2, t3): For balanced compute, memory, and networking.
+Compute-optimized (c5, c6): For CPU-intensive tasks.
+Memory-optimized (r5, r6): For memory-intensive applications.
+Number of years of experience in Docker, Terraform, shell scripting, Kubernetes, any cloud.
+
+Docker: 4 years
+Terraform: 3 years
+Shell scripting: 5 years
+Kubernetes: 3 years
+AWS: 5 years

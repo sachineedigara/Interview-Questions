@@ -1,0 +1,106 @@
+company-Neilson
+Write a shell script service
+Diff b/z git pull & clone
+Explain the process of PR[pull request]
+Diff b/w ADD & COPY 
+How will you create a secret 
+What is nodeselector in K8s
+what kind of error u get in K8s
+why we get oomkilled error in K8s . How you will resolve this
+What kinds of EC2 instances are there in AWS
+Explain s3 lifecycle & its policy
+Difference b/w security group & NACL
+Explain terraform workflow
+What is Deamonset why we use Deamonset?
+What is stateful set?
+
+Shell Script
+Here's an example of a simple shell script to check the status of a service:
+
+bash
+Copy code
+#!/bin/bash
+
+SERVICE_NAME="apache2"
+SERVICE_STATUS=$(systemctl is-active $SERVICE_NAME)
+
+if [ "$SERVICE_STATUS" == "active" ]; then
+    echo "$SERVICE_NAME is running."
+else
+    echo "$SERVICE_NAME is not running."
+    echo "Attempting to start $SERVICE_NAME..."
+    systemctl start $SERVICE_NAME
+
+    if [ $? -eq 0 ]; then
+        echo "$SERVICE_NAME has been started successfully."
+    else
+        echo "Failed to start $SERVICE_NAME."
+    fi
+fi
+Git: pull vs clone
+git pull: Fetches changes from the remote repository and merges them into your local branch. It's used to update your local repository with changes from the remote repository.
+git clone: Creates a copy of the remote repository on your local machine. It includes the entire history of the repository.
+Pull Request (PR) Process
+Create a Branch: Make a new branch from the main branch to work on a feature or fix.
+Make Changes: Commit your changes to the branch.
+Push Changes: Push the branch to the remote repository.
+Open a Pull Request: Go to the repository hosting service (like GitHub or GitLab) and open a pull request from your branch to the main branch.
+Review: Team members review the pull request, suggest changes, or approve it.
+Merge: Once approved, the pull request is merged into the main branch.
+Close: The pull request is closed after merging.
+Dockerfile: ADD vs COPY
+ADD: Copies files from your host machine to the Docker image and can also handle remote URLs and extraction of compressed files.
+COPY: Simply copies files from your host to the Docker image. It does not handle URLs or extraction.
+Creating a Secret in Kubernetes
+You can create a Kubernetes secret using kubectl or YAML. For example, to create a secret from literal values:
+
+bash
+Copy code
+kubectl create secret generic my-secret --from-literal=username=admin --from-literal=password=secret
+Kubernetes: nodeSelector
+nodeSelector: Allows you to constrain a Pod to only run on nodes with specific labels. It is used for scheduling Pods on nodes with particular characteristics.
+Example nodeSelector in a Pod spec:
+
+yaml
+Copy code
+spec:
+  nodeSelector:
+    disktype: ssd
+Kubernetes Errors
+Common Kubernetes errors include:
+
+CrashLoopBackOff: Indicates a Pod is repeatedly crashing.
+OOMKilled: Indicates the container was killed because it exceeded its memory limit.
+ImagePullBackOff: Indicates the container image could not be pulled.
+OOMKilled Error
+Out of Memory (OOM) Error occurs when a container exceeds its memory limit. To resolve it:
+
+Increase the memory limit of the container.
+Optimize the application to use less memory.
+Check for memory leaks in the application.
+AWS EC2 Instance Types
+General Purpose: e.g., t2, t3
+Compute Optimized: e.g., c5, c6g
+Memory Optimized: e.g., r5, x1
+Storage Optimized: e.g., i3, d2
+Accelerated Computing: e.g., p3, g4
+S3 Lifecycle Policies
+Lifecycle Rules: Automate transitions between storage classes (e.g., from S3 Standard to S3 Glacier) or deletions of objects.
+Example Policy: Transition objects to Glacier after 30 days.
+Security Group vs NACL
+Security Group: Acts as a virtual firewall for your instances. It operates at the instance level and is stateful.
+NACL (Network Access Control List): Acts as a firewall for controlling traffic in and out of one or more subnets. It is stateless.
+Terraform Workflow
+Write: Define resources using Terraform configuration files.
+Plan: Execute terraform plan to preview changes.
+Apply: Execute terraform apply to apply the changes.
+Destroy: Execute terraform destroy to remove resources.
+DaemonSet
+DaemonSet: Ensures that a specific Pod runs on all (or a subset of) nodes in a cluster. Useful for background tasks like logging or monitoring.
+StatefulSet
+StatefulSet: Manages stateful applications. Provides stable network identities and persistent storage for Pods. Used for applications like databases.
+
+
+
+
+

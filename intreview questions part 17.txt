@@ -1,0 +1,178 @@
+explain ci cd pipeline? what are the challenges faced in CI CI pipeline?
+explain ebs and efs?
+explain branching startegy?
+how hotfix branch works with example?
+why do you use state file ? how the state file configuration is done? why do you keep state file?
+Explain the state locking and why do you use?
+explain the componenets of kubernetes?
+write a terraform to create a ec2 instance and change the default ip to ellastic ip?
+explain the claster architecture
+when pod is running when a high traffic comes in anew pod is created how it is created explain?
+how do you optimize docker images for size
+when a user hit the url? the user is getting navigated to respective pod/container how that flow goes? 
+what is kubernetes load balancer
+what is init container and when you use that?
+How do you check crashloopback error
+
+
+CI/CD Pipeline
+CI/CD Pipeline: Continuous Integration (CI) and Continuous Deployment/Delivery (CD) pipelines automate the process of building, testing, and deploying code changes, ensuring that software can be released reliably at any time.
+
+Typical Stages in CI/CD Pipeline:
+
+Source Code Management: Integrating with version control systems like Git.
+Build: Compiling the code, creating build artifacts.
+Test: Running unit tests, integration tests, and other automated tests.
+Deploy: Deploying to various environments (dev, staging, prod).
+Monitor: Monitoring the application and infrastructure post-deployment.
+Challenges in CI/CD Pipeline:
+
+Complexity: Managing and automating the entire pipeline can be complex, especially with microservices.
+Environment Parity: Ensuring consistency across different environments (dev, staging, prod).
+Test Reliability: Maintaining reliable and fast tests to prevent false positives/negatives.
+Security: Integrating security checks and compliance in the pipeline.
+Rollback: Implementing effective rollback strategies in case of failures.
+Scalability: Ensuring the pipeline can scale with the team and project growth.
+EBS and EFS
+EBS (Elastic Block Store):
+
+Usage: Provides block-level storage volumes for use with EC2 instances.
+Features: Persistent storage, snapshots, various volume types (SSD, HDD), encryption.
+Performance: Designed for applications requiring single-instance storage with high throughput and low latency.
+EFS (Elastic File System):
+
+Usage: Provides scalable file storage for use with AWS services and on-premises resources.
+Features: Fully managed, scalable, POSIX-compliant file system, accessible from multiple EC2 instances.
+Performance: Suitable for workloads that require shared file access and throughput.
+Branching Strategy
+Branching Strategy:
+
+Main Branch: The primary branch where the production-ready code resides.
+Feature Branch: Created for new features, isolated from the main branch until complete.
+Develop Branch: Integrates changes from feature branches before merging into the main branch.
+Release Branch: Used to prepare for a new production release.
+Hotfix Branch: Created for urgent fixes that need to be applied to production quickly.
+Hotfix Branch Example:
+
+Create Hotfix Branch: From the main branch for a critical bug fix.
+sh
+Copy code
+git checkout -b hotfix/issue-123 main
+Fix the Issue: Apply and commit the fix.
+sh
+Copy code
+git commit -m "Fix critical issue #123"
+Merge to Main: Merge the hotfix branch back to the main branch.
+sh
+Copy code
+git checkout main
+git merge hotfix/issue-123
+Deploy: Deploy the updated main branch to production.
+Merge to Develop: Ensure the hotfix is also merged into the develop branch.
+sh
+Copy code
+git checkout develop
+git merge hotfix/issue-123
+Terraform State File
+State File:
+
+Usage: Tracks the state of infrastructure managed by Terraform.
+Configuration:
+hcl
+Copy code
+terraform {
+  backend "s3" {
+    bucket = "my-terraform-state"
+    key    = "path/to/my/key"
+    region = "us-west-2"
+  }
+}
+Purpose: Maintains the mapping of real-world resources to Terraform configuration, enabling consistent management and updates.
+State Locking:
+
+Purpose: Prevents concurrent operations from modifying the state file.
+Implementation: Typically achieved using a locking mechanism like DynamoDB when using remote state storage.
+Kubernetes Components
+Kubernetes Components:
+
+Master Node Components:
+API Server: Front-end for the Kubernetes control plane.
+etcd: Key-value store for cluster data.
+Scheduler: Assigns nodes to newly created pods.
+Controller Manager: Manages controllers that handle routine tasks.
+Worker Node Components:
+Kubelet: Ensures containers are running.
+Kube-Proxy: Handles networking for the pods.
+Container Runtime: Software that runs the containers (e.g., Docker, containerd).
+Terraform to Create an EC2 Instance and Assign Elastic IP
+hcl
+Copy code
+provider "aws" {
+  region = "us-west-2"
+}
+
+resource "aws_instance" "example" {
+  ami           = "ami-0c55b159cbfafe1f0"
+  instance_type = "t2.micro"
+}
+
+resource "aws_eip" "example_eip" {
+  instance = aws_instance.example.id
+}
+Kubernetes Cluster Architecture
+Cluster Architecture:
+
+Control Plane: Manages the overall state of the cluster (API server, etcd, scheduler, controller manager).
+Worker Nodes: Run the applications (kubelet, kube-proxy, container runtime).
+Networking: Uses CNI plugins for pod networking, service networking, and ingress controllers.
+High Traffic Pod Scaling
+Pod Auto-Scaling:
+
+Horizontal Pod Autoscaler (HPA): Automatically scales the number of pods based on CPU utilization or other select metrics.
+Metrics Server: Collects resource metrics from nodes.
+HPA Configuration:
+yaml
+Copy code
+apiVersion: autoscaling/v1
+kind: HorizontalPodAutoscaler
+metadata:
+  name: my-app
+spec:
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: my-app
+  minReplicas: 1
+  maxReplicas: 10
+  targetCPUUtilizationPercentage: 50
+Optimizing Docker Images for Size
+Optimizing Docker Images:
+
+Multi-Stage Builds: Separate build and runtime stages to reduce the final image size.
+Minimal Base Images: Use smaller base images like alpine.
+Remove Unnecessary Files: Delete temporary files and caches during the build process.
+User URL Navigation to Pod/Container
+Flow:
+
+User Hits URL: User request is sent to a DNS service (e.g., Route 53).
+Ingress Controller: Directs the request to the appropriate service within the cluster.
+Service: Load balancer distributes the request to one of the pods.
+Pod/Container: Processes the request and sends the response back to the user.
+Kubernetes Load Balancer
+Kubernetes Load Balancer:
+
+Type: LoadBalancer service type automatically provisions an external load balancer.
+Function: Distributes incoming traffic to the pods in a service.
+Init Container
+Init Container:
+
+Purpose: Runs before the main application container starts.
+Use Case: Used for tasks like setting up environment variables, configuration, or dependencies that need to be completed before the application starts.
+Checking CrashLoopBackOff Error
+Troubleshooting CrashLoopBackOff:
+
+Check Pod Status: kubectl get pods
+Describe Pod: kubectl describe pod <pod-name>
+Logs: kubectl logs <pod-name>
+Events: kubectl get events
+Configuration: Verify YAML/Helm chart configurations for issues.

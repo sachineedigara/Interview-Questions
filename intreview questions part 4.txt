@@ -1,0 +1,174 @@
+Altimetrik Interview questions(round 1)
+
+Terraform Questions
+
+1. What commands have you used in Terraform?
+
+terraform init: Initializes the working directory with configuration files.
+terraform plan: Creates an execution plan, showing what actions Terraform will take.
+terraform apply: Applies the changes required to reach the desired state of the configuration.
+terraform destroy: Destroys the infrastructure managed by Terraform.
+terraform validate: Validates the configuration files.
+terraform refresh: Updates the state file with real-world infrastructure changes.
+terraform taint: Manually marks a resource for recreation.
+terraform import: Imports existing infrastructure into Terraform state.
+terraform state: Manipulates Terraform state files.
+terraform fmt: Formats the configuration files.
+
+2. How to rectify tainted resources?
+
+To rectify tainted resources, you can run terraform taint <resource> to mark a resource as tainted, and then run terraform apply to recreate it. Alternatively, you can use terraform untaint <resource> to mark the resource as healthy again if you don't want to recreate it.
+
+3. What are dependency logs in Terraform?
+
+Dependency logs in Terraform refer to the logs that record the order and relationship of resource creation. Terraform determines the dependency graph and executes resources accordingly.
+
+4. What is a data source and how is it useful?
+
+A data source allows you to fetch or compute information used by your configuration. Data sources enable you to use existing infrastructure resources defined outside Terraform or dynamically fetch information, like AMIs or subnet IDs, without creating new resources.
+
+5. Suppose I have created a resource through Terraform and did some manual changes. Next time when I run apply the resource should not be updated. What will you do?
+
+To ensure the resource is not updated, you can add the lifecycle block with the ignore_changes argument.
+hcl
+Copy code
+resource "aws_instance" "example" {
+  ami           = "ami-123456"
+  instance_type = "t2.micro"
+  lifecycle {
+    ignore_changes = [ami, instance_type]
+  }
+}
+
+
+6. What is a root module and child module in Terraform?
+
+The root module is the directory where Terraform is executed. Child modules are any modules called by the root module or other child modules. Child modules enable the reuse of code and abstraction of complex configurations.
+
+
+AWS Questions
+
+1. Suppose I have an instance and I am trying to connect to it but I am getting an error. What might be the reason?
+
+Possible reasons include:
+Security group rules not allowing SSH/RDP access.
+Incorrect key pair.
+Instance not running.
+Network ACLs blocking traffic.
+VPC route table misconfiguration.
+Instance not having a public IP address.
+
+
+2. I am getting error device name invalid when I am trying to connect to EC2. What might be the reason?
+
+This could be due to:
+Incorrect device name used in the configuration.
+EBS volume not attached properly.
+Volume mount issues in the instance OS.
+
+
+3. Have you used AWS RDS? Then what is the difference between read replicas and multi-AZ?
+
+Read Replicas: Used for read scaling and offloading read traffic. They provide asynchronous replication and can be in the same or different region.
+Multi-AZ: Provides high availability and failover support. It synchronously replicates data to a standby instance in another AZ within the same region.
+
+
+4. In Multi-AZ, do the user requests go to both primary and replicas?
+
+No, user requests only go to the primary instance. The standby instance is only used for failover in case of a primary instance failure.
+
+
+5. Explain S3 lifecycle management.
+
+S3 lifecycle management allows you to define rules to automatically transition objects to different storage classes (e.g., from Standard to Glacier) and/or delete objects after a certain period.
+
+
+6. What is a CNAME record in Route 53?
+
+A CNAME (Canonical Name) record maps an alias name to the true or canonical domain name.
+
+7. How do you bind an SSL certificate in ALB?
+
+You can bind an SSL certificate to an ALB by creating a listener on port 443 and selecting the SSL certificate from ACM (AWS Certificate Manager) or uploading a custom certificate.
+
+
+8. What is Access Key Rotation?
+
+Access Key Rotation involves periodically changing the AWS access keys for security reasons and updating applications and services to use the new keys.
+
+
+9. Suppose I create resources in account A and I want to provide access to resources in account B. How do you do that?
+
+Use IAM roles and cross-account access policies to grant permissions to resources in account B.
+
+
+10. What are log groups in CloudWatch?
+
+Log groups in CloudWatch are a collection of log streams that share the same retention, monitoring, and access control settings.
+
+
+11. Suppose some user has corrupted an EC2 instance. How will you find out?
+
+Check CloudTrail logs, CloudWatch logs, and instance logs to trace user actions and identify suspicious activities.
+
+
+Docker Questions
+
+1. How do you build a Docker image from a Dockerfile?
+
+Use the docker build command.
+sh
+Copy code
+docker build -t my-image:latest .
+
+
+2. How do you build a Docker image from a container?
+
+Use docker commit to create a new image from a container's changes.
+sh
+Copy code
+docker commit <container_id> my-new-image
+
+3. Difference between docker load and import?
+
+docker load loads an image from a tar archive into Docker.
+docker import imports the contents of a tarball to create a filesystem image.
+
+Kubernetes Questions
+
+1. What are probes and how many have you used?
+
+Probes are mechanisms to check the health of a container. There are three types:
+Liveness Probe: Checks if the container is running.
+Readiness Probe: Checks if the container is ready to serve traffic.
+Startup Probe: Checks if the application within the container has started.
+
+
+2. Suppose I have updated my ConfigMap manifest file and without restarting or stopping the pod I want the changes to be accessed by Pod. How do you do that?
+
+Use the kubectl rollout restart command to restart the pods with the new ConfigMap without downtime.
+
+
+3. What is a DaemonSet and its use case?
+
+A DaemonSet ensures that a copy of a pod runs on all (or some) nodes in the cluster. Use cases include running logs collection daemons, monitoring agents, or other node-specific services.
+
+
+Linux Questions
+
+1. How do you check whether a remote server port is open?
+
+Use the telnet or nc (netcat) command.
+sh
+Copy code
+telnet <hostname> <port>
+nc -zv <hostname> <port>
+
+2. I want to change the IP address of the Linux server. How to do that?
+
+Edit the network configuration file, e.g., /etc/network/interfaces for Debian/Ubuntu or /etc/sysconfig/network-scripts/ifcfg-<interface> for RHEL/CentOS, and then restart the network service.
+
+
+3. I want to change the domain name or add a domain name in the server. In which file do you add?
+
+Edit the /etc/hosts file or update DNS settings in the /etc/resolv.conf file.

@@ -1,0 +1,186 @@
+company-Sacumen
+
+1. aws services you have worked
+2. write script to turn of aws ec2 instances at 5pm and turn on in morning 8am everyday
+3. write script to delete all empty files under a directory 
+4. what do you mean by terragrunt in terraform
+5. what is dry in terraform
+6. different types for remote backend u have used
+7. how can you setup jenkins job process
+8. explain about shared library in jenkins
+9. explain about static and dynamic inventory 
+10. how will you deploy file to minion of other minion
+11. write python script "hello world" how many times each charaters are there in string without builtin functions 
+12. differnce b/w softlink and hardlink
+13. how to figure out which crone job chokes up your system in linux and describe process to fix it (how do you identify which crone job is responsible for which process)
+14. explain how you handle exception in jenkin pipeline
+15. difference alb and elb
+16. use of WAF and rate limiting
+17. which senario you choose ingress, egress vs alb and why
+18. how ingress different from gateway
+19. what is auto scaling and policies of it
+
+
+
+Sacumen: Detailed Responses
+1. AWS Services Worked On
+EC2: For computing resources, virtual servers.
+S3: Object storage service.
+RDS: Managed relational database service.
+VPC: Virtual Private Cloud for network isolation.
+CloudFormation: Infrastructure as code service.
+IAM: Identity and Access Management for security.
+CloudWatch: Monitoring and logging service.
+EBS: Block storage for EC2 instances.
+Lambda: Serverless computing service.
+Route 53: DNS and domain name management service.
+2. Script to Turn Off EC2 Instances at 5 PM and Turn On at 8 AM
+python
+Copy code
+import boto3
+from datetime import datetime
+import time
+
+def turn_off_instances():
+    ec2 = boto3.client('ec2', region_name='your-region')
+    response = ec2.describe_instances(
+        Filters=[
+            {
+                'Name': 'tag:AutoStartStop',
+                'Values': ['true']
+            }
+        ]
+    )
+
+    instances = [instance['InstanceId'] for reservation in response['Reservations'] for instance in reservation['Instances']]
+    if instances:
+        ec2.stop_instances(InstanceIds=instances)
+        print(f'Stopped instances: {instances}')
+    else:
+        print('No instances to stop.')
+
+def turn_on_instances():
+    ec2 = boto3.client('ec2', region_name='your-region')
+    response = ec2.describe_instances(
+        Filters=[
+            {
+                'Name': 'tag:AutoStartStop',
+                'Values': ['true']
+            }
+        ]
+    )
+
+    instances = [instance['InstanceId'] for reservation in response['Reservations'] for instance in reservation['Instances']]
+    if instances:
+        ec2.start_instances(InstanceIds=instances)
+        print(f'Started instances: {instances}')
+    else:
+        print('No instances to start.')
+
+while True:
+    now = datetime.now().time()
+    if now.strftime('%H:%M') == '17:00':
+        turn_off_instances()
+    elif now.strftime('%H:%M') == '08:00':
+        turn_on_instances()
+    time.sleep(60)
+3. Script to Delete All Empty Files Under a Directory
+bash
+Copy code
+#!/bin/bash
+find /path/to/directory -type f -empty -delete
+4. Terragrunt in Terraform
+Terragrunt is a thin wrapper for Terraform that provides extra tools for keeping your configurations DRY, managing remote state, and working with modules.
+
+5. DRY in Terraform
+DRY (Don't Repeat Yourself) in Terraform refers to the practice of reducing repetition in your Terraform configurations by using modules and variables.
+
+6. Types of Remote Backend
+S3: Store state files in an S3 bucket.
+Consul: Store state files in a Consul key-value store.
+Terraform Cloud/Enterprise: Store state files in Terraform's own backend.
+Azure Blob Storage: Store state files in Azure Blob Storage.
+Google Cloud Storage: Store state files in Google Cloud Storage.
+7. Setting Up Jenkins Job Process
+Install Jenkins: Deploy Jenkins on a server.
+Configure Plugins: Install necessary plugins like Git, Maven, Docker, etc.
+Create Jobs: Create freestyle or pipeline jobs.
+Source Code Management: Configure SCM (e.g., Git).
+Build Triggers: Set up triggers like SCM polling or webhooks.
+Build Steps: Define build steps like shell scripts, Maven goals, etc.
+Post-Build Actions: Define actions like email notifications or deploying artifacts.
+8. Shared Library in Jenkins
+Shared Libraries in Jenkins allow you to define common functions and workflows in a central repository and use them across multiple Jenkins pipelines, promoting code reuse and consistency.
+
+9. Static vs Dynamic Inventory
+Static Inventory: List of hosts defined in a file, usually in INI or YAML format.
+Dynamic Inventory: Script or plugin that generates the list of hosts from a source like AWS, GCP, or an API.
+10. Deploy File to Minion from Another Minion
+You can use SaltStack's salt-cp command:
+
+bash
+Copy code
+salt-cp 'target-minion' /path/to/local/file /path/to/remote/file
+11. Python Script to Count Characters in String Without Built-in Functions
+python
+Copy code
+def char_count(s):
+    count_dict = {}
+    for char in s:
+        if char in count_dict:
+            count_dict[char] += 1
+        else:
+            count_dict[char] = 1
+    return count_dict
+
+string = "hello world"
+count = char_count(string)
+print(count)
+12. Softlink vs Hardlink
+Softlink (Symlink): A pointer to a file or directory. Can span different filesystems.
+Hardlink: A direct reference to the data on the disk. Cannot span different filesystems.
+13. Identifying Cron Job Issues
+Check Logs: Look at /var/log/syslog or /var/log/cron for cron job logs.
+Crontab Listing: List all cron jobs with crontab -l for each user.
+Process Monitoring: Use ps or top to see which processes are running and correlate them with cron jobs.
+14. Handling Exceptions in Jenkins Pipeline
+Use try-catch blocks in Jenkins Pipeline scripts:
+
+groovy
+Copy code
+pipeline {
+    agent any
+    stages {
+        stage('Example') {
+            steps {
+                script {
+                    try {
+                        // Your build steps
+                    } catch (Exception e) {
+                        // Handle the exception
+                        echo "Build failed: ${e.message}"
+                    }
+                }
+            }
+        }
+    }
+}
+15. Difference Between ALB and ELB
+ALB (Application Load Balancer): Layer 7 load balancing, supports path-based and host-based routing.
+ELB (Classic Load Balancer): Layer 4 load balancing, basic load balancing features.
+16. Use of WAF and Rate Limiting
+WAF (Web Application Firewall): Protects web applications from common exploits and vulnerabilities.
+Rate Limiting: Controls the rate of incoming requests to prevent abuse and DDoS attacks.
+17. Ingress vs Egress vs ALB
+Ingress: Manages inbound traffic to Kubernetes services.
+Egress: Manages outbound traffic from Kubernetes pods.
+ALB: Distributes inbound traffic across multiple EC2 instances.
+18. Ingress vs Gateway
+Ingress: Kubernetes-specific resource for managing inbound traffic.
+Gateway: General term for a network device that routes traffic between different networks.
+19. Auto Scaling and Policies
+Auto Scaling: Automatically adjusts the number of EC2 instances based on demand.
+Policies:
+Target Tracking: Adjusts capacity based on a target metric (e.g., CPU utilization).
+Step Scaling: Adjusts capacity based on a set of scaling adjustments.
+Scheduled Scaling: Adjusts capacity based on a schedule.

@@ -1,0 +1,270 @@
+Company: DanskeIT
+
+Role and Responsibilities in Current Project
+
+1. Let me know role and responsibilities in your current project and tech stack used in your current project.
+
+Role: DevOps Engineer
+
+Responsibilities:
+
+Designing, implementing, and managing CI/CD pipelines using Jenkins.
+Provisioning and managing infrastructure using Terraform and Ansible.
+Containerizing applications with Docker and orchestrating them with Kubernetes.
+Monitoring and logging using tools like Prometheus, Grafana, and ELK stack.
+Ensuring high availability and scalability of applications on AWS.
+Collaborating with development and operations teams to automate workflows.
+Implementing security best practices in the DevOps lifecycle.
+Tech Stack:
+
+CI/CD: Jenkins, Git, GitHub
+Infrastructure as Code: Terraform, Ansible
+Containerization: Docker, Kubernetes
+Cloud Provider: AWS (EC2, S3, VPC, RDS, ALB, EKS)
+Monitoring and Logging: Prometheus, Grafana, ELK stack
+Version Control: Git
+Scripting: Bash, Python
+Configuration Management: Ansible
+Terraform vs. Ansible
+
+
+2. What is the advantage Terraform offers over Ansible?
+
+Advantage Terraform offers over Ansible:
+
+Declarative Language: Terraform uses a declarative language (HCL) which allows you to define the desired state of your infrastructure.
+State Management: Terraform keeps track of the infrastructure state, allowing you to manage changes and understand the current state of resources.
+Plan Command: Terraform’s plan command helps to preview changes before applying them, reducing the risk of unexpected changes.
+Resource Graph: Terraform builds a dependency graph of resources to ensure proper creation and destruction order.
+
+
+3. Can I use Ansible for provisioning?
+
+Yes, Ansible can be used for provisioning infrastructure. It is more commonly used for configuration management, but it can also handle provisioning tasks.
+
+Cloud Service Models
+
+
+4. Difference between IaaS, PaaS, and SaaS.
+
+Difference between IaaS, PaaS, and SaaS:
+
+IaaS (Infrastructure as a Service): Provides virtualized computing resources over the internet. Examples: AWS EC2, Azure VMs.
+PaaS (Platform as a Service): Provides a platform allowing customers to develop, run, and manage applications without dealing with the underlying infrastructure. Examples: AWS Elastic Beanstalk, Google App Engine.
+SaaS (Software as a Service): Delivers software applications over the internet on a subscription basis. Examples: Google Workspace, Salesforce.
+
+
+5. I have data sitting on-prem and an application in AWS. Is it SaaS, PaaS, or IaaS?
+
+If you have data sitting on-premises and an application in AWS, it is considered a hybrid cloud model. The application in AWS can be either IaaS or PaaS, depending on how it is deployed and managed.
+
+Docker vs. Kubernetes
+
+
+6. What is the difference between Docker and Kubernetes?
+
+Difference between Docker and Kubernetes:
+
+Docker: A platform for developing, shipping, and running applications inside containers.
+Kubernetes: An orchestration platform for managing containerized applications at scale, including deployment, scaling, and operations.
+
+
+7. Can we deploy applications in Docker?
+
+Yes, you can deploy applications in Docker containers.
+
+8. Does Docker have the concept of POD?
+
+No, Docker does not have the concept of Pods. Pods are a Kubernetes concept that groups one or more containers that share the same network namespace and storage.
+
+Image Scenarios
+
+9. I have a scenario where I want to create another image (Image2) that uses all the resources of Image1 with additional resources.
+
+Image2 using all resources of Image1:
+
+Dockerfile
+Copy code
+FROM image1
+# Add additional resources for Image2
+COPY new-resources /app
+
+
+10. I want to create another image (Image2) that uses partially resources of Image1.
+
+Image2 using part of Image1 resources:
+
+Dockerfile
+Copy code
+FROM image1 AS base
+# Use part of image1 resources
+COPY --from=base /app /app
+# Add new resources
+COPY additional-resources /app
+Code Coverage
+
+
+11. I need to check the code coverage. What will you do?
+
+Use tools like SonarQube to analyze code quality and coverage.
+Integrate SonarQube with your CI/CD pipeline to automatically check code coverage during builds.
+
+
+12. Do you deploy SonarQube on any of the containers?
+
+Yes, you can deploy SonarQube using Docker or Kubernetes. Example Docker Compose file:
+
+yaml
+Copy code
+version: '3'
+services:
+  sonarqube:
+    image: sonarqube
+    ports:
+      - "9000:9000"
+  sonar-scanner:
+    image: sonarsource/sonar-scanner-cli
+Docker Communication
+
+
+13. How to make all the containers talk to each other in Docker?
+
+Use Docker networks to allow containers to communicate.
+Example Docker Compose file with network:
+yaml
+Copy code
+version: '3'
+services:
+  app:
+    image: myapp
+    networks:
+      - mynetwork
+  db:
+    image: mydb
+    networks:
+      - mynetwork
+
+networks:
+  mynetwork:
+
+
+14. Replicate the same scenario in Kubernetes.
+
+Use Kubernetes Services to expose pods internally.
+Define a Kubernetes Service to allow inter-pod communication.
+Communication Between Frontend and API
+
+
+15. How does communication happen between frontend and API?
+
+The frontend communicates with the API via HTTP requests.
+Use environment variables or configuration files to define API endpoints in the frontend application.
+Dockerfile Variables
+
+
+16. In Docker, what variables can you use in a Dockerfile?
+
+ARG: Define build-time variables.
+ENV: Define environment variables.
+
+
+17. What is the purpose of args in Docker?
+
+ARG: Allows you to pass build-time variables into the Dockerfile.
+18. What is the difference between COPY and ADD commands?
+
+COPY: Simple copy of files and directories.
+ADD: Supports additional features like extracting tar files and downloading from URLs.
+
+
+19. Is there any other advantage with COPY and ADD?
+
+COPY: Generally preferred for simple copying tasks.
+ADD: Useful for more complex tasks like handling tar files or remote URLs.
+
+
+20. Will COPY work with remote locations?
+
+No, COPY does not support remote locations. For remote file downloads, use ADD.
+
+Terraform
+
+
+21. What is the template in Terraform?
+
+Templates allow you to reuse configurations and dynamically generate configurations based on variables.
+
+22. What happens when you apply Terraform Plan?
+
+terraform plan generates an execution plan showing what actions Terraform will perform to achieve the desired state.
+terraform apply applies the changes required to reach the desired state.
+
+
+23. What is the use of backup tfstate?
+
+The state file tracks the current state of infrastructure managed by Terraform.
+Backup ensures you can restore the state if needed.
+
+
+24. What is the importance of Null Resource and why do we need it?
+
+null_resource allows you to run arbitrary commands or scripts within Terraform, useful for non-resource-related actions.
+AWS
+
+
+25. There is a service called IAM in AWS. What is the difference between IAM and KMS?
+
+IAM (Identity and Access Management): Manages user access and permissions.
+KMS (Key Management Service): Manages encryption keys for securing data.
+
+
+26. What is the use of CDN?
+
+Content Delivery Network (CDN) like CloudFront distributes content to end-users with high availability and performance.
+
+
+27. Have you used any Database service in your experience?
+
+Examples include RDS (Relational Database Service) and DynamoDB (NoSQL).
+
+
+28. What if you want to use NoSQL in AWS?
+
+Use DynamoDB for NoSQL database needs.
+
+
+29. I already have an infrastructure with 10 jobs running. All of a sudden they stop working with out-of-memory issues. What will be the reason and how do you debug?
+
+Check resource usage with CloudWatch.
+Review logs for errors and memory usage patterns.
+Optimize application memory usage or scale resources.
+CI/CD and Jenkins
+
+
+30. I am new to CI/CD pipeline, how do you guide me to create one?
+
+Start by defining stages: build, test, deploy.
+Use Jenkins or another CI/CD tool to automate these stages.
+Integrate with version control and configuration management tools.
+Continuously monitor and improve the pipeline.
+
+
+31. What Jenkins plugins will you use for CI/CD? Is there any plugin required to use the pipeline?
+
+Pipeline
+Git
+Docker
+Kubernetes
+SonarQube
+Blue Ocean
+
+
+32. What is CloudWatch and what all have you worked on? What is CloudWatch Insight?
+
+CloudWatch: AWS service for monitoring and logging.
+CloudWatch Insights: Provides interactive querying and analysis of logs.
+
+
+33. Where have you used CloudWatch in your project? 
+
+If you want to monitor and set CPU usage of 100 servers to 80% and restrict user login to max 20 users, how would you set up CloudWatch for

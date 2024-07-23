@@ -1,0 +1,315 @@
+Company: Xebia
+
+
+1. Can you tell me about rolling updates in deployment?
+
+Answer:
+Rolling updates allow you to update the deployment of an application incrementally with zero downtime. In Kubernetes, this means updating a few pods at a time, ensuring that some instances of the application are always available. This is typically done using the kubectl rollout command.
+
+2. How to monitor the health of a pod?
+Answer:
+Health of a pod can be monitored using liveness and readiness probes:
+
+Liveness Probes: Check if the pod is running.
+Readiness Probes: Check if the pod is ready to serve traffic.
+Example:
+
+yaml
+Copy code
+livenessProbe:
+  httpGet:
+    path: /healthz
+    port: 8080
+  initialDelaySeconds: 3
+  periodSeconds: 3
+
+readinessProbe:
+  httpGet:
+    path: /ready
+    port: 8080
+  initialDelaySeconds: 3
+  periodSeconds: 3
+
+
+3. How do we connect a deployment pod with a service?
+Answer:
+You can connect a deployment pod with a service by creating a Kubernetes Service that matches the labels of the pods in the deployment.
+
+Example:
+
+yaml
+Copy code
+apiVersion: v1
+kind: Service
+metadata:
+  name: my-service
+spec:
+  selector:
+    app: my-app
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 8080
+
+
+4. How to set up an Application Load Balancer as ingress for the EKS cluster?
+Answer:
+You can use the AWS Load Balancer Controller to set up an ALB as ingress for an EKS cluster. This involves installing the controller and creating an Ingress resource.
+
+5. How are you making the deployment using kubectl or any Helm charts?
+Answer:
+Deployments can be done using kubectl apply -f <manifest.yaml> for Kubernetes manifests or helm install <release-name> <chart-name> for Helm charts.
+
+6. In Helm charts, how to variablize?
+Answer:
+In Helm charts, you can use the values.yaml file to define variables, and reference them in templates using {{ .Values.variableName }}.
+
+Example:
+
+yaml
+Copy code
+# values.yaml
+replicaCount: 3
+
+# deployment.yaml
+replicas: {{ .Values.replicaCount }}
+
+
+7. Is it possible to write a Jenkins pipeline?
+Answer:
+Yes, it is possible to write a Jenkins pipeline using a Jenkinsfile.
+
+Example:
+
+groovy
+Copy code
+pipeline {
+    agent any
+    stages {
+        stage('Build') {
+            steps {
+                sh 'make build'
+            }
+        }
+        stage('Test') {
+            steps {
+                sh 'make test'
+            }
+        }
+        stage('Deploy') {
+            steps {
+                sh 'make deploy'
+            }
+        }
+    }
+}
+
+
+8. Is it possible to keep conditions in stage?
+Answer:
+Yes, you can use when directives in Jenkins pipeline stages to define conditions.
+
+Example:
+
+groovy
+Copy code
+stage('Deploy') {
+    when {
+        branch 'main'
+    }
+    steps {
+        sh 'make deploy'
+    }
+}
+
+
+9. How to pass parameters from Jenkins pipeline like string parameter?
+Answer:
+You can define parameters in a Jenkins pipeline using the parameters block.
+
+Example:
+
+groovy
+Copy code
+pipeline {
+    parameters {
+        string(name: 'ENV', defaultValue: 'dev', description: 'Environment')
+    }
+    stages {
+        stage('Deploy') {
+            steps {
+                echo "Deploying to ${params.ENV}"
+            }
+        }
+    }
+}
+
+
+10. How to get this value as a user-defined variable?
+Answer:
+You can access the parameter value using params.PARAM_NAME.
+
+11. How to render the value from other resources in Terraform?
+Answer:
+You can reference values from other resources using interpolation syntax.
+
+Example:
+
+hcl
+Copy code
+resource "aws_instance" "example" {
+  ami           = "ami-0c55b159cbfafe1f0"
+  instance_type = "t2.micro"
+  subnet_id     = aws_subnet.example.id
+}
+
+
+12. How to get the subnet id and vpc id in another resource block?
+Answer:
+You can use interpolation to get these values.
+
+Example:
+
+hcl
+Copy code
+resource "aws_instance" "example" {
+  ami           = "ami-0c55b159cbfafe1f0"
+  instance_type = "t2.micro"
+  subnet_id     = aws_subnet.example.id
+  vpc_security_group_ids = [aws_vpc.example.id]
+}
+
+
+13. If VPC is in another module, how to access it in the configuration block?
+Answer:
+You can output the VPC ID from the module and then use that output in the configuration block.
+
+Example:
+
+hcl
+Copy code
+module "vpc" {
+  source = "./vpc"
+}
+
+resource "aws_instance" "example" {
+  ami           = "ami-0c55b159cbfafe1f0"
+  instance_type = "t2.micro"
+  subnet_id     = module.vpc.subnet_id
+}
+
+
+14. Why do we use the state file?
+Answer:
+The state file keeps track of the current state of your infrastructure, enabling Terraform to manage resources and make changes effectively.
+
+15. You have EC2, VPC in your configuration. You do Terraform plan and apply. Then by mistake delete the state file. What will happen?
+Answer:
+If the state file is deleted, Terraform loses track of the resources it manages, and running terraform plan or terraform apply might recreate or alter existing resources incorrectly.
+
+16. How to do a refresh on the state file?
+Answer:
+You can refresh the state file by running terraform refresh.
+
+17. What is a tainted resource?
+Answer:
+A tainted resource is marked for destruction and recreation on the next terraform apply.
+
+18. On AWS, do you manage the infrastructure or only deployments?
+Answer:
+I manage both infrastructure and deployments.
+
+19. Do you manage the infrastructure using Terraform in your current project?
+Answer:
+Yes, I manage infrastructure using Terraform.
+
+20. If we have a private subnet, is it possible to make a public subnet?
+Answer:
+Yes, by associating a route table with an internet gateway to the subnet.
+
+21. How to organize an EC2 instance to run behind an Application Load Balancer?
+Answer:
+
+Create an ALB.
+Register the EC2 instance with the ALB target group.
+Create a listener rule for the ALB to forward traffic to the target group.
+
+
+22. How to allow traffic for only HTTPS?
+Answer:
+
+Set up a security group to allow inbound traffic on port 443.
+Configure the ALB listener to listen on port 443 and forward traffic to the target group.
+
+
+23. How to make a domain with an ELB?
+Answer:
+
+Create an ALB.
+Register the domain with Route 53.
+Create a Route 53 record set pointing to the ALB DNS name.
+
+
+24. Do you manage RDS? Which engine do you use?
+Answer:
+Yes, I manage RDS. I have used MySQL, PostgreSQL, and Aurora.
+
+25. In RDS, what is read replicas?
+Answer:
+Read replicas are used to offload read traffic and improve scalability.
+
+26. What are Parameter groups in RDS? Default parameters?
+Answer:
+Parameter groups are a collection of configuration settings for RDS instances. Default parameters are the pre-configured settings provided by AWS.
+
+27. If you want to enable cron schemas and expressions inside the RDS, how will you do?
+Answer:
+You can enable and configure event scheduler parameters using a custom parameter group.
+
+28. How to build a docker image from a Dockerfile?
+Answer:
+Use the docker build command.
+
+sh
+Copy code
+docker build -t my-image:latest .
+
+
+29. How to move all the HTML, CSS, and images to a docker image?
+Answer:
+Copy the files in the Dockerfile.
+
+Dockerfile
+Copy code
+FROM nginx:alpine
+COPY ./html /usr/share/nginx/html
+30. Write a small Dockerfile.
+Answer:
+
+Dockerfile
+Copy code
+FROM node:14-alpine
+WORKDIR /app
+COPY package*.json ./
+RUN npm install
+COPY . .
+EXPOSE 3000
+CMD ["npm", "start"]
+
+
+31. How to execute a command in a Dockerfile?
+Answer:
+Use the RUN instruction.
+
+Dockerfile
+Copy code
+RUN echo "Hello, World!"
+
+
+32. How to expose a port on the container?
+Answer:
+Use the EXPOSE instruction.
+
+Dockerfile
+Copy code
+EXPOSE 80

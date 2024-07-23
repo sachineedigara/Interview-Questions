@@ -1,0 +1,157 @@
+Company : LTIMindtree
+
+1. Introduce yourself.
+2. Explain about your project and day to day responsibilities.
+3. Which CICD tool have you used ?
+4. How to find the number of lines containing a specific keyword.
+5. How do you verify your file is present or not.
+6. How can i display last but 1 line
+7. Explain the stages involved in your CICD
+8. How will you deploy apk in different environments.
+9. I want to print the last column in kubectl output, how can i do it.
+10. How do you upgrade your applications.
+11. explain k8 architecture.
+12. Difference between deployment and statefull set.
+13. what are the services available in k8.
+14. explain about ingress.
+15. how to ensure apk is highly available and reliable for the consumers.
+16. Do you do monitoring implementation and Which monitoring tool you were using.
+17. what is NAT gateway? Is it so much significant during provisioning time ?
+18. I want to containerize mysql apk and how can i do that ?
+19. What are the dockerfile instructions you will use ?
+20. what are steps involved in k8 cluster ?
+21. is there a autopilot cluster in aws ?
+22. Notice Period
+
+
+Introduce Yourself
+
+[Your introduction here]: Provide a brief overview of your professional background, highlighting your expertise in DevOps, cloud technologies, and any notable achievements or projects.
+Explain About Your Project and Day-to-Day Responsibilities
+
+Project: Describe the primary project you’re working on. Include details about its scope, objectives, and technologies involved.
+Responsibilities: Outline your daily tasks, which may include managing CI/CD pipelines, deploying applications, monitoring infrastructure, and resolving issues.
+Which CI/CD Tool Have You Used?
+
+[Your CI/CD tool here]: Mention the tools you’ve used, such as Jenkins, GitLab CI, CircleCI, or others. Explain how you’ve leveraged these tools for automating build, test, and deployment processes.
+How to Find the Number of Lines Containing a Specific Keyword
+
+You can use grep to count the number of lines containing a specific keyword:
+bash
+Copy code
+grep -c "keyword" filename
+How Do You Verify Your File Is Present or Not?
+
+You can use ls or test command:
+bash
+Copy code
+ls filename
+# or
+test -e filename && echo "File exists" || echo "File does not exist"
+How Can I Display the Last But 1 Line
+
+Use tail to display the last but one line of a file:
+bash
+Copy code
+tail -n 2 filename | head -n 1
+Explain the Stages Involved in Your CI/CD
+
+Stages: Typically include:
+Build: Compile the code and package it.
+Test: Run unit, integration, and other tests.
+Deploy: Deploy the application to staging or production environments.
+Monitor: Track the application’s performance and health post-deployment.
+How Will You Deploy APK in Different Environments?
+
+APK Deployment: Use tools like Fastlane for automated deployment. Define different environment configurations and set up pipelines for each environment (e.g., development, staging, production).
+I Want to Print the Last Column in kubectl Output, How Can I Do It?
+
+You can use awk or cut:
+bash
+Copy code
+kubectl get pods | awk '{print $NF}'
+# or
+kubectl get pods | cut -d' ' -f<last_column_number>
+How Do You Upgrade Your Applications?
+
+Upgrade Process:
+Build: Create a new version of the application.
+Test: Ensure the new version passes all tests.
+Deploy: Deploy the new version using a CI/CD pipeline or manually.
+Monitor: Watch for issues and roll back if necessary.
+Explain Kubernetes Architecture
+
+Master Node Components:
+API Server: Handles API requests and interactions.
+Controller Manager: Manages the controllers and the state of the cluster.
+Scheduler: Schedules pods on nodes based on resource availability.
+etcd: Key-value store for cluster state.
+Worker Node Components:
+Kubelet: Ensures containers are running as expected.
+Kube-Proxy: Maintains network rules for pod communication.
+Container Runtime: Runs containers (e.g., Docker).
+Difference Between Deployment and StatefulSet
+
+Deployment: Manages stateless applications with rolling updates and scaling.
+StatefulSet: Manages stateful applications with stable network identities and persistent storage.
+What Are the Services Available in Kubernetes?
+
+ClusterIP: Exposes the service on a cluster-internal IP.
+NodePort: Exposes the service on each Node’s IP at a static port.
+LoadBalancer: Exposes the service externally using a cloud load balancer.
+ExternalName: Maps the service to a DNS name.
+Explain About Ingress
+
+Ingress: Manages external access to services in a Kubernetes cluster, typically HTTP/HTTPS. It uses rules to route traffic to the appropriate service based on URL paths or hostnames.
+How to Ensure APK Is Highly Available and Reliable for the Consumers
+
+High Availability: Use multiple instances across different zones or regions.
+Load Balancing: Employ load balancers to distribute traffic.
+Auto-scaling: Implement auto-scaling to handle varying loads.
+Monitoring and Alerts: Set up monitoring and alerting to detect and address issues proactively.
+Do You Do Monitoring Implementation and Which Monitoring Tool Have You Used?
+
+Monitoring Tools: Mention tools like Prometheus, Grafana, ELK Stack, Datadog, etc. Explain how you use these tools to track application performance and system health.
+What Is NAT Gateway? Is It Significant During Provisioning Time?
+
+NAT Gateway: Provides network address translation for private subnet instances to access the internet. It is significant for allowing instances in private subnets to reach the internet while maintaining security.
+I Want to Containerize MySQL APK and How Can I Do That?
+
+Containerize MySQL:
+Dockerfile Example:
+Dockerfile
+Copy code
+FROM mysql:latest
+ENV MYSQL_ROOT_PASSWORD=root_password
+ENV MYSQL_DATABASE=your_database
+ENV MYSQL_USER=your_user
+ENV MYSQL_PASSWORD=your_password
+COPY ./init.sql /docker-entrypoint-initdb.d/
+Build and Run:
+bash
+Copy code
+docker build -t mysql-container .
+docker run -d -p 3306:3306 --name mysql-container mysql-container
+What Are the Dockerfile Instructions You Will Use?
+
+Common Instructions:
+FROM: Base image to use.
+RUN: Execute commands during build.
+COPY: Copy files from host to container.
+ENV: Set environment variables.
+CMD: Specify the command to run when the container starts.
+What Are the Steps Involved in Kubernetes Cluster Setup?
+
+Steps:
+Provision Nodes: Set up the required infrastructure.
+Install Kubernetes: Use tools like kubeadm, kops, or managed services.
+Configure Cluster: Set up networking, storage, and other configurations.
+Deploy Applications: Use kubectl to deploy and manage applications.
+Monitor and Maintain: Implement monitoring and perform regular maintenance.
+Is There an Autopilot Cluster in AWS?
+
+Autopilot Mode: Yes, AWS EKS offers an Autopilot mode that manages the infrastructure for you, including provisioning, scaling, and patching, while you focus on deploying and managing your applications.
+Notice Period
+
+Notice Period: Share your current notice period if applicable, and be prepared to discuss potential start dates if hired.
+Feel free to adjust these responses based on your specific experience and context.

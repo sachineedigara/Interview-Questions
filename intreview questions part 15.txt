@@ -1,0 +1,116 @@
+Company : Netcracker
+
+
+1. What is the deployment strategy you are aware of
+2. Why did you choose canary deployment 
+3. What is blue green deployment strategy 
+4. How were the different environments managed via Jenkins pipelines
+5. How were you passing environment variables to kubernetes via your Jenkins
+6. What are the different metrics you were monitoring via prometheus-Grafana
+7. What is helm template. How were you using helm for release management
+8. How did you break monolithic application to micro services what was the strategy involved. How your containers were managed
+9. What is Kafka and where was it predominantly used in your project.( Later understood they also work on Kafka)
+10. Explain your Jenkins CI/CD. As you deal with customer how was the complex application shipped and deployed to your customer
+11. What are the different metrics which can be gathered via cloudfront
+
+
+What is the deployment strategy you are aware of?
+
+Common deployment strategies include:
+
+Rolling Deployment: Incrementally updates instances of the application with zero downtime.
+Recreate Deployment: Shuts down the old version completely before deploying the new version.
+Blue-Green Deployment: Runs two identical environments (blue and green). The new version is deployed to the green environment, and after testing, traffic is switched from blue to green.
+Canary Deployment: Releases the new version to a small subset of users to test before a full rollout.
+A/B Testing: Similar to canary deployment, but used for testing new features on a subset of users and comparing the results to the control group.
+Why did you choose canary deployment?
+
+Canary deployment was chosen because:
+
+Risk Mitigation: It allows testing the new version on a small subset of users, reducing the risk of introducing bugs to all users.
+Feedback: Provides early feedback from real users, which can be used to make improvements before full deployment.
+Gradual Rollout: Enables a controlled, gradual rollout, making it easier to monitor the impact and rollback if necessary.
+What is blue-green deployment strategy?
+
+Blue-Green Deployment involves maintaining two identical production environments, known as Blue and Green:
+
+Blue Environment: The current live environment.
+Green Environment: The environment where the new version is deployed.
+After deploying the new version to the Green environment and performing tests, traffic is switched from the Blue environment to the Green environment. The Blue environment is kept as a backup until the Green environment is fully validated.
+How were the different environments managed via Jenkins pipelines?
+
+Jenkins pipelines manage different environments using:
+
+Environment-Specific Stages: Defining stages for development, staging, and production environments in the pipeline.
+Environment Variables: Passing different environment variables to each stage to configure the deployments.
+Conditional Logic: Using conditions in the pipeline script to differentiate actions based on the target environment.
+Separate Pipelines: Sometimes, separate Jenkins pipelines are used for different environments for more complex setups.
+How were you passing environment variables to Kubernetes via your Jenkins?
+
+Environment variables were passed to Kubernetes via Jenkins using:
+
+Kubernetes Secrets: Storing sensitive data as secrets in Kubernetes and referencing them in deployment manifests.
+ConfigMaps: Using ConfigMaps for non-sensitive configuration data.
+Jenkins Credentials: Storing credentials in Jenkins and injecting them into the pipeline.
+Pipeline Script: Directly passing environment variables from the Jenkins pipeline script to the Kubernetes manifests.
+What are the different metrics you were monitoring via Prometheus-Grafana?
+
+Metrics monitored via Prometheus-Grafana include:
+
+CPU Usage: Metrics related to CPU usage of nodes and pods.
+Memory Usage: Monitoring memory consumption.
+Disk I/O: Disk read/write operations.
+Network Traffic: Network usage and latency.
+Application Performance: Application-specific metrics, such as request rates, error rates, and latency.
+Pod Status: Number of running, pending, and failed pods.
+Node Health: Node availability and health status.
+What is a Helm template? How were you using Helm for release management?
+
+A Helm template is a Kubernetes manifest file that uses Go templating to enable dynamic configuration. Helm templates allow:
+
+Parameterization: Using values files to inject different configurations for different environments.
+Reuse: Reusing charts across multiple applications and environments.
+Versioning: Managing different versions of charts for different releases.
+Dependencies: Managing dependencies between charts.
+In release management, Helm was used to package, deploy, and manage Kubernetes applications, ensuring consistent and repeatable deployments.
+How did you break a monolithic application to microservices? What was the strategy involved? How were your containers managed?
+
+Breaking a monolithic application into microservices involved:
+
+Domain-Driven Design (DDD): Identifying and defining bounded contexts and microservices around business capabilities.
+Incremental Decomposition: Gradually refactoring parts of the monolith into independent microservices.
+API Gateway: Implementing an API gateway to handle communication between clients and microservices.
+Database Decoupling: Moving from a single monolithic database to microservice-specific databases or shared databases with clear ownership.
+Containerization: Using Docker to package microservices into containers.
+Orchestration: Managing containers using Kubernetes, ensuring high availability, scalability, and ease of deployment.
+What is Kafka and where was it predominantly used in your project?
+
+Kafka is a distributed streaming platform used for building real-time data pipelines and streaming applications. It is used for:
+
+Event Streaming: Collecting and processing real-time data streams.
+Decoupling Microservices: Enabling asynchronous communication between microservices.
+Data Integration: Integrating different systems by acting as a central hub for data.
+In projects, Kafka was predominantly used for processing real-time events, decoupling services, and integrating various data sources.
+Explain your Jenkins CI/CD. As you deal with customers, how was the complex application shipped and deployed to your customers?
+
+Jenkins CI/CD pipeline involves:
+
+Source Code Management: Integrating with version control systems like Git.
+Build: Compiling code and creating artifacts.
+Test: Running automated tests to ensure code quality.
+Deploy: Deploying to different environments (e.g., development, staging, production) using tools like Kubernetes, Helm, and Argo CD.
+Delivery: Automated delivery to customer environments.
+Complex applications were shipped and deployed using a combination of Jenkins pipelines, containerization (Docker), orchestration (Kubernetes), and GitOps (Argo CD) to ensure reliable and repeatable deployments.
+What are the different metrics which can be gathered via CloudFront?
+
+Metrics gathered via AWS CloudFront include:
+
+Cache Hit Ratio: Percentage of requests served from cache.
+Total Requests: Number of HTTP and HTTPS requests.
+Bytes Downloaded: Volume of data downloaded.
+Bytes Uploaded: Volume of data uploaded.
+4xx Error Rate: Percentage of client error responses.
+5xx Error Rate: Percentage of server error responses.
+Latency: Time taken to serve requests.
+Requests by Region: Distribution of requests across different geographic regions.
+Origin Latency: Time taken for CloudFront to receive the first byte from the origin.

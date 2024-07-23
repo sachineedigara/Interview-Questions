@@ -1,0 +1,226 @@
+Company - HCL
+Share the screen and
+1) Write a multistage docker file
+2) Explain each instruction which you have used in dockerfile
+3) What is the main purpose you have considered going for multistage build
+4) What is the specific difference between cmd and entrypoint
+5) What is networking in docker
+6) Which networking have you considered for your application and why?
+7) How did your kubernetes architecture look like?
+8) Explain every component of the arcitecture
+9) Can etcd be placed outside your cluster? Explain
+10) I have an application running and it is running out of resource. I need to act immediately. But I dont have access to cluster. I cant increase the resource limit. What is the action you take?
+11) Expalin the current application you are handling and how many clusters do you have?
+12) How many worker nodes does your application needs?
+13) Considering your current application, this same setup needs to be provisioned using terraform. How do you do it.
+14) What is the kind for ingress?
+15) Considering your application, where all the different services can be implemented. Explain?
+16) How the networking works in kubernetes, with respect to pod and container, pod and nodes, nodes and outside world?
+17) What is your experience on makefile ?
+18) How was the release management done in your organization and what was your role in this?
+19) How was the code copied from production to master branch?
+20) How your are securing each branches?
+21) In various branches you have, for merging code to each branch who is the approver in your organization?
+22) Have you worked on gitlab?
+23) Difference between dependencies and plugin.
+24) Maven lifecycle?
+25) Have you implemented python for automating tasks in your orgaization?
+26) Rate yourself with respect to docker, kubernetes, python (out of 10)
+27) What are all the different objects in ansible
+28) Have you worked on puppet or chef?
+29) Why terraform is preffered when you have Cloud formation templates?
+30) What is the day to day task that you are handling in terraform?
+31) Apart from what is mentioned in resume, what is the core strength that you can highlight?
+32) How good are your connections with client
+33) What is the shift that you are working currently?
+34) In your complete experience have you worked in deployment for production?
+35) Who is handling the deployment to production in your current organization?
+36) What is your understanding on docker compose, why is it considered?
+
+
+
+. Multistage Dockerfile
+
+Here's an example of a multistage Dockerfile:
+
+dockerfile
+Copy code
+# Stage 1: Build stage
+FROM node:14 AS build
+
+# Set working directory
+WORKDIR /app
+
+# Install dependencies
+COPY package*.json ./
+RUN npm install
+
+# Copy the rest of the application code
+COPY . .
+
+# Build the application
+RUN npm run build
+
+# Stage 2: Production stage
+FROM nginx:alpine
+
+# Copy build artifacts from the previous stage
+COPY --from=build /app/build /usr/share/nginx/html
+
+# Expose port 80
+EXPOSE 80
+
+# Start Nginx server
+CMD ["nginx", "-g", "daemon off;"]
+2. Explanation of Each Instruction
+
+FROM node:14 AS build: Specifies the base image for the build stage and names this stage build.
+WORKDIR /app: Sets the working directory inside the container.
+COPY package*.json ./: Copies package.json and package-lock.json to the working directory.
+RUN npm install: Installs the dependencies specified in package.json.
+COPY . .: Copies the rest of the application code into the working directory.
+RUN npm run build: Runs the build command to compile the application.
+FROM nginx:alpine: Starts a new stage with the Nginx image for the production environment.
+COPY --from=build /app/build /usr/share/nginx/html: Copies the built application from the previous stage to the Nginx directory.
+EXPOSE 80: Exposes port 80 for the Nginx server.
+CMD ["nginx", "-g", "daemon off;"]: Starts Nginx in the foreground.
+3. Purpose of Multistage Build
+
+Reduced Image Size: Only the final production artifacts are included in the final image, reducing the size.
+Improved Security: The final image doesn't include build tools or source code.
+Cleaner Builds: Separate stages make the build process cleaner and more maintainable.
+4. Difference Between CMD and ENTRYPOINT
+
+CMD: Provides default arguments for the ENTRYPOINT or a command to run. It can be overridden when the container starts.
+dockerfile
+Copy code
+CMD ["nginx", "-g", "daemon off;"]
+ENTRYPOINT: Sets the command that will always be run when the container starts. CMD provides default arguments for ENTRYPOINT.
+dockerfile
+Copy code
+ENTRYPOINT ["nginx"]
+CMD ["-g", "daemon off;"]
+5. Networking in Docker
+
+Bridge Network: Default network for containers on a single host.
+Host Network: Shares the host's network stack.
+Overlay Network: Used for multi-host communication in Docker Swarm.
+Macvlan Network: Assigns a MAC address to a container, making it appear as a physical network device.
+6. Networking Consideration
+
+For My Application: I use the bridge network for local development and overlay network for services that need to communicate across multiple hosts in a Docker Swarm setup. This choice allows isolation and flexibility.
+Kubernetes
+7. Kubernetes Architecture
+
+A typical Kubernetes architecture includes:
+
+Master Node: Manages the cluster and includes components like API Server, Controller Manager, Scheduler, and etcd.
+Worker Nodes: Run the containerized applications and include components like Kubelet, Kube Proxy, and container runtime.
+Pods: The smallest deployable units that contain one or more containers.
+Services: Abstract and expose the application running in pods.
+8. Components of the Architecture
+
+API Server: Exposes the Kubernetes API and serves as the gateway to the cluster.
+Controller Manager: Ensures the desired state of the cluster by managing controllers.
+Scheduler: Assigns pods to nodes based on resource availability and other constraints.
+etcd: A distributed key-value store for storing cluster state.
+Kubelet: Ensures containers are running in pods on each node.
+Kube Proxy: Manages network rules on nodes.
+9. Can etcd be Placed Outside Your Cluster?
+
+Yes, etcd can be placed outside the Kubernetes cluster for high availability and disaster recovery. This setup can be complex and requires careful configuration to ensure data consistency and security.
+10. Resource Outage Action
+
+Immediate Action: Check application logs, metrics, and resource usage. Since you don't have cluster access, communicate with the team responsible for cluster management or use monitoring tools to alert them about resource limits.
+11. Current Application and Clusters
+
+Application: Provide a brief description of the application and its purpose.
+Clusters: Specify the number and types of clusters you are managing.
+12. Worker Nodes
+
+Number of Worker Nodes: Depends on the application's scale and load requirements. Describe the current setup and its rationale.
+13. Provisioning with Terraform
+
+Write Terraform configurations to define the Kubernetes resources, including nodes, namespaces, services, and deployments. Example Terraform code might include:
+hcl
+Copy code
+resource "aws_eks_cluster" "my_cluster" {
+  name     = "my-cluster"
+  role_arn  = aws_iam_role.eks.arn
+  ...
+}
+14. Ingress Kind
+
+Kind of Ingress: Ingress in Kubernetes is a resource that manages external access to services, typically HTTP.
+15. Implementing Services
+
+Services: Describe how you implement services like Load Balancers, Ingress Controllers, or ClusterIP services based on the application's needs.
+16. Kubernetes Networking
+
+Pod-to-Pod: Direct communication using the cluster network.
+Pod-to-Node: Pods use node IPs for communication.
+Node-to-Outside: Nodes use external IPs or Load Balancers for external communication.
+17. Experience with Makefile
+
+Makefile: Used for automating build processes and managing dependencies in software development. Describe any specific tasks you’ve automated using Makefiles.
+18. Release Management
+
+Process: Explain how releases are managed, including staging, approval, and deployment processes.
+Your Role: Specify your responsibilities in the release process.
+19. Code Copying from Production to Master
+
+Process: Describe how code is merged or copied from production to the master branch, including any tools or processes used.
+20. Securing Branches
+
+Branch Security: Implement branch protection rules, enforce code reviews, and restrict direct pushes.
+21. Approvers for Branch Merging
+
+Approvers: Identify who is responsible for approving merges into different branches (e.g., team leads, senior developers).
+22. Experience with GitLab
+
+GitLab: Explain your experience with GitLab CI/CD, repository management, and any specific features you’ve used.
+23. Dependencies vs Plugins
+
+Dependencies: External libraries or packages required for a project.
+Plugins: Extensions that add specific functionalities to tools or platforms (e.g., Jenkins plugins).
+24. Maven Lifecycle
+
+Phases: validate, compile, test, package, verify, install, deploy.
+25. Python for Automation
+
+Examples: Describe specific automation tasks you’ve implemented using Python.
+26. Rating
+
+Self-Rating: Rate yourself on a scale of 1-10 for Docker, Kubernetes, and Python based on your expertise and experience.
+27. Ansible Objects
+
+Objects: Playbooks, Roles, Tasks, Handlers, Variables, Templates, Inventory.
+28. Puppet or Chef
+
+Experience: Describe any experience with configuration management tools like Puppet or Chef, if applicable.
+29. Terraform vs CloudFormation
+
+Terraform: Multi-cloud support, modularity, and community modules.
+CloudFormation: AWS-specific, deep integration with AWS services.
+30. Day-to-Day Terraform Tasks
+
+Tasks: Writing and updating configurations, managing state files, and applying changes.
+31. Core Strength
+
+Strengths: Highlight any skills or qualities not mentioned in your resume that are relevant to the role.
+32. Client Connections
+
+Client Relations: Describe your approach to maintaining good relationships with clients.
+33. Current Shift
+
+Shift: Specify your current work shift (e.g., day shift, night shift).
+34. Production Deployment Experience
+
+Experience: Describe your involvement in deploying applications to production environments.
+35. Deployment Responsibility
+
+Deployment Team: Identify who is responsible for deploying to production in your current organization.
+36. Docker Compose
+
+Docker Compose: Tool for defining and running multi-container Docker applications. It simplifies managing complex applications with multiple services.
+Feel free to ask for more details or specific examples! 

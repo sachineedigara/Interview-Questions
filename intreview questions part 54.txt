@@ -1,0 +1,364 @@
+Zensar
+1.Introduction
+2.What kind of scripting knowledge you have?
+3.CI/CD major tools you have worked.
+4.What is the current project you are working and role and responsibilities of you in that?
+5.Do you have experience in AWS EKS?
+6.What is controller in EKS?
+7.What is scheduler in EKS?
+8.Can I have the high level EKS architecture?
+9.How are you provisioning the EKS?
+10.Can you explain the flow, how are you provisioning the EKS in Terraform.
+11.What is the current version of EKS you are using?
+12.What much experience you have in EKS?
+13.What is the endof support of EKS 1.24 version?
+14.Do you involved in any of EKS upgrades?
+15.What is fargate?
+16.What kind of worker node load you are using? EKS with node group or any other things?
+17.What is secret manager?
+18.What is the service types you worked in the EKS cluster?
+19.What is the difference betweeen clusterIP and loadbalancer?
+20. How do you expose your services to outside cluster?
+21.What is Deployment?
+22.What is differenece between replica and replicaset?
+23.How many production cluster you are managing currently?
+24.Are you maintaining seperate account for Dev, QA, production?
+25.I have node group with 5 nodes,the memory is not sufficient and I want to upgrade that instance type.How do you migrate the node group?
+26.What is PVC?
+27.What kind of volume you used in your application?
+28.WHat is ingress?
+29.What is diference between ingress resource and ingress controller?
+30.What is rolling restart?
+31.What is the command to restart deployment?
+32.How do you check pod logs?
+33.What is namespace?
+34.What is the command to list all pods across all namespaces?
+35.Command to list ingress.
+36. COmmand to take backup the ingress as yaml.
+37. Share the screen and do some practicals
+   a.Write the normal file containing one pod, one service.
+   b.Write the sample docker file and run it
+   c.Write a command to create volume in docker and run container using that volume.
+   d.Create a EKS node group using Terraform.
+   e.Can you write a command to list all cronjobs
+   f.Write the script to find the bigger file in path /var/test  and romove that.
+38.Difference between git pull and fetch
+39.Write the command to checkout to another branch.
+40.What is the build tool you have used? Actually what is the build tool?
+41.What kind of application you are supporting through maven?
+42.What is pom.xml?
+43.Did you get any chance to work with that pom.xml file
+44.Any build issues you have faced.   
+45.What configure management you have worked?
+46.What is ansible host file and controll machine and playbook?
+47.Tell command to run playbook.
+48.Difference betweeen docker and VM.
+49.Command to install docker.
+50.What is entrypoint in docker?
+51.Did you write end to end pipeline?
+52.Command to install jenkins.
+53.What is pollSCM in jenkins job?
+54.How jenkins is able to talk to EKS?
+55.What is jnekins master-slave?
+56.What is the advantage of module?
+57.What is statefile? WHat are the options to store the state file.
+58.Do you have experience in javascript,python?
+59.Any small admin releated script like restart service will you able to write.
+60.Worked on docker compose?
+61.Worked on databases? RDS, DYnamo db?
+
+
+
+
+
+Introduction
+
+Introduction: Briefly introduce yourself, highlighting your background, relevant experience in DevOps and cloud technologies, and any notable projects you’ve worked on.
+What Kind of Scripting Knowledge Do You Have?
+
+Scripting Knowledge: Describe the scripting languages you are familiar with, such as Shell scripting (Bash), Python, or PowerShell. Provide examples of tasks you’ve automated using these scripts.
+CI/CD Major Tools You Have Worked With
+
+CI/CD Tools: Discuss the CI/CD tools you have experience with, such as Jenkins, GitLab CI/CD, GitHub Actions, CircleCI, or Azure DevOps. Explain how you’ve used these tools to automate build, test, and deployment processes.
+What Is the Current Project You Are Working On and Your Role and Responsibilities?
+
+Current Project: Describe the project you’re currently working on, your role, and your key responsibilities. Include details about the technologies and tools you are using.
+Do You Have Experience in AWS EKS?
+
+AWS EKS Experience: Share your experience with AWS EKS (Elastic Kubernetes Service), including setting up clusters, deploying applications, and managing Kubernetes resources.
+What Is Controller in EKS?
+
+Controller in EKS: Controllers in Kubernetes (and EKS) are responsible for ensuring that the desired state of the cluster is maintained. Examples include ReplicaSet, Deployment, and StatefulSet controllers.
+What Is Scheduler in EKS?
+
+Scheduler in EKS: The Kubernetes scheduler is responsible for assigning Pods to Nodes based on resource availability and other constraints.
+Can I Have the High-Level EKS Architecture?
+
+High-Level EKS Architecture: EKS architecture includes:
+Control Plane: Managed by AWS, including API Server, Controller Manager, and Scheduler.
+Worker Nodes: EC2 instances or Fargate that run your Pods.
+Cluster Networking: VPC, subnets, and security groups.
+Storage: EBS volumes or other storage solutions.
+How Are You Provisioning the EKS?
+
+Provisioning EKS: Explain the methods you use to provision EKS clusters, such as using AWS Management Console, AWS CLI, or infrastructure-as-code tools like Terraform or AWS CloudFormation.
+Can You Explain the Flow of How You Are Provisioning the EKS in Terraform?
+
+Provisioning EKS in Terraform: Outline the steps:
+Define the EKS cluster resource in Terraform.
+Configure VPC, subnets, and security groups.
+Create IAM roles and policies.
+Initialize Terraform and apply the configuration to create the cluster.
+What Is the Current Version of EKS You Are Using?
+
+EKS Version: State the version of EKS you are currently using and any specific features or limitations associated with that version.
+How Much Experience Do You Have in EKS?
+
+Experience in EKS: Detail your experience with EKS, including the size and complexity of clusters you’ve managed and any specific challenges you’ve faced.
+What Is the End of Support of EKS 1.24 Version?
+
+EKS 1.24 End of Support: The end-of-support date for EKS versions can vary. As of the latest information, AWS provides a specific support timeline that you can check on the AWS EKS documentation.
+Have You Been Involved in Any EKS Upgrades?
+
+EKS Upgrades: Describe your experience with upgrading EKS clusters, including steps taken and challenges faced.
+What Is Fargate?
+
+Fargate: AWS Fargate is a serverless compute engine for containers that works with both Amazon ECS and EKS. It allows you to run containers without managing the underlying infrastructure.
+What Kind of Worker Node Load Are You Using? EKS with Node Group or Any Other Things?
+
+Worker Node Load: Describe the type of worker nodes you are using with EKS, such as EC2 instances in a node group or Fargate. Explain the reasons behind your choice.
+What Is Secret Manager?
+
+Secret Manager: AWS Secrets Manager is a service that helps you protect access to your applications, services, and IT resources without the upfront investment and on-going maintenance costs of operating your own infrastructure.
+What Are the Service Types You Have Worked With in the EKS Cluster?
+
+Service Types in EKS: Discuss the different service types in Kubernetes, such as ClusterIP, NodePort, LoadBalancer, and ExternalName, and which ones you’ve used.
+What Is the Difference Between ClusterIP and LoadBalancer?
+
+ClusterIP vs LoadBalancer:
+ClusterIP: Exposes the service on a cluster-internal IP. It is accessible only within the cluster.
+LoadBalancer: Creates an external load balancer (typically a cloud provider’s load balancer) to expose the service to the outside world.
+How Do You Expose Your Services to the Outside Cluster?
+
+Expose Services: Explain methods to expose services, such as using LoadBalancer services, Ingress controllers, or setting up NodePort services.
+What Is Deployment?
+
+Deployment: A Kubernetes resource that manages a set of Pods, ensuring that a specified number of replicas are running and handling updates to the application.
+What Is the Difference Between Replica and ReplicaSet?
+
+Replica vs ReplicaSet:
+Replica: An individual instance of a Pod.
+ReplicaSet: Ensures that a specified number of Pod replicas are running at any given time. It manages the lifecycle of Pods.
+How Many Production Clusters Are You Managing Currently?
+
+Production Clusters: Share the number of production Kubernetes clusters you manage and provide details on their size and configuration.
+Are You Maintaining Separate Accounts for Dev, QA, and Production?
+
+Separate Accounts: Explain whether you use separate AWS accounts for different environments (Dev, QA, Production) and the reasons for this setup.
+I Have a Node Group with 5 Nodes, and the Memory Is Not Sufficient. I Want to Upgrade That Instance Type. How Do You Migrate the Node Group?
+
+Upgrade Node Group: Steps typically include:
+Modify the node group configuration to use the new instance type.
+Update the auto-scaling group settings.
+Replace old instances gradually to avoid downtime.
+What Is PVC?
+
+PVC (Persistent Volume Claim): A request for storage by a user that allows Pods to use persistent storage.
+What Kind of Volume Have You Used in Your Application?
+
+Volume Types: Describe the types of volumes used, such as EBS volumes, EFS, or other storage solutions, and why you chose them.
+What Is Ingress?
+
+Ingress: A Kubernetes resource that manages external access to services in the cluster, typically HTTP/S. It provides routing rules and can be configured with an Ingress controller.
+What Is the Difference Between Ingress Resource and Ingress Controller?
+
+Ingress Resource vs Ingress Controller:
+Ingress Resource: Defines routing rules and configurations for incoming traffic.
+Ingress Controller: Implements the rules defined in the Ingress resource and manages the external access.
+What Is Rolling Restart?
+
+Rolling Restart: A deployment strategy where Pods are updated gradually. New Pods are started before old Pods are terminated to ensure minimal downtime.
+What Is the Command to Restart Deployment?
+
+Command: kubectl rollout restart deployment <deployment-name>
+How Do You Check Pod Logs?
+
+Command: kubectl logs <pod-name>
+What Is Namespace?
+
+Namespace: A Kubernetes feature that provides a way to divide cluster resources between multiple users or teams. It helps in organizing and isolating resources.
+What Is the Command to List All Pods Across All Namespaces?
+
+Command: kubectl get pods --all-namespaces
+Command to List Ingress
+
+Command: kubectl get ingress
+Command to Take Backup of the Ingress as YAML
+
+Command: kubectl get ingress <ingress-name> -o yaml > ingress-backup.yaml
+Share the Screen and Do Some Practicals
+
+a. Write the Normal File Containing One Pod, One Service:
+
+yaml
+Copy code
+apiVersion: v1
+kind: Pod
+metadata:
+  name: my-pod
+spec:
+  containers:
+  - name: my-container
+    image: nginx
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: my-service
+spec:
+  selector:
+    app: my-pod
+  ports:
+  - protocol: TCP
+    port: 80
+    targetPort: 80
+  type: ClusterIP
+b. Write a Sample Docker File and Run It:
+
+Dockerfile
+Copy code
+# Sample Dockerfile
+FROM nginx:latest
+COPY . /usr/share/nginx/html
+Build and Run:
+
+bash
+Copy code
+docker build -t my-nginx-image .
+docker run -d -p 80:80 my-nginx-image
+c. Write a Command to Create Volume in Docker and Run Container Using That Volume:
+
+bash
+Copy code
+docker volume create my-volume
+docker run -d -v my-volume:/data --name my-container my-image
+d. Create an EKS Node Group Using Terraform:
+
+hcl
+Copy code
+resource "aws_eks_node_group" "example" {
+  cluster_name    = aws_eks_cluster.example.name
+  node_group_name = "example-node-group"
+  node_role_arn   = aws_iam_role.example.arn
+  subnet_ids      = aws_subnet.example[*].id
+  scaling_config {
+    desired_size = 2
+    max_size     = 3
+    min_size     = 1
+  }
+  instance_types = ["t3.medium"]
+}
+e. Can You Write a Command to List All CronJobs:
+
+bash
+Copy code
+kubectl get cronjobs
+f. Write a Script to Find the Biggest File in Path /var/test and Remove That:
+
+bash
+Copy code
+#!/bin/bash
+largest_file=$(find /var/test -type f -exec du -h {} + | sort -rh | head -n 1 | awk '{print $2}')
+rm -f "$largest_file"
+Difference Between Git Pull and Fetch
+
+Git Pull vs Fetch:
+Git Fetch: Downloads changes from the remote repository but does not merge them into your current branch.
+Git Pull: Downloads changes and merges them into your current branch.
+Write the Command to Checkout to Another Branch
+
+Command: git checkout <branch-name>
+What Is the Build Tool You Have Used? Actually, What Is the Build Tool?
+
+Build Tool: A tool that automates the process of compiling source code into executable code. Examples include Maven, Gradle, and Ant. Describe which one you’ve used and its purpose.
+What Kind of Application Are You Supporting Through Maven?
+
+Maven Applications: Discuss the types of applications you’ve managed using Maven, such as Java applications, including the build and dependency management process.
+What Is pom.xml?
+
+pom.xml: The Project Object Model (POM) file used by Maven to manage project dependencies, build configuration, and plugins.
+Did You Get Any Chance to Work with That pom.xml File?
+
+Experience with pom.xml: Describe your experience with configuring and managing the pom.xml file for Maven projects.
+Any Build Issues You Have Faced?
+
+Build Issues: Share specific build issues you’ve encountered and how you resolved them.
+What Configuration Management Have You Worked With?
+
+Configuration Management: Discuss tools like Ansible, Chef, Puppet, or SaltStack that you’ve used for managing infrastructure and application configurations.
+What Is Ansible Host File, Control Machine, and Playbook?
+
+Ansible Host File: A file that lists the hosts and groups of hosts Ansible will manage.
+Control Machine: The machine where Ansible runs from and manages other machines.
+Playbook: A YAML file that defines a set of tasks to be executed on managed hosts.
+Tell Command to Run Playbook
+
+Command: ansible-playbook <playbook.yml>
+Difference Between Docker and VM
+
+Docker vs VM:
+Docker: Container-based virtualization with shared OS kernel, lightweight and fast.
+VM: Full OS virtualization with its own kernel, heavier and slower compared to containers.
+Command to Install Docker
+
+Command: For Ubuntu:
+bash
+Copy code
+sudo apt-get update
+sudo apt-get install docker-ce docker-ce-cli containerd.io
+What Is Entrypoint in Docker?
+
+Entrypoint: The default executable to run when a container starts. It is specified in the Dockerfile using the ENTRYPOINT instruction.
+Did You Write End-to-End Pipeline?
+
+End-to-End Pipeline: Describe any CI/CD pipelines you’ve created, from code commit to deployment, including stages for building, testing, and deploying applications.
+Command to Install Jenkins
+
+Command: For Ubuntu:
+bash
+Copy code
+sudo apt update
+sudo apt install openjdk-11-jdk
+wget -q -O - https://pkg.jenkins.io/debian/jenkins.io.key | sudo apt-key add -
+sudo sh -c 'echo deb http://pkg.jenkins.io/debian-stable binary > /etc/apt/sources.list.d/jenkins.list'
+sudo apt update
+sudo apt install jenkins
+What Is PollSCM in Jenkins Job?
+
+PollSCM: A Jenkins feature that periodically checks the source code repository for changes. If changes are detected, it triggers a new build.
+How Does Jenkins Talk to EKS?
+
+Jenkins and EKS Integration: Jenkins can interact with EKS by using Kubernetes plugin or by deploying Jenkins agents as Kubernetes Pods. Authentication is typically handled using IAM roles and Kubernetes service accounts.
+What Is Jenkins Master-Slave?
+
+Jenkins Master-Slave:
+Master: The central server that manages jobs, schedules builds, and maintains configuration.
+Slave (Agent): Machines that execute the builds and report back to the master.
+What Is the Advantage of Module?
+
+Advantage of Module: Modules in tools like Terraform help in organizing and reusing configuration code, making it more manageable and scalable.
+What Is State File? What Are the Options to Store the State File?
+
+State File: In Terraform, a state file tracks the resources managed by Terraform. Options for storing the state file include local files, S3 buckets, or remote state storage solutions.
+Do You Have Experience in JavaScript, Python?
+
+Experience in JavaScript, Python: Share your experience with these languages, including projects or tasks where you used them.
+Any Small Admin-Related Script Like Restart Service You Are Able to Write?
+
+Admin Scripts: Provide examples of administrative scripts you’ve written, such as for restarting services or automating system tasks.
+Worked on Docker Compose?
+
+Docker Compose: Discuss your experience with Docker Compose for defining and running multi-container Docker applications using docker-compose.yml.
+Worked on Databases? RDS, DynamoDB?
+
+Databases: Describe your experience with AWS RDS (Relational Database Service) and DynamoDB, including tasks such as provisioning, configuring, and managing databases.

@@ -1,0 +1,60 @@
+Pure Software
+1.Introduce yourself
+2.how do u secure test APIS
+3.some real scenario based questions on REST API
+4.In python what is npm array.
+5.what are all issues you faced with persistent volume in k8s.
+6.scenario. one of your team mate created 4 resources using terraform. Including those 4 resources you also try to create 20 resources.
+what will be the error.
+7.what is cicd. continuous delivery and deployment.
+8. what is CloudFormation.
+9.explain about backend of state file in terraform.
+10.what is the purpose of locking statefile.
+
+
+ntroduce Yourself
+
+Provide a brief overview of your background, highlighting your experience in DevOps, cloud technologies, and any notable projects or achievements. Mention your current role and how it aligns with the position you’re interviewing for.
+How Do You Secure Test APIs?
+
+API Security Measures:
+Authentication: Use OAuth, API keys, or JWT tokens to verify users.
+Authorization: Ensure users have the appropriate permissions for API access.
+Rate Limiting: Prevent abuse by limiting the number of requests.
+Input Validation: Sanitize and validate input data to prevent injection attacks.
+Encryption: Use HTTPS to encrypt data in transit.
+Some Real Scenario-Based Questions on REST API
+
+Scenario 1: How would you handle versioning for a REST API?
+Answer: Implement versioning in the URL (e.g., /api/v1/resource) or through request headers.
+Scenario 2: What would you do if a REST API endpoint returns a 500 Internal Server Error?
+Answer: Check server logs for errors, ensure proper exception handling, and verify that the server environment is correctly configured.
+In Python What Is Numpy Array?
+
+Numpy Array: A numpy array is a powerful data structure provided by the numpy library in Python for numerical operations. It supports multidimensional arrays and matrices, along with a large collection of mathematical functions.
+What Are All Issues You Faced with Persistent Volume in Kubernetes?
+
+Common Issues:
+Provisioning: Difficulty in provisioning Persistent Volumes (PVs) due to storage class issues.
+Binding: Issues with PV and Persistent Volume Claim (PVC) binding.
+Scaling: Challenges in scaling storage resources.
+Data Loss: Risk of data loss if PVs are not properly managed or backed up.
+Scenario: One of Your Team Members Created 4 Resources Using Terraform. Including Those 4 Resources, You Also Try to Create 20 Resources. What Will Be the Error?
+
+Possible Error: Terraform may encounter conflicts or state inconsistencies if multiple people are modifying the same state file concurrently. Ensure state file locking and proper coordination to avoid such issues.
+What Is CI/CD? Continuous Delivery and Deployment?
+
+CI/CD:
+Continuous Integration (CI): Automatically integrate code changes into a shared repository multiple times a day, followed by automated testing.
+Continuous Delivery (CD): Automatically deploy changes to a staging environment, making it ready for production release.
+Continuous Deployment: Automatically deploy changes directly to production without manual intervention.
+What Is CloudFormation?
+
+CloudFormation: An AWS service that allows you to define and provision AWS infrastructure using code. You create templates in JSON or YAML to describe the resources and their configurations.
+Explain About Backend of State File in Terraform
+
+Backend: The backend in Terraform determines where the state file is stored and how it is accessed. It can be local or remote (e.g., S3, Azure Blob Storage) and handles state locking and consistency.
+What Is the Purpose of Locking the State File?
+
+State File Locking: Prevents concurrent operations on the same state file to avoid conflicts and corruption. It ensures that only one user or process can make changes to the state at a time.
+Feel free to adjust your responses based on your experience and the specific context of the role you're applying for.

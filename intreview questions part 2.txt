@@ -1,0 +1,239 @@
+
+Cirrus labs Company
+
+1. What is your day-to-day activities?
+Answer:
+
+Monitoring CI/CD pipelines
+Managing and configuring infrastructure using Terraform
+Handling deployments and troubleshooting issues
+Collaborating with development teams for smooth integration
+Implementing automation scripts for various DevOps tasks
+Ensuring system security and compliance
+
+2. Have you worked with AWS DevOps?
+
+Answer:
+Yes, I have worked extensively with AWS DevOps, including services such as AWS CodePipeline, CodeBuild, CodeDeploy, and CodeCommit. I have also used CloudFormation and Terraform for infrastructure automation.
+
+3. What is the application you have dealt with? Java application
+Answer:
+I have worked with various applications, including Java-based web applications, microservices, and APIs. I have experience with both monolithic and microservice architectures.
+
+4. Have you worked with Kubernetes (K8s)?
+Answer:
+Yes, I have worked with Kubernetes for container orchestration, managing deployments, scaling applications, and ensuring high availability.
+
+5. Explain K8s architecture? How it works.
+Answer:
+Kubernetes architecture consists of:
+
+Master Node: Manages the cluster, runs the control plane components like API server, controller manager, scheduler, and etcd.
+Worker Nodes: Run the application workloads, host the kubelet, kube-proxy, and container runtime (e.g., Docker).
+Pods: The smallest deployable units in K8s, consisting of one or more containers.
+Services: Provide stable IPs and DNS names to access pods.
+Controllers: Manage the lifecycle of pods, such as ReplicaSets, Deployments, and StatefulSets.
+
+
+6. What type of failures you have seen in K8s?
+Answer:
+
+Pod crashes due to misconfigurations or resource limits
+Node failures or unavailability
+Network issues causing communication problems between pods
+API server or etcd outages impacting cluster management
+
+7. What happens if master node doesn't work?
+Answer:
+If the master node fails, the cluster cannot be managed, and no new pods can be scheduled. Existing applications may continue to run, but cluster state changes and scaling operations will be impacted. High availability configurations with multiple master nodes can mitigate this issue.
+
+8. How can you view the previous build result in AWS CodeBuild?
+Answer:
+You can view previous build results in AWS CodeBuild by navigating to the CodeBuild console, selecting the specific build project, and then reviewing the build history where you can see logs and details of past builds.
+
+9. Can you explain the steps to deploy a Node.js application?
+Answer:
+
+Build: Install dependencies (npm install), run tests, and bundle the application.
+Containerize (optional): Create a Dockerfile and build a Docker image.
+Push to Repository: Push the code or Docker image to a version control or container registry.
+Provision Infrastructure: Use Terraform or CloudFormation to set up the necessary infrastructure.
+Deploy: Use a CI/CD tool like Jenkins, CodePipeline, or Kubernetes to deploy the application to the target environment.
+
+10. What is CodeStar in AWS?
+Answer:
+AWS CodeStar is a service that provides a unified user interface to easily manage software development activities. It integrates various AWS services like CodeCommit, CodeBuild, CodeDeploy, and CodePipeline to help you set up a CI/CD pipeline quickly.
+
+11. What CI/CD do you use apart from Jenkins?
+Answer:
+Apart from Jenkins, I have used GitLab CI, AWS CodePipeline, CircleCI, and Travis CI for continuous integration and deployment.
+
+12. What code style do you select in Jenkins?
+Answer:
+I follow standard coding practices and styles specific to the programming language used, such as PEP 8 for Python, Google Java Style Guide for Java, and ESLint for JavaScript. In Jenkins, I ensure the use of declarative pipelines and maintain clear, readable, and well-documented scripts.
+
+13. Write a Groovy script (CICD pipeline) and explain all the stages
+Answer:
+
+groovy
+Copy code
+pipeline {
+    agent any
+
+    stages {
+        stage('Checkout') {
+            steps {
+                git 'https://github.com/your-repo.git'
+            }
+        }
+        stage('Build') {
+            steps {
+                sh 'npm install'
+            }
+        }
+        stage('Test') {
+            steps {
+                sh 'npm test'
+            }
+        }
+        stage('Deploy') {
+            steps {
+                sh 'npm run deploy'
+            }
+        }
+    }
+}
+Checkout: Pulls the code from the Git repository.
+Build: Installs the project dependencies.
+Test: Runs the test cases.
+Deploy: Deploys the application.
+
+
+14. How are you managing environment variables in your declarative pipeline?
+Answer:
+Environment variables can be managed using the environment directive in Jenkins:
+
+groovy
+Copy code
+pipeline {
+    agent any
+    environment {
+        ENV_VAR = 'value'
+    }
+    stages {
+        stage('Example') {
+            steps {
+                sh 'echo $ENV_VAR'
+            }
+        }
+    }
+}
+
+
+15. Have you worked on any service capacity planning?
+Answer:
+Yes, I have worked on service capacity planning, which involves monitoring resource usage, predicting future needs, and scaling infrastructure accordingly to ensure optimal performance and cost-efficiency.
+
+16. Have you worked on Bamboo artifacts?
+Answer:
+Yes, I have used Bamboo for CI/CD and worked with artifacts to store build outputs, such as binaries, logs, and test results, which can be used in subsequent build or deployment stages.
+
+17. What is an artifact?
+Answer:
+An artifact is a file or set of files produced during a build process, which can include compiled code, libraries, documentation, and configuration files. Artifacts are often stored and managed for deployment and distribution purposes.
+
+18. Do you know what is Instacart?
+Answer:
+Instacart is a grocery delivery and pick-up service in the US and Canada that allows users to order groceries from participating retailers via a mobile app or website.
+
+19. How is routing done in AWS?
+Answer:
+Routing in AWS is managed using services like Route 53 for DNS routing, ELB (Elastic Load Balancer) for distributing traffic among instances, and VPC route tables for directing traffic within and between VPCs.
+
+20. What advantage do we get with a route table?
+Answer:
+Route tables control the routing of traffic within a VPC, enabling fine-grained control over network paths, enhancing security, and optimizing network performance.
+
+21. What is your branching strategy for the application?
+Answer:
+I typically use Gitflow, which includes:
+
+Master: Production-ready code.
+Develop: Integration branch for features.
+Feature Branches: For new features or bug fixes.
+Release Branches: For preparing releases.
+Hotfix Branches: For urgent fixes to production.
+
+22. How do you manage your environment variable during release? Values will be different for dev, prod; in those cases how do you manage those values?
+Answer:
+Environment variables are managed using configuration management tools like Ansible or through secret management services like AWS Secrets Manager, and they are injected into the deployment pipeline depending on the environment.
+
+23. What type of issues do you face as a DevOps engineer?
+Answer:
+
+Integration issues between various tools and systems
+Network and connectivity issues
+Resource and capacity constraints
+Security vulnerabilities and compliance issues
+Automation failures and script errors
+
+
+24. There are a lot of security aspects in your project. Any best practices you followed so there is no leakage on credentials, code security; as a DevOps engineer what you will do?
+Answer:
+
+Use secret management tools like AWS Secrets Manager or HashiCorp Vault.
+Implement IAM roles and policies with the principle of least privilege.
+Use encrypted storage and secure communication channels.
+Regularly audit and rotate credentials.
+Conduct security scans and code reviews.
+
+
+25. Any cost optimization technique?
+Answer:
+
+Use Reserved Instances and Savings Plans for predictable workloads.
+Implement auto-scaling to manage demand.
+Monitor and optimize resource utilization.
+Use spot instances for non-critical workloads.
+Regularly review and clean up unused resources.
+
+
+26. How will you schedule EC2 machines?
+Answer:
+EC2 instances can be scheduled using AWS Lambda with CloudWatch Events or using EC2 Auto Scaling based on time or resource usage.
+
+
+27. Terraform code - provision EC2, S3 bucket with ACL enabled, VPC.
+hcl
+Copy code
+provider "aws" {
+  region = "us-west-2"
+}
+
+resource "aws_vpc" "example" {
+  cidr_block = "10.0.0.0/16"
+}
+
+resource "aws_subnet" "example" {
+  vpc_id            = aws_vpc.example.id
+  cidr_block        = "10.0.1.0/24"
+  availability_zone = "us-west-2a"
+}
+
+resource "aws_instance" "example" {
+  ami           = "ami-0c55b159cbfafe1f0"
+  instance_type = "t2.micro"
+  subnet_id     = aws_subnet.example.id
+
+  tags = {
+    Name = "example-instance"
+  }
+}
+
+resource "aws_s3_bucket" "example" {
+  bucket = "example-bucket"
+
+  acl    = "private"
+
+  tags = {
+    Name

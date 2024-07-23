@@ -1,0 +1,65 @@
+company_name:happiest minds technologies
+1.introduction
+2.explain ci/cd
+3.explain k8s component
+4.terraform cycle
+5.what will u do if the state file is lost
+6. r u using state lock concept?if yes explain
+7.expalin docker
+8.explain services in k8s
+9.expalin vpc
+10.b/w NACL AND NAT gateway
+
+
+
+Introduction
+
+[Your introduction here]: Share your professional background, highlighting your experience in DevOps, cloud platforms, CI/CD processes, and any notable achievements or projects you've worked on.
+Explain CI/CD
+
+CI/CD stands for Continuous Integration and Continuous Deployment. CI involves automatically testing and integrating code changes into a shared repository several times a day. CD extends this to automatically deploying these changes to production or staging environments, ensuring rapid delivery and feedback loops. This process enhances collaboration, reduces manual errors, and accelerates the release of new features.
+Explain Kubernetes Components
+
+Master Node Components:
+API Server: Exposes the Kubernetes API and serves as the gateway for all the REST commands.
+Controller Manager: Handles controllers that manage the state of the cluster.
+Scheduler: Schedules pods onto nodes based on resource availability.
+etcd: A distributed key-value store for storing cluster state and configuration.
+Node Components:
+Kubelet: Ensures containers are running in a Pod.
+Kube-Proxy: Maintains network rules for Pod communication.
+Container Runtime: Manages the container lifecycle (e.g., Docker, containerd).
+Terraform Cycle
+
+Terraform Cycle typically includes:
+Write: Define the desired state using HCL (HashiCorp Configuration Language).
+Plan: Terraform analyzes the configuration and creates an execution plan.
+Apply: Executes the plan and applies changes to reach the desired state.
+Destroy: Optionally, remove resources created by Terraform.
+What Will You Do If the State File Is Lost?
+
+State File Recovery:
+Restore from Backup: Use any available backups of the state file.
+Recreate State: If no backup exists, you may need to manually recreate the state by importing resources into a new state file.
+Remote Backend: Implement a remote backend with state locking and versioning (e.g., S3 with DynamoDB for locking).
+Are You Using State Lock Concept? If Yes, Explain
+
+State Locking: Yes, it prevents concurrent modifications to the state file. For instance, when using an S3 backend, DynamoDB can be used to manage state locks and prevent conflicts during concurrent operations.
+Explain Docker
+
+Docker is a platform for developing, shipping, and running applications in lightweight, portable containers. Containers package an application and its dependencies, ensuring consistency across different environments.
+Explain Services in Kubernetes
+
+Services in Kubernetes are abstractions that define a logical set of Pods and a policy by which to access them. Types include:
+ClusterIP: Exposes the service on a cluster-internal IP.
+NodePort: Exposes the service on each Node’s IP at a static port.
+LoadBalancer: Creates an external load balancer in the cloud (if supported).
+ExternalName: Maps the service to a DNS name.
+Explain VPC
+
+VPC (Virtual Private Cloud) is a private network in the cloud where you can define your IP address range, subnets, route tables, and network gateways. It allows for secure and isolated network environments for your resources.
+Difference Between NACL and NAT Gateway
+
+NACL (Network Access Control List): Acts as a stateless firewall at the subnet level, controlling inbound and outbound traffic.
+NAT Gateway: Provides network address translation for private subnet instances to access the internet without exposing them directly to incoming traffic.
+Feel free to adjust or elaborate based on your experience and the specific context of the role!

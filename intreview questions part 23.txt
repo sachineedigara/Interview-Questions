@@ -1,0 +1,253 @@
+company - Altimetrik
+1. what all scripts you have written to automate - why you writen to monitore disk space -don't you have monitoring tools
+2. what type of jobs you have created and which all plugins you used
+3. explain stages of pipeline job
+4. what are build tools you used -explain maven life cycle
+5. build is failing in deployment what could be the reason
+6. have you worked on boto3
+7. script to take jenkins backup and store it in s3
+8. explain dockerfile
+9. how you check java path and how you update java path
+10. explain modules in ansible and explain playbook to install application
+11. do you have expierence on upgrading and patching, what level of patching and while tool your using and process
+12. how frequently your writting terraform template
+13. write template to create aws loadbalancer I need working template
+14. what type of application you are working
+15. how many microservices are there
+16. how microservices are deploying onto k8s any terraform template is there and explain yml files
+17. how you are orchestraing k8s environment to environment 
+18. explain k8s architecture
+19. how you are deleteing pods
+20. how frequently your writing manifest files
+21. how you configured promothus and grafana explain
+22. eks configuration pre-requisites - which process you followed and tell commands you used for creation
+23. have you configured RDS and explain process
+24. have you worked on cost optimizaion project- how you do it
+25. how you are checking vulunaribility 
+26. how you achive multistage docker image
+
+
+
+Altimetrik: Detailed Responses
+1. Scripts for Automation
+Disk Space Monitoring Script: Written to check disk space usage, as sometimes internal tools may not provide detailed insights or immediate alerts.
+Other Automation Scripts: Scripts for automating EC2 instance management, backups, deployments, etc.
+Monitoring Tools: Yes, monitoring tools are used, but custom scripts can complement existing tools for specific needs.
+2. Types of Jobs and Plugins in Jenkins
+Types of Jobs:
+Freestyle Jobs: Simple and easy to configure for basic tasks.
+Pipeline Jobs: More complex workflows and CI/CD pipelines.
+Multibranch Pipeline Jobs: Automatically discovers branches in a repository and manages them.
+Plugins Used:
+Git Plugin: For source code management.
+Maven Integration Plugin: For building Maven projects.
+Docker Plugin: For Docker integration.
+Pipeline Plugin: For creating Jenkins pipelines.
+Blue Ocean Plugin: For a modern user interface.
+3. Stages of a Pipeline Job
+Declarative Pipeline:
+pipeline: Defines the entire pipeline.
+agent: Specifies where the pipeline will run.
+stages: Contains multiple stages.
+steps: Individual tasks within a stage.
+Example:
+groovy
+Copy code
+pipeline {
+    agent any
+    stages {
+        stage('Build') {
+            steps {
+                echo 'Building...'
+            }
+        }
+        stage('Test') {
+            steps {
+                echo 'Testing...'
+            }
+        }
+        stage('Deploy') {
+            steps {
+                echo 'Deploying...'
+            }
+        }
+    }
+}
+4. Build Tools and Maven Lifecycle
+Build Tools:
+Maven: Popular build automation tool for Java projects.
+Gradle: Another build automation tool used for JVM and other projects.
+Maven Lifecycle:
+validate: Checks if the project is correct and all necessary information is available.
+compile: Compiles the source code.
+test: Runs tests using a suitable unit testing framework.
+package: Packages the compiled code into a distributable format (e.g., JAR).
+verify: Runs any checks to verify the quality of the package.
+install: Installs the package into the local repository.
+deploy: Copies the package to the remote repository.
+5. Reasons for Deployment Build Failure
+Configuration Issues: Incorrect configuration files or parameters.
+Dependency Problems: Missing or incompatible dependencies.
+Environment Mismatch: Differences between development and deployment environments.
+Code Issues: Bugs or errors in the code.
+Resource Constraints: Insufficient resources like memory or disk space.
+6. Experience with Boto3
+Yes, Boto3 is used for interacting with AWS services via Python scripts for tasks like managing EC2 instances, S3 buckets, and other AWS resources.
+
+7. Script to Backup Jenkins and Store in S3
+python
+Copy code
+import boto3
+import shutil
+import os
+from datetime import datetime
+
+# Define paths
+jenkins_home = '/var/jenkins_home'
+backup_dir = f'/backups/jenkins_{datetime.now().strftime("%Y%m%d%H%M%S")}'
+
+# Create backup
+shutil.copytree(jenkins_home, backup_dir)
+
+# Upload to S3
+s3 = boto3.client('s3')
+for root, dirs, files in os.walk(backup_dir):
+    for file in files:
+        s3.upload_file(os.path.join(root, file), 'your-s3-bucket', f'jenkins_backup/{file}')
+8. Explain Dockerfile
+A Dockerfile is a text document that contains all the commands to assemble an image. It includes instructions such as:
+
+FROM: Base image.
+RUN: Commands to execute during image build.
+COPY: Copy files from host to image.
+CMD: Default command to run in the container.
+9. Checking and Updating Java Path
+Check Java Path:
+bash
+Copy code
+echo $JAVA_HOME
+java -version
+Update Java Path:
+bash
+Copy code
+export JAVA_HOME=/path/to/java
+export PATH=$JAVA_HOME/bin:$PATH
+10. Ansible Modules and Playbook
+Modules: Predefined Ansible components to perform tasks, e.g., yum, apt, copy, template.
+Playbook Example:
+yaml
+Copy code
+- name: Install Apache
+  hosts: webservers
+  become: yes
+  tasks:
+    - name: Install httpd
+      yum:
+        name: httpd
+        state: present
+    - name: Start httpd
+      service:
+        name: httpd
+        state: started
+11. Experience with Upgrading and Patching
+Levels:
+Minor Upgrades: Regular updates and patches.
+Major Upgrades: Significant version changes.
+Tools: Typically use automation tools or manual processes for patching.
+Process:
+Assessment: Identify components to upgrade.
+Testing: Test upgrades in a staging environment.
+Deployment: Apply upgrades to production.
+Verification: Ensure systems are functioning correctly.
+12. Frequency of Writing Terraform Templates
+Frequency: Depends on project needs, but generally updated with new features, infrastructure changes, or during new project setups.
+13. Terraform Template to Create AWS Load Balancer
+hcl
+Copy code
+resource "aws_elb" "my_load_balancer" {
+  name               = "my-load-balancer"
+  availability_zones = ["us-west-2a", "us-west-2b"]
+  instances          = [aws_instance.my_instance.id]
+  
+  listener {
+    instance_port     = 80
+    instance_protocol = "HTTP"
+    lb_port           = 80
+    protocol          = "HTTP"
+  }
+  
+  tags = {
+    Name = "my-load-balancer"
+  }
+}
+14. Type of Application
+Type: Varies by project. Common types include web applications, microservices, APIs, etc.
+15. Number of Microservices
+Number: Varies by project. Can range from a few to several dozen depending on the application's complexity.
+16. Deploying Microservices onto Kubernetes
+Terraform Template Example:
+hcl
+Copy code
+resource "kubernetes_deployment" "my_app" {
+  metadata {
+    name = "my-app"
+  }
+  spec {
+    replicas = 3
+    selector {
+      match_labels = {
+        app = "my-app"
+      }
+    }
+    template {
+      metadata {
+        labels = {
+          app = "my-app"
+        }
+      }
+      spec {
+        container {
+          name  = "my-app-container"
+          image = "my-app-image:latest"
+        }
+      }
+    }
+  }
+}
+YAML Files:
+Deployment: Defines the application, replicas, and container specifications.
+Service: Exposes the deployment within the cluster or externally.
+17. Orchestrating Kubernetes Environment
+Tools: Use Helm, Argo CD, or custom scripts.
+Process: Define configurations in YAML files, manage deployments through CI/CD pipelines, and use Helm charts for templated configurations.
+18. Kubernetes Architecture
+Master Node: Manages the cluster, includes components like the API server, scheduler, and controller manager.
+Worker Nodes: Run application containers, include components like kubelet, kube-proxy, and container runtime.
+Pods: Smallest deployable units, can contain one or more containers.
+Services: Define access policies for pods.
+19. Deleting Pods
+Command:
+bash
+Copy code
+kubectl delete pod <pod-name>
+20. Frequency of Writing Manifest Files
+Frequency: Varies with deployment changes or updates in application requirements.
+21. Configuring Prometheus and Grafana
+Prometheus: Set up as a monitoring system and time-series database.
+Configuration: Define scrape configs and rules in prometheus.yml.
+Grafana: Used for visualizing metrics.
+Configuration: Add Prometheus as a data source, create dashboards and visualizations.
+22. EKS Configuration Prerequisites and Commands
+Prerequisites:
+IAM Roles: Create roles with appropriate permissions.
+VPC: Set up networking for EKS.
+Commands:
+bash
+Copy code
+aws eks create-cluster --name my-cluster --role-arn arn:aws:iam::123456789012:role/EKSRole --resources-vpc-config subnetIds=subnet-abc123,securityGroupIds=sg-abc123
+23. Configuring RDS
+Process:
+Create DB Instance: Configure instance type, storage, and database engine.
+2
+
+

@@ -1,0 +1,205 @@
+company name: strawberry infotech
+1.introduction
+2.write ci/cd pipeline
+3.how to u take backup of Jenkins
+4.what is git fetch and git pull
+5.b/w git merge and git rebase
+6.explain branching strategy
+7.write ansible playbook to install apache server
+8. what is roles
+9.b/w role and task
+10.where do u store state file
+11.what is work around if state file is lost
+12.what is workspace in terraform
+13.expalin state locking of state file
+14.write shell script to add to numbers
+15.expalin k8s component
+16.if pod need to deploy on specific node how do u do that?
+17.b/w config map and secrets
+18.write deployment file
+19.how do u secure k8s
+20.expalin services in k8s
+21.b/w application load balancer and network load balancer
+22.expalin best practise to write docker file
+23.on what intervals do u talk with client
+24.do u work as a team or do u have team working under you?
+
+
+
+
+Introduction:
+
+I am [Your Name], with extensive experience in DevOps, cloud technologies, and CI/CD pipelines. My background includes working with tools such as Jenkins, Kubernetes, Terraform, and Ansible. I have been involved in automating infrastructure, optimizing deployments, and managing both cloud and on-premises environments.
+Write CI/CD Pipeline:
+
+groovy
+Copy code
+pipeline {
+    agent any
+    stages {
+        stage('Checkout') {
+            steps {
+                git 'https://github.com/your-repo/project.git'
+            }
+        }
+        stage('Build') {
+            steps {
+                sh './build.sh' // Assuming you have a build script
+            }
+        }
+        stage('Test') {
+            steps {
+                sh './test.sh' // Assuming you have a test script
+            }
+        }
+        stage('Deploy') {
+            steps {
+                sh './deploy.sh' // Assuming you have a deploy script
+            }
+        }
+    }
+    post {
+        success {
+            echo 'Build and Deployment Successful!'
+        }
+        failure {
+            echo 'Build or Deployment Failed.'
+        }
+    }
+}
+How to Take Backup of Jenkins:
+
+To back up Jenkins, you can use the following methods:
+Manual Backup: Copy the Jenkins home directory (usually /var/lib/jenkins) to a backup location. This includes configurations, jobs, and plugins.
+Automated Backup: Use plugins like the ThinBackup plugin to schedule regular backups of Jenkins data.
+Cloud Backup: Use cloud storage solutions to back up Jenkins home directory regularly.
+What is Git Fetch and Git Pull:
+
+Git Fetch: Retrieves new data from a remote repository, including branches and tags, but does not update the working directory or the current branch.
+Git Pull: Fetches data from the remote repository and immediately updates the local branch with the latest changes, merging them into your current branch.
+Difference Between Git Merge and Git Rebase:
+
+Git Merge: Combines changes from two branches into one branch, creating a new commit that has two parent commits.
+Git Rebase: Moves or combines a sequence of commits to a new base commit. It rewrites history to create a linear progression of commits.
+Explain Branching Strategy:
+
+A branching strategy organizes how branches are used and managed in a repository. Common strategies include:
+Feature Branching: Each feature or bug fix is developed in a separate branch.
+Git Flow: Uses separate branches for features, releases, and hotfixes.
+GitHub Flow: Simpler strategy with a main branch and feature branches, merging changes via pull requests.
+Write Ansible Playbook to Install Apache Server:
+
+yaml
+Copy code
+---
+- name: Install Apache Web Server
+  hosts: webservers
+  become: yes
+  tasks:
+    - name: Install Apache
+      apt:
+        name: apache2
+        state: present
+
+    - name: Ensure Apache is running
+      service:
+        name: apache2
+        state: started
+        enabled: yes
+What is a Role in Ansible:
+
+A role in Ansible is a way to group related tasks, variables, files, templates, and handlers together. It helps to organize and reuse code. Roles are stored in a specific directory structure and can be shared across playbooks.
+Difference Between Role and Task:
+
+Role: A role is a collection of tasks and related files, variables, and handlers that are organized and reusable. Roles are used to break down playbooks into smaller, manageable units.
+Task: A task is a single action or step that Ansible performs, such as installing a package or copying a file. Tasks are part of roles or playbooks.
+Where Do You Store State File:
+
+State files are usually stored in a remote backend like AWS S3, Azure Blob Storage, or Terraform Cloud. This ensures state is shared and managed securely.
+What is the Workaround if State File is Lost:
+
+If the state file is lost, you can:
+Recreate the infrastructure manually and then use terraform import to import existing resources into a new state file.
+Restore the state file from a backup if available.
+What is Workspace in Terraform:
+
+A workspace in Terraform is an environment that allows managing multiple instances of the same configuration. Each workspace has its own state file, which enables managing separate environments like development, staging, and production.
+Explain State Locking of State File:
+
+State locking prevents concurrent operations on the same state file, avoiding conflicts and corruption. It is implemented using locking mechanisms provided by backend services, such as S3 with DynamoDB for locking.
+Write Shell Script to Add Two Numbers:
+
+sh
+Copy code
+#!/bin/bash
+read -p "Enter first number: " num1
+read -p "Enter second number: " num2
+sum=$((num1 + num2))
+echo "Sum: $sum"
+Explain Kubernetes Components:
+
+Master Node: Controls the Kubernetes cluster. Components include API server, controller manager, scheduler, and etcd.
+Worker Node: Runs application containers. Components include kubelet, kube-proxy, and container runtime.
+Pod: The smallest deployable unit, containing one or more containers.
+Service: Exposes a set of pods as a network service.
+If Pod Needs to Deploy on Specific Node How Do You Do That:
+
+Use node selectors, affinity, or taints and tolerations in the pod specification to ensure that the pod is scheduled on a specific node.
+Difference Between ConfigMap and Secrets:
+
+ConfigMap: Stores non-sensitive configuration data in key-value pairs. Useful for configuration that is not sensitive.
+Secrets: Stores sensitive data, such as passwords or API keys, in a more secure manner. Secrets are encoded and can be encrypted.
+Write Deployment File:
+
+yaml
+Copy code
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: my-app
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: my-app
+  template:
+    metadata:
+      labels:
+        app: my-app
+    spec:
+      containers:
+      - name: my-app
+        image: my-app-image:latest
+        ports:
+        - containerPort: 80
+How Do You Secure Kubernetes:
+
+Use RBAC for access control, configure network policies, enable encryption for secrets, and regularly update Kubernetes and its components.
+Explain Services in Kubernetes:
+
+ClusterIP: Exposes the service on a cluster-internal IP. Default type.
+NodePort: Exposes the service on each node's IP at a static port.
+LoadBalancer: Exposes the service externally using a cloud provider’s load balancer.
+ExternalName: Maps the service to a DNS name.
+Difference Between Application Load Balancer and Network Load Balancer:
+
+Application Load Balancer (ALB): Operates at the application layer (Layer 7), supports routing based on content and advanced request routing.
+Network Load Balancer (NLB): Operates at the transport layer (Layer 4), handles high-throughput and low-latency traffic with static IPs.
+Explain Best Practices to Write Dockerfile:
+
+Use a minimal base image.
+Combine commands into single layers where possible.
+Use .dockerignore to exclude unnecessary files.
+Specify non-root user for running applications.
+Keep images small and use multi-stage builds.
+On What Intervals Do You Talk With Clients:
+
+Typically, interactions with clients occur during project kick-offs, sprint reviews, status updates, and as needed for issue resolution or feedback.
+Do You Work as a Team or Do You Have Team Working Under You?:
+
+I work as part of a team, collaborating with colleagues to achieve project goals. In some roles, I may lead or manage a team, guiding them through technical challenges and project milestones.
+
+
+
+
+

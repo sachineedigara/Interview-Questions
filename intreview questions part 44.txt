@@ -1,0 +1,111 @@
+COMPANY: Wissen infotech
+1.introduction
+2.expalin ci cd
+3.expalin terraform command
+4.how u store state file
+5.where are sensitive data store in terraform
+6.expalin your 3 tier architecture
+7.explain k8s component
+8.expalin how pod is created in the background
+9.explain monitoring and Grafana
+10.expalin probe in k8s
+11.explain services in k8s
+12.tell ur automation scripts both shell script and python
+13.b/w alb and nlb
+14.have u worked on cloud formation template
+15.expalin git branching stategy
+
+
+Introduction:
+
+I am [Your Name], with a strong background in DevOps, cloud computing, and infrastructure automation. I have hands-on experience with various tools and technologies including Jenkins, Kubernetes, Terraform, and Grafana. My work involves automating workflows, managing cloud infrastructure, and ensuring seamless deployment processes.
+Explain CI/CD:
+
+CI/CD stands for Continuous Integration and Continuous Deployment. CI involves automatically building and testing code changes frequently to ensure integration issues are detected early. CD involves automatically deploying these changes to production or staging environments, ensuring that the latest version of the application is always available. CI/CD pipelines typically include stages for code integration, build, test, and deployment.
+Explain Terraform Command:
+
+terraform init: Initializes a Terraform working directory, downloading necessary provider plugins.
+terraform plan: Creates an execution plan, showing what changes will be made to the infrastructure.
+terraform apply: Applies the changes required to reach the desired state of the configuration.
+terraform destroy: Destroys the infrastructure managed by Terraform.
+terraform validate: Validates the syntax and configuration of Terraform files.
+terraform fmt: Formats Terraform configuration files to a canonical format and style.
+How Do You Store State File:
+
+State files can be stored remotely using backends such as AWS S3, Azure Blob Storage, or Terraform Cloud. Remote state storage enables collaboration and ensures that the state is not lost.
+Where Are Sensitive Data Stored in Terraform:
+
+Sensitive data is stored in the Terraform state file. To protect sensitive data, Terraform supports encrypting state files when using remote backends, and sensitive data can also be managed using secrets management tools like HashiCorp Vault.
+Explain Your 3-Tier Architecture:
+
+A typical 3-tier architecture consists of:
+Presentation Tier: The user interface layer where users interact with the application (e.g., web frontend).
+Application Tier: The business logic layer where application logic is processed (e.g., application servers).
+Data Tier: The database layer where data is stored and managed (e.g., SQL or NoSQL databases).
+Explain Kubernetes Components:
+
+Master Node: Manages the Kubernetes cluster, including the API server, controller manager, scheduler, and etcd.
+Worker Node: Runs application workloads and includes kubelet, kube-proxy, and a container runtime.
+Pod: The smallest deployable unit in Kubernetes, which can host one or more containers.
+Service: Exposes a set of pods as a network service.
+Deployment: Manages a set of replicas of pods and ensures the desired state is maintained.
+Explain How Pod is Created in the Background:
+
+When a pod is created, Kubernetes schedules it onto a worker node based on resource availability and constraints. The kubelet on the node pulls the container images, creates the containers defined in the pod specification, and starts them. The pod then goes through the lifecycle phases like Pending, Running, and succeeded or failed.
+Explain Monitoring and Grafana:
+
+Monitoring: Involves continuously observing the health, performance, and availability of systems and applications. Monitoring tools collect metrics and logs to provide insights and alert on issues.
+Grafana: A powerful visualization tool used to create dashboards and charts from monitoring data. It integrates with data sources like Prometheus, InfluxDB, and Elasticsearch to provide real-time insights into system performance.
+Explain Probes in Kubernetes:
+
+Liveness Probe: Checks if a container is running. If the liveness probe fails, Kubernetes restarts the container.
+Readiness Probe: Checks if a container is ready to serve traffic. If the readiness probe fails, the container is removed from the service's endpoints until it is ready.
+Startup Probe: Checks if a container's application has started. This is used for slow-starting applications and can replace liveness and readiness probes during startup.
+Explain Services in Kubernetes:
+
+ClusterIP: Default service type that exposes the service on a cluster-internal IP.
+NodePort: Exposes the service on each node's IP at a static port, allowing external access.
+LoadBalancer: Exposes the service externally using a cloud provider's load balancer.
+ExternalName: Maps the service to a DNS name.
+Tell Your Automation Scripts Both Shell Script and Python:
+
+Shell Script to Backup a Directory:
+sh
+Copy code
+#!/bin/bash
+tar -czf /backup/backup_$(date +%F).tar.gz /data
+Python Script to Send an Email:
+python
+Copy code
+import smtplib
+from email.mime.text import MIMEText
+
+def send_email(subject, body, to_email):
+    msg = MIMEText(body)
+    msg['Subject'] = subject
+    msg['From'] = 'your-email@example.com'
+    msg['To'] = to_email
+
+    with smtplib.SMTP('smtp.example.com') as server:
+        server.login('your-email@example.com', 'your-password')
+        server.send_message(msg)
+
+send_email('Test Subject', 'Test Body', 'recipient@example.com')
+Difference Between ALB and NLB:
+
+Application Load Balancer (ALB): Operates at Layer 7 (Application Layer), supports advanced routing, SSL termination, and content-based routing.
+Network Load Balancer (NLB): Operates at Layer 4 (Transport Layer), provides high throughput and low latency, and supports static IP addresses.
+Have You Worked on CloudFormation Template:
+
+Yes, I have worked with AWS CloudFormation to define and provision AWS infrastructure using YAML or JSON templates. This allows for infrastructure as code and automates the deployment of AWS resources.
+Explain Git Branching Strategy:
+
+Git Branching Strategy: A strategy for managing branches in a Git repository to organize development work. Common strategies include:
+Feature Branching: Create branches for individual features or bug fixes.
+Git Flow: Uses branches for features, releases, and hotfixes.
+GitHub Flow: Simple branching model with main and feature branches, using pull requests for merging changes.
+
+
+
+
+

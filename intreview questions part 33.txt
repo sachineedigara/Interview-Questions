@@ -1,0 +1,259 @@
+
+Company- Neilsen 2nd round
+
+Introduce yourself
+What is your roles & responsibility
+Explain your project
+Explain CICD step by step
+Explain the Jenkins file for terraform stage
+Write docker file to install tomcat , copy war file from 1st stage run it in 2nd stage
+what is docker file
+what docker image
+How do you create containers
+What is the difference between container and  k8s pod
+What are the things you know in K8s
+Tell me some K8s commands
+What is cron tab
+Tell some linux commands
+In Linux , if I login to tomcat usr/local/tomcat/webapps/start.sh script should automatically run. How would you do this
+Explain Branching strategy
+In what permissions are there for s3 bucket
+What are the things you know in EC2
+What are the services you know in AWS
+How do you create EC2 instance?
+Explain how Appln Load Balancer works
+What are the rules available in ALB. How you define rules
+Explain Autoscaling[VPA,HPA,CA] which is best & why
+Explain ingress controllers
+Explain Route 53, If I provide url how it works
+What are the configuration you do in Route53
+How do you deploy application to prod env . what are the process involved
+How do you handle secret 
+Have you involved in process of transformation from on-premise to cloud env
+Have you written terraform script to configure resources on on-premise
+What is your day to day activities
+Are you available for morning shift
+
+
+Introduce Yourself
+Hello, my name is [Your Name]. I am currently a DevOps Manager at Nest Digital. I have extensive experience in managing infrastructure, implementing CI/CD pipelines, and utilizing a wide range of tools and technologies, including Kubernetes, AWS services, Terraform, Jenkins, Docker, and more. I have been working in the DevOps field for several years and have been involved in various projects that required both technical expertise and leadership skills.
+
+What are your roles & responsibilities?
+As a DevOps Manager at Nest Digital, my roles and responsibilities include:
+
+Managing and automating the infrastructure using Terraform and AWS services.
+Implementing and maintaining CI/CD pipelines using Jenkins and Argo CD.
+Overseeing container orchestration and microservices deployment with Kubernetes and Docker.
+Monitoring and ensuring the reliability of EKS clusters using tools like Prometheus and Grafana.
+Managing and leading a team of DevOps engineers, providing technical guidance and support.
+Collaborating with development and operations teams to streamline workflows and improve efficiency.
+Handling cloud migration projects, including moving on-premise VMs to the cloud and connecting them.
+Explain your project
+One of my recent projects involved replicating the current environment on AWS with specific requirements, including:
+
+Multi-region architecture to ensure high availability and disaster recovery.
+Containerized applications managed through Kubernetes on EKS.
+Automated CI/CD pipelines using Jenkins and Argo CD.
+Continuous monitoring and logging using Prometheus, Grafana, and ELK stack.
+Ensuring security and compliance through IAM policies, security groups, and VPC configurations.
+Explain CICD step by step
+Code Commit: Developers commit code changes to the version control system (e.g., Git).
+Build: Jenkins or another CI tool fetches the latest code, runs tests, and builds the application.
+Test: Automated tests are executed to verify the build's integrity and functionality.
+Deploy to Staging: The built application is deployed to a staging environment for further testing.
+Acceptance Testing: QA team performs acceptance testing in the staging environment.
+Deploy to Production: Once approved, the application is deployed to the production environment.
+Monitoring: Continuous monitoring is set up to track the application's performance and health.
+Explain the Jenkins file for terraform stage
+groovy
+Copy code
+pipeline {
+    agent any
+    stages {
+        stage('Checkout') {
+            steps {
+                git 'https://github.com/your-repo.git'
+            }
+        }
+        stage('Terraform Init') {
+            steps {
+                sh 'terraform init'
+            }
+        }
+        stage('Terraform Plan') {
+            steps {
+                sh 'terraform plan -out=tfplan'
+            }
+        }
+        stage('Terraform Apply') {
+            steps {
+                sh 'terraform apply tfplan'
+            }
+        }
+    }
+}
+Write Docker file to install Tomcat, copy WAR file from 1st stage, run it in 2nd stage
+Dockerfile
+Copy code
+# Stage 1: Build stage
+FROM maven:3.8.1-jdk-11 as builder
+WORKDIR /app
+COPY . .
+RUN mvn clean package
+
+# Stage 2: Run stage
+FROM tomcat:9.0
+COPY --from=builder /app/target/your-app.war /usr/local/tomcat/webapps/
+CMD ["catalina.sh", "run"]
+What is Dockerfile?
+A Dockerfile is a script containing a series of instructions on how to build a Docker image. It specifies the base image, the commands to run inside the container, and other configurations necessary to create the final image.
+
+What is Docker image?
+A Docker image is a lightweight, standalone, and executable software package that includes everything needed to run a piece of software, including the code, runtime, libraries, and dependencies.
+
+How do you create containers?
+You create containers using the docker run command followed by the image name. For example:
+
+sh
+Copy code
+docker run -d --name mycontainer myimage
+What is the difference between container and k8s pod?
+Container: A lightweight, standalone, and executable package of software that includes everything needed to run it.
+Kubernetes Pod: A group of one or more containers that are deployed together on the same host and share the same network namespace. Pods are the smallest deployable units in Kubernetes.
+What are the things you know in K8s?
+Pod, Deployment, Service, ConfigMap, Secret
+Helm Charts for package management
+Ingress Controllers for routing external traffic
+Horizontal Pod Autoscaling (HPA), Vertical Pod Autoscaling (VPA)
+Cluster monitoring with Prometheus and Grafana
+CI/CD integration with Kubernetes using Jenkins and Argo CD
+Tell me some K8s commands
+kubectl get pods
+kubectl describe pod [pod_name]
+kubectl apply -f [file_name].yaml
+kubectl delete pod [pod_name]
+kubectl logs [pod_name]
+kubectl exec -it [pod_name] -- /bin/bash
+What is crontab?
+Crontab is a command used to schedule tasks to be executed at specific times or intervals on Unix-like operating systems. It is used to automate repetitive tasks.
+
+Tell some Linux commands
+ls: List directory contents
+cd: Change directory
+cp: Copy files and directories
+mv: Move or rename files and directories
+rm: Remove files or directories
+chmod: Change file permissions
+chown: Change file owner and group
+ps: Report a snapshot of current processes
+top: Display tasks
+In Linux, if I login to tomcat usr/local/tomcat/webapps/start.sh script should automatically run. How would you do this?
+You can add the command to the .bashrc or .bash_profile file of the user to ensure the script runs upon login. For example:
+
+sh
+Copy code
+echo "/usr/local/tomcat/webapps/start.sh" >> ~/.bashrc
+Explain Branching strategy
+A branching strategy defines how code branches are used and managed in a version control system. Common strategies include:
+
+Mainline/Trunk-Based Development: A single main branch where all changes are integrated.
+Feature Branching: Each feature is developed in its own branch and merged into the main branch when complete.
+Release Branching: Separate branches for different releases, allowing for maintenance and development in parallel.
+GitFlow: A more complex strategy with separate branches for development, releases, and hotfixes.
+What permissions are there for S3 bucket?
+S3 bucket permissions include:
+
+Bucket Policies: JSON-based policies that define what actions are allowed or denied for specific users or roles.
+Access Control Lists (ACLs): Simple, legacy method to grant read/write permissions to users.
+IAM Policies: Policies attached to IAM users, groups, or roles to grant permissions.
+What are the things you know in EC2?
+Launching and configuring instances
+Security groups and key pairs for access control
+EBS volumes for persistent storage
+AMIs for creating instances with pre-configured settings
+Auto Scaling Groups for dynamic scaling
+Elastic Load Balancers (ALB, NLB) for distributing traffic
+VPC configurations for network isolation
+What are the services you know in AWS?
+EC2, S3, RDS, Lambda
+VPC, IAM, CloudWatch
+SQS, SNS, API Gateway
+ECS, EKS, Fargate
+Route 53, CloudFront
+DynamoDB, Aurora
+How do you create EC2 instance?
+Go to the EC2 Dashboard in the AWS Management Console.
+Click on "Launch Instance".
+Select an Amazon Machine Image (AMI).
+Choose an instance type.
+Configure instance details (network, IAM role, etc.).
+Add storage.
+Add tags.
+Configure security group.
+Review and launch the instance.
+Explain how Application Load Balancer works
+An Application Load Balancer (ALB) distributes incoming application traffic across multiple targets, such as EC2 instances, in different availability zones. It operates at the application layer (Layer 7) and supports advanced routing, such as host-based and path-based routing, SSL termination, and sticky sessions.
+
+What are the rules available in ALB? How you define rules?
+ALB rules allow for routing decisions based on:
+
+Host-based routing: Route traffic based on the hostname in the request.
+Path-based routing: Route traffic based on the URL path.
+Header-based routing: Route traffic based on HTTP headers.
+Method-based routing: Route traffic based on HTTP methods.
+Rules are defined in the ALB listener configuration, specifying conditions and target groups.
+Explain Autoscaling (VPA, HPA, CA) which is best & why
+Horizontal Pod Autoscaler (HPA): Automatically scales the number of pods based on CPU utilization or other select metrics.
+Vertical Pod Autoscaler (VPA): Automatically adjusts the CPU and memory requests/limits of pods.
+Cluster Autoscaler (CA): Automatically adjusts the size of the Kubernetes cluster based on pending pods and resource utilization.
+The best option depends on the use case:
+
+HPA is best for scaling stateless applications dynamically.
+VPA is useful for optimizing resource requests and limits.
+CA ensures the cluster has enough nodes to handle workloads.
+Explain ingress controllers
+Ingress controllers manage the ingress resources and provide HTTP and HTTPS routing to services within a Kubernetes cluster. They handle traffic routing, SSL termination, and load balancing. Common ingress controllers include NGINX, Traefik, and HAProxy.
+
+Explain Route 53, If I provide URL how it works
+Route 53 is a scalable DNS web service. When a URL is provided, Route 53:
+
+Receives the DNS query.
+Looks up the DNS records.
+Responds with the IP address of the target resource.
+Optionally, it can route traffic based on routing policies such as latency-based, geo-location, weighted, or failover.
+What are the configurations you do in Route 53?
+Create and manage hosted zones.
+Set up DNS records (A, CNAME, MX, TXT).
+Configure routing policies (latency-based, weighted, geo-location).
+Set up health checks for failover routing.
+Configure domain registration and transfer.
+How do you deploy application to prod env. What are the process involved
+Code Merge: Ensure the latest code is merged into the main branch.
+Build: Use CI tools like Jenkins to build the application.
+Test: Run automated tests to validate the build.
+Staging Deployment: Deploy to a staging environment for final validation.
+Approval: Obtain necessary approvals for production deployment.
+Production Deployment: Deploy the application to the production environment using tools like Jenkins, Terraform, and Helm.
+Monitoring: Monitor the application for any issues post-deployment.
+How do you handle secrets
+Use AWS Secrets Manager or HashiCorp Vault to store and manage secrets.
+Use Kubernetes Secrets for sensitive data in a Kubernetes environment.
+Ensure secrets are encrypted at rest and in transit.
+Limit access to secrets using IAM policies and roles.
+Have you involved in process of transformation from on-premise to cloud environment?
+Yes, I have been involved in several projects where we migrated on-premise VMs to the cloud. This includes assessing the current infrastructure, planning the migration strategy, configuring the cloud environment, and executing the migration using tools like AWS Migration Hub, Server Migration Service (SMS), and Database Migration Service (DMS).
+
+Have you written terraform script to configure resources on on-premise?
+While Terraform is typically used for cloud resources, it can also be used to manage on-premise infrastructure with providers like VMware vSphere or OpenStack. I have written Terraform scripts for configuring resources in such environments.
+
+What is your day-to-day activities?
+Managing and monitoring infrastructure.
+Implementing and maintaining CI/CD pipelines.
+Collaborating with development and operations teams.
+Troubleshooting and resolving issues.
+Conducting code reviews and providing technical guidance.
+Automating repetitive tasks using scripts and tools.
+Ensuring security and compliance of the infrastructure.
+Leading and mentoring the DevOps team.
+Are you available for morning shift?
+Yes, I am available for the morning shift.

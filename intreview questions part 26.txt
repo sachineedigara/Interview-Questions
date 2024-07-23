@@ -1,0 +1,237 @@
+LTI Mindtree 2 Round:
+git:
+1. How do you decide a branching strategy. What are the different branching strategies you are aware of
+2. diff between git revert and git reset
+Jenkins:
+1. Share your screen and write your CI CD pipeline
+2. Suppose you want to upgrade Jenkins, without having downtime how do you do that.
+3. How do you take Jenkins backup, where do you store the backup, how frequently you used to take back up. How the backup scripts used to get triggered
+Terraform:
+1. Where did you keep your state files
+2. Was there any scenario where you had to load from a S3 backup. How did you do that
+3. Where were your terraform scripts stored at
+Ansible:
+1. Write an ansible playbook to install a software
+AWS:
+1. Difference between ALB and NLB
+2. WAF, ACL and NACL how do you configure that 
+3. Calculate CIDR for a given range
+4. What is ARM and it's benefits. Mainly was expecting the use case
+5. Have you used codeguru, cloud formation templates, code pipeline what is the difference between these
+6. How do you control traffic spikes to your service 
+Kubernetes:
+1. How do you choose a deployment strategy take an example of canary and rolling update in which scenario you go for canary and in which scenario you go for rolling update
+2. Write a daemonset manifest
+3. Write deployment manifest
+4. How to upgrade the cluster to the latest version what is your approach
+DevSecops:
+1. What is your understanding of DevSecops why people are more tending towards it
+2. What is Black Duck
+Python:
+1. What is your proficiency in python 
+2. Write a logic to check whether two strings are anagram
+
+
+LTI Mindtree 2 Round: Detailed Responses
+Git:
+1. How do you decide a branching strategy? What are the different branching strategies you are aware of?
+
+Branching Strategy: Choose based on team size, workflow, and release cadence.
+Git Flow: Uses branches for features, releases, and hotfixes. Suitable for teams with a structured release schedule.
+GitHub Flow: Simple strategy with only master and feature branches. Suitable for continuous deployment.
+GitLab Flow: Combines Git Flow and GitHub Flow, integrating issue tracking with branches.
+Trunk-Based Development: Frequent commits to the main branch, with short-lived feature branches.
+2. Difference between git revert and git reset:
+
+git revert: Creates a new commit that undoes changes from a previous commit. It’s safe for shared branches as it doesn’t alter the commit history.
+git reset: Alters the commit history by moving the HEAD pointer. It can be used to discard changes or modify the commit history. There are different modes:
+--soft: Keeps changes in the working directory.
+--mixed: Resets index but not the working directory.
+--hard: Resets both the index and working directory, discarding changes.
+Jenkins:
+1. Share your screen and write your CI/CD pipeline:
+
+Since I can’t share a screen, here’s a basic example of a Jenkins pipeline in a Jenkinsfile:
+groovy
+Copy code
+pipeline {
+    agent any
+    stages {
+        stage('Build') {
+            steps {
+                echo 'Building...'
+                sh 'mvn clean install'
+            }
+        }
+        stage('Test') {
+            steps {
+                echo 'Testing...'
+                sh 'mvn test'
+            }
+        }
+        stage('Deploy') {
+            steps {
+                echo 'Deploying...'
+                sh 'deploy.sh'
+            }
+        }
+    }
+}
+2. Suppose you want to upgrade Jenkins, without having downtime, how do you do that?
+
+Blue-Green Deployment: Set up a second Jenkins instance (Blue) and migrate users and plugins to it. After verifying the new instance, switch the traffic from the old instance (Green) to the new one.
+3. How do you take Jenkins backup, where do you store the backup, how frequently do you take a backup? How are the backup scripts triggered?
+
+Backup Process:
+Scripts: Use Jenkins' built-in backup plugins or custom scripts.
+Storage: Store backups in S3, an NFS server, or any cloud storage.
+Frequency: Based on the criticality of data, often daily or weekly.
+Triggering: Schedule backups using Jenkins cron jobs or external cron systems.
+Terraform:
+1. Where did you keep your state files?
+
+State Files: Typically stored in remote backends like AWS S3 with state locking using DynamoDB.
+2. Was there any scenario where you had to load from an S3 backup? How did you do that?
+
+Loading from S3 Backup:
+Download the backup file from S3.
+Replace the existing state file in your local environment or remote backend.
+Run terraform init and terraform apply to ensure consistency.
+3. Where were your Terraform scripts stored at?
+
+Storage: Typically stored in version control systems like GitHub, GitLab, or Bitbucket.
+Ansible:
+1. Write an Ansible playbook to install a software:
+
+yaml
+Copy code
+---
+- name: Install Apache Web Server
+  hosts: all
+  become: yes
+  tasks:
+    - name: Update apt cache
+      apt:
+        update_cache: yes
+
+    - name: Install Apache
+      apt:
+        name: apache2
+        state: present
+
+    - name: Ensure Apache is running
+      service:
+        name: apache2
+        state: started
+        enabled: yes
+AWS:
+1. Difference between ALB and NLB:
+
+ALB (Application Load Balancer): Operates at the application layer (Layer 7), supports advanced routing, SSL termination, and WebSocket.
+NLB (Network Load Balancer): Operates at the transport layer (Layer 4), handles millions of requests per second, and is suitable for TCP/UDP traffic.
+2. WAF, ACL, and NACL: How do you configure that?
+
+WAF (Web Application Firewall): Configure rules in the AWS WAF console to protect web applications from common threats.
+ACL (Access Control List): Use AWS ACLs to control access to AWS resources, such as S3 buckets or network interfaces.
+NACL (Network Access Control List): Configure inbound and outbound rules in the VPC console to control traffic at the subnet level.
+3. Calculate CIDR for a Given Range:
+
+For example, to calculate the CIDR for a range of IP addresses (e.g., 192.168.1.0/24), you need to determine the subnet mask that fits your IP range.
+Tools: Use online CIDR calculators or tools like ipcalc.
+4. What is ARM and Its Benefits? Mainly Was Expecting the Use Case:
+
+ARM (Azure Resource Manager): A management framework for deploying and managing Azure resources.
+Benefits: Provides a unified management interface, resource grouping, and template-based deployments.
+Use Case: Automate and manage resource deployment and configurations in Azure using ARM templates.
+5. Have You Used CodeGuru, CloudFormation Templates, CodePipeline? What Is the Difference Between These?
+
+CodeGuru: AWS service that provides code reviews and recommendations using machine learning.
+CloudFormation Templates: Infrastructure as code service to define and deploy AWS resources.
+CodePipeline: CI/CD service for automating the build, test, and deploy phases of applications.
+6. How Do You Control Traffic Spikes to Your Service?
+
+Traffic Spikes: Use Auto Scaling Groups, Elastic Load Balancers, and CloudFront for load distribution and scaling.
+Kubernetes:
+1. How Do You Choose a Deployment Strategy? Take an Example of Canary and Rolling Update. In Which Scenario Do You Go for Canary and in Which Scenario Do You Go for Rolling Update?
+
+Canary Deployment: Gradually roll out changes to a small subset of users. Suitable for high-risk updates where you want to test new features in production.
+Rolling Update: Gradually replaces instances of the previous version with the new version. Suitable for continuous deployments where minimal disruption is required.
+2. Write a DaemonSet Manifest:
+
+yaml
+Copy code
+apiVersion: apps/v1
+kind: DaemonSet
+metadata:
+  name: example-daemonset
+spec:
+  selector:
+    matchLabels:
+      name: example
+  template:
+    metadata:
+      labels:
+        name: example
+    spec:
+      containers:
+        - name: example-container
+          image: nginx
+3. Write Deployment Manifest:
+
+yaml
+Copy code
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: example-deployment
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: example
+  template:
+    metadata:
+      labels:
+        app: example
+    spec:
+      containers:
+        - name: example-container
+          image: nginx
+          ports:
+            - containerPort: 80
+4. How to Upgrade the Cluster to the Latest Version? What Is Your Approach?
+
+Upgrade Approach:
+Backup: Backup current cluster state.
+Test: Deploy a test cluster with the new version.
+Upgrade: Upgrade the cluster control plane and worker nodes.
+Verify: Check for any issues post-upgrade and validate applications.
+DevSecOps:
+1. What Is Your Understanding of DevSecOps? Why Are People More Tending Towards It?
+
+DevSecOps: Integrates security practices into the DevOps pipeline. Emphasizes security from the start of development through deployment.
+Reasons for Adoption: Helps in identifying vulnerabilities early, reduces risk, and ensures compliance while maintaining rapid development and deployment cycles.
+2. What Is Black Duck?
+
+Black Duck: A software composition analysis tool that identifies and manages open-source security vulnerabilities and license compliance issues.
+Python:
+1. What Is Your Proficiency in Python?
+
+Proficiency: Experienced in Python, including libraries such as Pandas, NumPy, and Flask.
+2. Write a Logic to Check Whether Two Strings Are Anagrams:
+
+python
+Copy code
+def are_anagrams(str1, str2):
+    return sorted(str1) == sorted(str2)
+
+# Example usage
+print(are_anagrams('listen', 'silent'))  # True
+print(are_anagrams('hello', 'world'))    # False
+Feel free to ask for more details or further clarifications on any of these topics!
+
+
+
+
+
+

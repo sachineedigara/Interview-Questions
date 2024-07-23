@@ -1,0 +1,406 @@
+Company- Altimetrix
+1. have you gone through job description?
+2. introduction
+3. what are all the frenquntly resources you created in terraform
+4. share screen and open notepad - create terraform module of instance and create instance using module
+5. what are the commands you will be using for creating this instance
+6. explain terraform pipeline
+7. how you manage multiple envs
+8. one person created ec2 instance in console, how you manage this instance, importing steps
+9. created ec2 instance with t2.micro but one person from management changed it to t2.medium for some upgarding activity , i don't want this to be detected by terraform is it possible 
+   be default it will detect when we do plan or apply i don't terraform to detect this is there is any option?
+10. how you manage state file? how do you manage creadentials for different envs
+11. what activities you do in k8s
+12. explain about your cluster and application
+13. how you created eks module using terraform
+14. which version of k8s using
+15. I have to deploy 2 applications say app1 and app2 on k8s cluster what are kubernates objects files you will write and explain how routing happens and whre you provide request has to go
+    app1 
+16. write all objects you have worked and explain what purpose you used
+17. did you write manifest file for pod or deployment
+18. how you pass environment varibles to your container
+19. how you created HPA
+20. what is CA
+21. how creats LB?
+22. where you mention path like app1 and app2
+23. i want to access app1, what will be my target and where will you be routing it(where you mention source and destination)
+24. is it possible to run 3 containers in same deployment, where my request goes to i mean which container
+25. in LB which are the target groups
+26. what about DNS, i want to access application using DNS not by LB URL
+27. how you secure K8s
+28. how you are login to cluster using service account or IAM roles
+29. how you secure application
+30. explain CICD
+31. explain helm charts
+32. given below 2 ingress files, how do you convert it into helm file
+33. what are all commands you use in helm
+34. i want to deploy it into dev only how do you pass values related to dev only
+35. how you configure helm
+36. lets say u configured it will helm in CICD for helm install it take 30 minutes what happens to your pipeline will it wait for completion of charts or goes it just say it's 
+    completed? if it waits how long it will wait
+37. how you do rollback of application
+38. explain about Gitlab runners
+39. explain steps of gitlab pipeline
+40. what kind of work you did in gitlab, enhancement work or scrach 
+41. what you understand from sonar report 
+42. what are all vulanariblities you come across
+43. have you used shared library in jenkins and explain it
+44. explain how you create gitlab pipeline
+45. what are all requests you get to create resources in aws
+46. worked on RDS
+47. how to migrate database to aws
+48. i have ec2, postgress and s3 in one region now client wants to migrate to another region how you do it?
+49. worked on lambda services, api gateways
+50. any cost optimazation you have worked and explain 
+51. how you monitor you application
+52. i created new ec2 instance I want to monitor using promethus and grafana how you do it
+53. which tools you used for logging 
+54. worked on splunk or ELK
+
+
+Altimetrix Interview Preparation
+1. Have You Gone Through Job Description?
+
+Confirm if you have reviewed the job description thoroughly to understand the role and requirements.
+2. Introduction
+
+Provide a brief overview of your professional background, key skills, and experience relevant to the position.
+3. Frequently Created Resources in Terraform
+
+EC2 Instances
+S3 Buckets
+VPCs and Subnets
+Security Groups
+RDS Instances
+IAM Roles and Policies
+EKS Clusters
+4. Create Terraform Module of Instance and Use Module
+
+Terraform Module (main.tf in a module directory):
+
+hcl
+Copy code
+variable "instance_type" {
+  description = "Type of EC2 instance"
+  default     = "t2.micro"
+}
+
+variable "ami_id" {
+  description = "AMI ID for the instance"
+}
+
+resource "aws_instance" "example" {
+  ami           = var.ami_id
+  instance_type = var.instance_type
+
+  tags = {
+    Name = "example-instance"
+  }
+}
+Using the Module (main.tf in the root directory):
+
+hcl
+Copy code
+module "ec2_instance" {
+  source        = "./path_to_module"
+  instance_type = "t2.micro"
+  ami_id         = "ami-12345678"
+}
+5. Commands for Creating the Instance
+
+Initialize Terraform: terraform init
+Plan the Deployment: terraform plan
+Apply the Configuration: terraform apply
+6. Explain Terraform Pipeline
+
+Plan: Generates an execution plan to show what actions Terraform will take.
+Apply: Executes the actions proposed in the plan to reach the desired state.
+Destroy: Removes all infrastructure managed by the Terraform configuration.
+7. Managing Multiple Environments
+
+Use Workspaces: Create separate workspaces for each environment (e.g., terraform workspace new dev).
+Use Different State Files: Store state files in different locations or use naming conventions.
+Use Environment Variables: Define variables for different environments.
+8. Managing EC2 Instance Created in Console
+
+Import Steps: Use terraform import to import the existing EC2 instance into your Terraform configuration.
+bash
+Copy code
+terraform import aws_instance.example i-1234567890abcdef0
+9. Prevent Terraform from Detecting Changes
+
+State Management: Use terraform state commands to manually manage state and ignore specific changes.
+Override Configuration: Configure ignore_changes in your Terraform configuration.
+hcl
+Copy code
+resource "aws_instance" "example" {
+  # ...
+  lifecycle {
+    ignore_changes = [instance_type]
+  }
+}
+10. Managing State Files and Credentials
+
+State Files: Store in a remote backend like S3 with state locking enabled (e.g., using DynamoDB for locking).
+Credentials: Use environment variables or managed secrets for different environments.
+11. Kubernetes Activities
+
+Deploying Applications
+Managing Pods and Services
+Scaling Applications
+Monitoring and Logging
+Configuring Networking
+12. Cluster and Application Description
+
+Cluster: Describe the number of nodes, types of nodes, and overall architecture.
+Application: Describe the applications running on the cluster, their purpose, and architecture.
+13. Creating EKS Module Using Terraform
+
+EKS Module Example:
+
+hcl
+Copy code
+resource "aws_eks_cluster" "example" {
+  name     = "example-cluster"
+  role_arn  = aws_iam_role.eks.arn
+  ...
+}
+14. Kubernetes Version
+
+Version: Specify the Kubernetes version you are using (e.g., 1.21, 1.22).
+15. Deploying Applications on Kubernetes
+
+Kubernetes Objects: Deployment, Service, Ingress.
+Deployment: Defines the application and replicas.
+Service: Exposes the application to other services or external traffic.
+Ingress: Routes external HTTP/HTTPS requests to the services.
+16. Kubernetes Objects
+
+Pods: Run individual containers.
+Deployments: Manage the deployment and scaling of pods.
+Services: Expose applications to internal or external traffic.
+ConfigMaps: Store configuration data.
+Secrets: Store sensitive data.
+Ingress: Manage external access to services.
+17. Manifest File for Pod or Deployment
+
+Pod Manifest Example:
+
+yaml
+Copy code
+apiVersion: v1
+kind: Pod
+metadata:
+  name: my-pod
+spec:
+  containers:
+  - name: my-container
+    image: my-image
+Deployment Manifest Example:
+
+yaml
+Copy code
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: my-deployment
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: my-app
+  template:
+    metadata:
+      labels:
+        app: my-app
+    spec:
+      containers:
+      - name: my-container
+        image: my-image
+18. Passing Environment Variables to Containers
+
+In Deployment Manifest:
+yaml
+Copy code
+spec:
+  containers:
+  - name: my-container
+    image: my-image
+    env:
+    - name: MY_ENV_VAR
+      value: "my-value"
+19. Creating Horizontal Pod Autoscaler (HPA)
+
+HPA Manifest Example:
+yaml
+Copy code
+apiVersion: autoscaling/v1
+kind: HorizontalPodAutoscaler
+metadata:
+  name: my-hpa
+spec:
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: my-deployment
+  minReplicas: 1
+  maxReplicas: 10
+  targetCPUUtilizationPercentage: 50
+20. Certificate Authority (CA)
+
+CA: Provides digital certificates that are used to secure communications and verify identities.
+21. Creating Load Balancer
+
+Load Balancer Service Example:
+yaml
+Copy code
+apiVersion: v1
+kind: Service
+metadata:
+  name: my-service
+spec:
+  type: LoadBalancer
+  selector:
+    app: my-app
+  ports:
+  - protocol: TCP
+    port: 80
+    targetPort: 80
+22. Path Configuration
+
+In Ingress:
+yaml
+Copy code
+rules:
+- host: example.com
+  http:
+    paths:
+    - path: /app1
+      backend:
+        serviceName: app1-service
+        servicePort: 80
+    - path: /app2
+      backend:
+        serviceName: app2-service
+        servicePort: 80
+23. Accessing Application via DNS
+
+DNS Configuration: Create an A or CNAME record in your DNS provider pointing to the Load Balancer’s DNS name.
+24. Running Multiple Containers in Same Deployment
+
+Configuration: All containers in a pod share the same network namespace. Requests are distributed among containers using ports and application logic.
+25. Target Groups in Load Balancer
+
+Target Groups: Define a group of targets (EC2 instances) that the Load Balancer routes traffic to. Each target group has a specific port and health check configuration.
+26. DNS for Application Access
+
+DNS Setup: Create DNS records pointing to the Load Balancer’s DNS name to access applications using custom domains.
+27. Securing Kubernetes
+
+Security Measures: Role-Based Access Control (RBAC), Network Policies, Pod Security Policies, Secrets Management, Regular Security Updates.
+28. Logging into Cluster
+
+Using Service Accounts: Create a Kubernetes service account and use kubectl to authenticate.
+Using IAM Roles: Configure IAM roles for AWS EKS and use aws-iam-authenticator for access.
+29. Securing Applications
+
+Application Security: Use TLS for communication, secure application secrets, and apply least privilege principles.
+30. CI/CD Explanation
+
+CI/CD: Continuous Integration (CI) automates code integration and testing. Continuous Deployment (CD) automates deployment to various environments.
+31. Helm Charts
+
+Helm Charts: Package configurations for Kubernetes applications, making it easier to deploy and manage applications.
+32. Converting Ingress Files to Helm
+
+Example Conversion: Create a Helm template with placeholders for path and service names.
+33. Helm Commands
+
+Commands:
+helm install: Install a chart
+helm upgrade: Upgrade a release
+helm rollback: Roll back a release
+helm list: List installed charts
+34. Deploying to Dev Only
+
+Pass Values: Use values-dev.yaml and specify during deployment:
+bash
+Copy code
+helm install my-release my-chart -f values-dev.yaml
+35. Configuring Helm
+
+Configuration: Set up Helm repositories, define values files, and create Helm charts for applications.
+36. Helm Installation in CI/CD Pipeline
+
+Pipeline Behavior: If Helm install takes 30 minutes, the pipeline will typically wait until completion unless specifically configured to timeout.
+37. Rollback of Application
+
+Rollback: Use Helm's rollback command to revert to a previous release:
+bash
+Copy code
+helm rollback my-release <REVISION>
+38. GitLab Runners
+
+GitLab Runners: Execute CI/CD jobs defined in GitLab pipelines. They can be shared or specific to your projects.
+39. Steps of GitLab Pipeline
+
+Steps:
+Define Pipeline: Create .gitlab-ci.yml
+Build: Compile code
+Test: Run tests
+Deploy: Deploy to environment
+Review: Approve or merge changes
+40. Work in GitLab
+
+Work Types: Enhancements or scratch. Describe your contributions and improvements.
+41. Understanding Sonar Report
+
+Sonar Report: Provides code quality and security metrics, including bugs, vulnerabilities, and code smells.
+42. Vulnerabilities Encountered
+
+Common Vulnerabilities: Security issues, deprecated libraries, unhandled exceptions.
+43. Shared Libraries in Jenkins
+
+Usage: Shared libraries are used to reuse Jenkins pipeline code across multiple jobs.
+44. Creating GitLab Pipeline
+
+Pipeline Creation: Define the pipeline in .gitlab-ci.yml, specifying stages, jobs, and runners.
+45. AWS Resource Requests
+
+Common Requests: EC2 instances, S3 buckets, IAM roles, VPC configurations.
+46. Experience with RDS
+
+RDS Tasks: Database setup, scaling, backups, performance tuning.
+47. Migrating Database to AWS
+
+Migration Methods: Use AWS Database Migration Service (DMS), dump and restore, or use database-specific tools.
+48. Migrating EC2, PostgreSQL, and S3
+
+Steps:
+EC2: Create AMI, launch in new region.
+PostgreSQL: Dump database and restore in new region.
+S3: Use S3 replication or transfer data manually.
+49. Experience with Lambda and API Gateway
+
+Lambda: Serverless compute service. Use cases include event-driven applications and backend services.
+API Gateway: Manage and deploy APIs.
+50. Cost Optimization
+
+Strategies: Right-sizing instances, using reserved instances, optimizing storage costs, and implementing auto-scaling.
+51. Application Monitoring
+
+Monitoring Tools: Prometheus, Grafana, CloudWatch, ELK Stack.
+52. Monitoring EC2 with Prometheus and Grafana
+
+Steps:
+Install Prometheus Node Exporter on EC2.
+Configure Prometheus to scrape metrics.
+Set up Grafana dashboards to visualize metrics.
+53. Logging Tools
+
+Tools: ELK Stack, Splunk, Fluentd, Graylog.
+54. Experience with Splunk or ELK
+
+Splunk: Log management and analysis tool.
+ELK Stack: Elasticsearch, Logstash, and Kibana for log management and analysis.
+Feel free to ask for more details or clarifications on any of these topics!

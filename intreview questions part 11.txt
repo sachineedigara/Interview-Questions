@@ -1,0 +1,265 @@
+company : Persistent Sys  date: 25-03-20223
+
+General Questions
+
+1. Introduce yourself.
+
+Answer: I am a DevOps Engineer with experience in managing and automating infrastructure, continuous integration, and deployment pipelines. My expertise spans across cloud platforms like AWS, container orchestration with Kubernetes, and configuration management with tools such as Terraform and Ansible. I am proficient in implementing CI/CD pipelines, monitoring systems, and ensuring high availability and scalability of applications.
+
+2. What are the services you were using in AWS?
+
+Answer: In AWS, I have used:
+
+EC2 (Elastic Compute Cloud)
+S3 (Simple Storage Service)
+VPC (Virtual Private Cloud)
+RDS (Relational Database Service)
+ALB (Application Load Balancer)
+EKS (Elastic Kubernetes Service)
+IAM (Identity and Access Management)
+CloudWatch
+Lambda
+DynamoDB
+Route 53
+
+
+3. EC2 purchasing options.
+
+Answer:
+
+On-Demand Instances: Pay for compute capacity by the hour or second with no long-term commitment.
+Reserved Instances: Reserve instances for a one-year or three-year term with significant cost savings.
+Spot Instances: Bid for unused EC2 capacity at a reduced price.
+Savings Plans: Commit to a consistent amount of usage over a one or three-year term for cost savings.
+Dedicated Hosts: Physical servers dedicated to your use, providing more control over the physical server.
+
+
+4. Working on any instance, suddenly out of reach what will be your action plan?
+
+Answer:
+
+Check Instance Status: Use AWS Management Console or CLI to check if the instance is running.
+Verify Network Configurations: Check VPC, subnet, and security group settings to ensure they are correctly configured.
+Review Logs: Look at system logs and CloudWatch logs for any error messages.
+Check Connectivity: Ensure there are no issues with the network or IAM roles.
+Reboot Instance: Try rebooting the instance to see if it resolves the issue.
+Contact AWS Support: If the issue persists, contact AWS Support for assistance.
+
+
+5. Difference between NACL and Security Group?
+
+Answer:
+
+Network ACL (NACL): Operates at the subnet level and controls inbound and outbound traffic to and from subnets. Stateless, meaning rules must be defined for both inbound and outbound traffic.
+Security Group: Operates at the instance level and controls inbound and outbound traffic to instances. Stateful, meaning if an incoming request is allowed, the corresponding response is automatically allowed.
+
+
+6. Components of VPC?
+
+Answer:
+
+Subnets: Segments of a VPC's IP address range.
+Internet Gateway: Allows communication between instances in a VPC and the internet.
+NAT Gateway: Allows instances in a private subnet to access the internet.
+Route Tables: Define how traffic is routed within the VPC.
+Security Groups: Virtual firewalls for instances to control inbound and outbound traffic.
+Network ACLs: Control inbound and outbound traffic at the subnet level.
+VPC Peering: Connects two VPCs to route traffic between them.
+
+
+7. Suppose you need to create 2 private and 2 public subnets, but you have created 1 public subnet and 3 private subnets. How will you convert one private subnet to a public subnet?
+
+Answer:
+
+Update Route Table: Add a route to the Internet Gateway in the route table associated with the private subnet.
+Modify Subnet Settings: Ensure that the subnet's route table directs traffic to the Internet Gateway for public access.
+
+
+8. Explain S3 lifecycle.
+
+Answer:
+
+S3 Lifecycle Policies: Automatically manage the lifecycle of objects in an S3 bucket. Policies can transition objects to cheaper storage classes (like S3 Glacier) or delete objects after a specified period. Useful for managing data retention and cost optimization.
+
+
+9. Data is present in the private subnet. How will you access the private subnet data?
+
+Answer:
+
+Bastion Host: Use a bastion host (jump server) in a public subnet to access the private subnet.
+VPN: Set up a VPN connection to securely connect to the private subnet.
+Direct Connect: Use AWS Direct Connect for a private, dedicated connection.
+
+
+10. Experience in AWS Lambda?
+
+Answer: Yes, I have experience with AWS Lambda. I have used it for creating serverless functions that run code in response to events, such as S3 uploads, DynamoDB changes, or API Gateway requests. Lambda enables the execution of code without managing servers.
+
+11. Experience in CloudWatch?
+
+Answer: Yes, I have used CloudWatch for monitoring and logging AWS resources. It provides metrics, logs, and alarms that help track the health and performance of applications and infrastructure.
+
+12. Experience in GIT?
+
+Answer: Yes, I have experience using Git for version control. I am familiar with branching strategies, merging, rebasing, and resolving conflicts.
+
+13. Git basic: If you change any file, how will you commit the changes?
+
+Answer:
+
+bash
+Copy code
+git add <file>
+git commit -m "Description of changes"
+
+
+14. Difference between git stash and git squash?
+
+Answer:
+
+Git Stash: Temporarily saves changes that are not yet committed, allowing you to switch branches or perform other tasks.
+Git Squash: Combines multiple commits into a single commit to simplify history, often used during merging or rebasing.
+
+
+15. Difference between CMD and ENTRYPOINT in Docker?
+
+Answer:
+
+CMD: Provides default arguments for the ENTRYPOINT instruction or specifies the command to run when the container starts. Can be overridden by providing arguments in docker run.
+ENTRYPOINT: Specifies the command that will always be executed when the container starts. CMD can provide default arguments to this command.
+
+
+16. Explain Kubernetes Auto-scaling.
+
+Answer:
+
+Horizontal Pod Autoscaler (HPA): Scales the number of pod replicas based on CPU utilization or other metrics.
+Vertical Pod Autoscaler (VPA): Adjusts the resource requests and limits of containers based on their usage.
+Cluster Autoscaler: Scales the number of nodes in the cluster based on the resource demands of the pods.
+
+
+17. Write any Ansible playbook.
+
+Answer:
+
+yaml
+Copy code
+- name: Install and start Apache
+  hosts: all
+  become: yes
+  tasks:
+    - name: Install httpd
+      yum:
+        name: httpd
+        state: present
+
+    - name: Start httpd service
+      service:
+        name: httpd
+        state: started
+        enabled: yes
+
+18. Write any Dockerfile.
+
+Answer:
+
+Dockerfile
+Copy code
+# Use an official Python runtime as a parent image
+FROM python:3.8-slim
+
+# Set the working directory
+WORKDIR /app
+
+# Copy the current directory contents into the container
+COPY . /app
+
+# Install any needed packages specified in requirements.txt
+RUN pip install --no-cache-dir -r requirements.txt
+
+# Make port 80 available to the world outside this container
+EXPOSE 80
+
+# Define environment variable
+ENV NAME World
+
+# Run app.py when the container launches
+CMD ["python", "app.py"]
+
+
+19. Write Jenkins pipeline script.
+
+Answer:
+
+groovy
+Copy code
+pipeline {
+    agent any
+    stages {
+        stage('Build') {
+            steps {
+                echo 'Building...'
+                sh 'mvn clean install'
+            }
+        }
+        stage('Test') {
+            steps {
+                echo 'Testing...'
+                sh 'mvn test'
+            }
+        }
+        stage('Deploy') {
+            steps {
+                echo 'Deploying...'
+                sh './deploy.sh'
+            }
+        }
+    }
+}
+
+
+20. Explain how you can install HTTPD in 100 servers.
+
+Answer:
+
+Using Ansible: Write an Ansible playbook to install HTTPD on all servers.
+yaml
+Copy code
+- name: Install HTTPD on multiple servers
+  hosts: webservers
+  become: yes
+  tasks:
+    - name: Install httpd
+      yum:
+        name: httpd
+        state: present
+
+
+21. How will you check if the previous command is successful or not in Linux?
+
+Answer:
+
+Check Exit Status: Use the $? variable immediately after the command.
+bash
+Copy code
+command
+if [ $? -eq 0 ]; then
+    echo "Command succeeded"
+else
+    echo "Command failed"
+fi
+
+
+22. Why did you work for 5 years in the same company?
+
+Answer: I worked for 5 years at the same company to deepen my expertise in my field, take on increasing responsibilities, and contribute to meaningful projects. It allowed me to grow professionally and develop a strong understanding of the company's operations and culture.
+
+
+23. Can you explain Python scripting?
+
+Answer: Python scripting involves writing scripts using the Python programming language to automate tasks, process data, or build applications. Python is known for its readability and simplicity, making it a popular choice for scripting.
+
+
+24. Can you adjust to Python script in 1 month?
+
+Answer: Yes, I can adjust to Python scripting within a month. I have experience with scripting and can quickly learn Python's syntax and libraries to accomplish scripting tasks efficiently.

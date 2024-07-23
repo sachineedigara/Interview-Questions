@@ -1,0 +1,139 @@
+Company: rsystems
+
+
+1. What have you done on Argo CD
+2. How your microservices were accessed by the end user externally
+3. How do you monitor the eks cluster. What are the tools involved
+4. Present your screen and write the architecture of your cluster
+5. What is helm, how was it used in your project
+6. How did you configure grafana and Prometheus for monitoring
+7. Write a Jenkins pipeline which should handle multiple environments 
+8. My EC2 is full how do you handle this
+9. Ppk or pem file is deleted. What is the workaround to connect to the instance get the data
+10. What is multiaz in RDS
+11. How to migrate onpremise VM to cloud
+12. How do you connect on premise VM to cloud
+
+Here’s a detailed overview of each of your new queries:
+
+What have you done on Argo CD?
+
+Argo CD is a declarative, GitOps continuous delivery tool for Kubernetes. Typical tasks may include:
+
+Application Deployment: Using Git repositories as the source of truth for defining the desired application state.
+Automated Sync: Configuring Argo CD to automatically synchronize the application state from Git to the Kubernetes cluster.
+Monitoring and Rollbacks: Monitoring application status and performing rollbacks if necessary.
+Multi-cluster Management: Managing deployments across multiple Kubernetes clusters.
+How were your microservices accessed by the end user externally?
+
+Ingress Controllers: Using Kubernetes Ingress controllers like NGINX, Traefik, or AWS ALB Ingress Controller to manage external access to the services.
+Load Balancers: Using cloud provider load balancers (e.g., AWS ELB/ALB/NLB) to distribute traffic to the microservices.
+API Gateway: Implementing API gateways (e.g., AWS API Gateway) to route, secure, and manage API traffic.
+DNS: Configuring DNS services to route user requests to the appropriate load balancers or ingress controllers.
+How do you monitor the EKS cluster? What are the tools involved?
+
+Monitoring an EKS cluster typically involves:
+
+Prometheus: Collecting and querying metrics from the Kubernetes cluster.
+Grafana: Visualizing metrics collected by Prometheus.
+CloudWatch: Using AWS CloudWatch for monitoring AWS resources and custom metrics.
+Fluentd/Fluent Bit: Collecting and aggregating logs.
+Kubernetes Dashboard: Web-based UI to monitor the Kubernetes cluster.
+ELK Stack: Elasticsearch, Logstash, and Kibana for logging and monitoring.
+Present your screen and write the architecture of your cluster
+
+Since I can't present a screen, I'll describe a typical architecture:
+
+Master Nodes: Control plane components (API server, scheduler, controller manager).
+Worker Nodes: Run applications in pods.
+Ingress Controller: Manages external access to services.
+Load Balancer: Distributes incoming traffic.
+Monitoring Tools: Prometheus, Grafana, CloudWatch.
+CI/CD Tools: Jenkins, Argo CD for deployments.
+What is Helm, how was it used in your project?
+
+Helm is a package manager for Kubernetes, used to streamline the installation and management of Kubernetes applications.
+
+Package Management: Using Helm charts to define, install, and upgrade applications.
+Version Control: Managing application versions and rollbacks.
+Templates: Using Helm templates to manage Kubernetes manifests dynamically.
+Repositories: Storing and sharing Helm charts in repositories.
+How did you configure Grafana and Prometheus for monitoring?
+
+Install Prometheus: Using Helm or manual manifests to deploy Prometheus.
+Configure Prometheus: Setting up Prometheus with appropriate scrape configs to collect metrics from Kubernetes nodes, pods, and services.
+Install Grafana: Using Helm or manual manifests to deploy Grafana.
+Integrate Grafana with Prometheus: Adding Prometheus as a data source in Grafana.
+Create Dashboards: Building custom dashboards in Grafana to visualize metrics.
+Write a Jenkins pipeline which should handle multiple environments
+
+Here’s an example Jenkins pipeline (Declarative Pipeline) that handles multiple environments:
+
+groovy
+Copy code
+pipeline {
+  agent any
+  environment {
+    DEV_ENV = "development"
+    PROD_ENV = "production"
+  }
+  stages {
+    stage('Build') {
+      steps {
+        echo 'Building...'
+        // Add build steps here
+      }
+    }
+    stage('Test') {
+      steps {
+        echo 'Testing...'
+        // Add test steps here
+      }
+    }
+    stage('Deploy to Dev') {
+      steps {
+        echo "Deploying to ${DEV_ENV} environment..."
+        // Add deployment steps for development environment here
+      }
+    }
+    stage('Deploy to Prod') {
+      steps {
+        input "Deploy to ${PROD_ENV}?"
+        echo "Deploying to ${PROD_ENV} environment..."
+        // Add deployment steps for production environment here
+      }
+    }
+  }
+}
+My EC2 is full, how do you handle this?
+
+Expand Volume: Use AWS Console or CLI to increase the size of the EBS volume.
+bash
+Copy code
+aws ec2 modify-volume --volume-id <volume-id> --size <new-size>
+Resize Filesystem: Log in to the instance and resize the filesystem.
+bash
+Copy code
+sudo resize2fs /dev/xvdf
+Add Additional Volume: Attach a new volume to the instance and mount it.
+Clean Up: Remove unnecessary files and data to free up space.
+PPK or PEM file is deleted. What is the workaround to connect to the instance and get the data?
+
+EC2 Instance Connect: Use EC2 Instance Connect to access the instance.
+Use a Snapshot: Create a snapshot of the EBS volume and attach it to another instance where you have access.
+AWS Systems Manager (SSM): Use SSM Session Manager if the instance has the SSM agent installed and IAM role configured.
+What is Multi-AZ in RDS?
+
+Multi-AZ (Multiple Availability Zone) in Amazon RDS provides high availability and failover support for DB instances. RDS automatically creates a primary DB instance and synchronously replicates the data to a standby instance in a different Availability Zone.
+
+How to migrate on-premise VM to the cloud?
+
+AWS Server Migration Service (SMS): Use AWS SMS to automate the migration.
+VM Import/Export: Use AWS VM Import/Export to import your virtual machine image.
+CloudEndure Migration: Use CloudEndure Migration for lift-and-shift migrations.
+Manual Method: Export VM disk, upload to S3, and create an AMI.
+How do you connect on-premise VM to cloud?
+
+VPN (Virtual Private Network): Set up a VPN connection between the on-premises network and the cloud VPC.
+Direct Connect: Use AWS Direct Connect for a dedicated network connection.
+Hybrid Cloud Solutions: Use services like AWS Transit Gateway, AWS Outposts, or VMware Cloud on AWS for hybrid cloud connectivity.

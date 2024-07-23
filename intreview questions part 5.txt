@@ -1,0 +1,147 @@
+Cognizant -questions
+
+
+1. Introduce Yourself
+
+I am a DevOps engineer currently working with Logicworks, a leading AWS consulting and Managed Services Provider. I have extensive experience in implementing multi-region architectures, containerized applications, and CI/CD pipelines. My expertise includes working with Kubernetes, Terraform, AWS services, and various CI/CD tools such as Jenkins.
+
+2. CI/CD Write and Explain
+
+A typical CI/CD pipeline in Jenkins might look like this:
+
+groovy
+Copy code
+pipeline {
+    agent any
+    environment {
+        DOCKER_IMAGE = "myapp"
+    }
+    stages {
+        stage('Checkout') {
+            steps {
+                git 'https://github.com/myrepo.git'
+            }
+        }
+        stage('Build') {
+            steps {
+                script {
+                    docker.build(DOCKER_IMAGE)
+                }
+            }
+        }
+        stage('Test') {
+            steps {
+                script {
+                    docker.image(DOCKER_IMAGE).inside {
+                        sh 'npm test'
+                    }
+                }
+            }
+        }
+        stage('Deploy') {
+            steps {
+                script {
+                    docker.image(DOCKER_IMAGE).inside {
+                        sh 'kubectl apply -f k8s/'
+                    }
+                }
+            }
+        }
+    }
+    post {
+        always {
+            cleanWs()
+        }
+    }
+}
+
+Checkout: Clones the Git repository.
+Build: Builds the Docker image.
+Test: Runs tests inside a Docker container.
+Deploy: Deploys the application to Kubernetes.
+Post: Cleans the workspace after the pipeline completes.
+
+
+3. Have You Written the POM.xml?
+Yes, I have written pom.xml files for Maven projects to manage dependencies, build configurations, and plugins.
+
+4. Difference Between COPY and ADD in Dockerfile
+COPY: Copies files from the host to the container.
+ADD: Similar to COPY but also supports URL downloads and automatic extraction of compressed files.
+
+5. Branching Strategy
+A common branching strategy is GitFlow:
+
+master: Production-ready code.
+develop: Integration branch for features.
+feature/: Branch for developing new features.
+release/: Preparation for a new production release.
+hotfix/: Quick fixes to the production code.
+
+
+6. Write a Script to Install EC2 by Terraform
+hcl
+Copy code
+provider "aws" {
+  region = "us-west-2"
+}
+
+resource "aws_instance" "example" {
+  ami           = "ami-12345678"
+  instance_type = "t2.micro"
+
+  tags = {
+    Name = "example-instance"
+  }
+}
+
+
+7. Reverting to a Previous Version of the State File
+To revert to a previous version of the state file:
+
+Use Terraform's built-in terraform state list and terraform state pull commands to identify and review state changes.
+Restore a backup of the state file manually if automatic backups are available.
+
+
+8. Install Previous Version of Plugin in Jenkins
+Go to Jenkins Plugin Manager.
+Download the .hpi or .jpi file of the desired version from the plugin’s GitHub releases or Jenkins Update Center archives.
+Upload the file through Jenkins Plugin Manager under "Advanced" tab -> "Upload Plugin".
+
+
+9. Different Services You Have Worked with in AWS
+EC2: Compute instances.
+S3: Object storage.
+RDS: Managed relational database service.
+Lambda: Serverless computing.
+VPC: Virtual private cloud.
+ECS/EKS: Container services.
+CloudWatch: Monitoring and logging.
+
+
+10. How to Integrate ALB
+Create an ALB in the AWS Management Console or via Terraform.
+Define target groups and listeners for the ALB.
+Register instances or services (such as ECS tasks) with the target groups.
+Configure security groups and routing rules to allow traffic to the ALB.
+
+
+11. Difference Between Count and Each in Terraform
+count: Creates multiple instances of a resource based on a numeric value.
+for_each: Creates resources based on a set of strings or keys, useful for maps and lists.
+
+
+12. Difference Between Git Pull and Git Fetch
+git pull: Fetches and integrates changes from the remote repository to the local branch.
+git fetch: Fetches changes from the remote repository without integrating them.
+
+
+13. Technical and Business Benefits of DevOps Work Culture
+Technical Benefits:
+Faster delivery of features.
+Improved collaboration and communication.
+Automated testing and deployments.
+Business Benefits:
+Increased efficiency and productivity.
+Reduced time to market.
+Better customer satisfaction with rapid feedback and improvements.

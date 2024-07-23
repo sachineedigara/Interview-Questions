@@ -1,0 +1,74 @@
+Company : Relanto
+how do you manage the disaster recovery in aws s3
+what is a permanent solution if s3 bucket storage is full?
+why do you create vpc?
+do you managed any resources in terraform?
+how do you monitor ec2 instance?
+How would you set up a highly available web application in AWS using EC2, ELB, and Auto Scaling?
+Can you describe the process of setting up a continuous delivery pipeline in AWS using CodePipeline and CodeBuild?
+how does company shift from monolithic to microservices and how can they club kuvernetes into it?
+Explain the Elastic Beanstalk deployment modes
+how were you passing environmentvariable in k8?
+how  blue-green deployment strategy was on AWS involves creating two identical environments and how you set up?
+
+
+Relanto: Detailed Responses
+1. Managing Disaster Recovery in AWS S3
+To manage disaster recovery for AWS S3, you can use several strategies:
+
+Versioning: Enable versioning on your S3 bucket to keep multiple versions of an object. This helps in recovering from accidental deletions or overwrites.
+Cross-Region Replication (CRR): Set up CRR to automatically replicate objects to a bucket in a different AWS region, ensuring data redundancy across geographical locations.
+Lifecycle Policies: Configure lifecycle policies to move older versions of objects to cheaper storage classes or to delete them after a certain period.
+Backup and Restore: Regularly backup data to another S3 bucket or another storage service, and have a tested process for restoring data when needed.
+2. Permanent Solution if S3 Bucket Storage is Full
+Storage Classes: Move data to different storage classes like S3 Glacier or S3 Intelligent-Tiering to optimize costs for infrequently accessed data.
+Lifecycle Policies: Implement lifecycle policies to transition objects to cheaper storage or to delete them after a specified period.
+Data Archiving: Archive old and rarely accessed data to storage solutions like AWS Glacier.
+Data Cleanup: Regularly clean up unnecessary files and old versions to free up space.
+3. Creating VPC
+Isolation: VPC allows you to isolate your resources within a virtual network.
+Security: Provides control over network settings, including security groups and network ACLs.
+Customization: Allows you to customize IP address ranges, create subnets, and configure route tables and gateways.
+4. Managing Resources in Terraform
+Yes, I have managed resources in Terraform. This includes creating and managing EC2 instances, VPCs, subnets, security groups, RDS instances, IAM roles, and more using Terraform scripts.
+
+5. Monitoring EC2 Instances
+CloudWatch: Use CloudWatch to monitor EC2 instance metrics such as CPU usage, disk I/O, and network activity.
+CloudWatch Alarms: Set up alarms to get notified when specific metrics reach certain thresholds.
+CloudWatch Logs: Collect and analyze log data from your EC2 instances.
+Custom Metrics: Publish custom metrics to CloudWatch for application-specific monitoring.
+6. Setting Up a Highly Available Web Application in AWS
+EC2 Instances: Deploy EC2 instances across multiple Availability Zones (AZs) for high availability.
+Elastic Load Balancer (ELB): Use ELB to distribute incoming traffic across multiple EC2 instances in different AZs.
+Auto Scaling: Configure Auto Scaling to automatically scale the number of EC2 instances based on demand.
+RDS Multi-AZ: Use RDS with Multi-AZ deployment for database high availability.
+Route 53: Use Route 53 for DNS management and health checks to route traffic to healthy instances.
+7. Setting Up a Continuous Delivery Pipeline in AWS
+CodePipeline: Set up CodePipeline to automate the build, test, and deploy phases.
+Source Stage: Configure the source stage to pull code from a repository (e.g., GitHub, CodeCommit).
+Build Stage: Use CodeBuild to build the code, run tests, and create artifacts.
+Deploy Stage: Use CodeDeploy or another deployment service to deploy the built artifacts to the target environment.
+IAM Roles: Ensure proper IAM roles and policies are in place for CodePipeline, CodeBuild, and other services to interact securely.
+8. Shifting from Monolithic to Microservices with Kubernetes
+Decomposition: Break down the monolithic application into smaller, loosely coupled microservices, each responsible for a specific functionality.
+Containerization: Package each microservice into a container using Docker.
+Kubernetes: Deploy and manage containers using Kubernetes.
+Service Discovery: Use Kubernetes services for service discovery and load balancing.
+Scaling: Use Kubernetes’ built-in scaling features to scale microservices based on demand.
+CI/CD Integration: Integrate CI/CD pipelines to automate the build, test, and deployment processes.
+9. Elastic Beanstalk Deployment Modes
+Single Instance: Deploys your application to a single Amazon EC2 instance. Suitable for development, testing, and low-traffic applications.
+Load Balanced: Deploys your application to multiple Amazon EC2 instances with an Elastic Load Balancer. Suitable for production applications requiring high availability.
+Rolling Updates: Updates a few instances at a time to minimize downtime.
+Immutable Updates: Launches a new set of instances alongside the existing ones and switches traffic to the new instances when they pass health checks.
+10. Passing Environment Variables in Kubernetes
+ConfigMaps: Store configuration data in ConfigMaps and reference them in your pod specifications.
+Secrets: Store sensitive data in Secrets and reference them in your pod specifications.
+Pod Specification: Use the env or envFrom fields in the pod specification to pass environment variables.
+11. Blue-Green Deployment Strategy on AWS
+Two Environments: Create two identical environments: one active (blue) and one idle (green).
+Route 53: Use Route 53 to route traffic to the blue environment.
+Deployment: Deploy the new version to the green environment and test it thoroughly.
+Switch Traffic: Once validated, switch traffic from the blue environment to the green environment using Route 53.
+Rollback: If any issues arise, switch traffic back to the blue environment.
+Would you like more details on any specific point?

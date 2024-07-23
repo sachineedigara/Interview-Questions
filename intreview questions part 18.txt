@@ -1,0 +1,236 @@
+company: SmartStream
+
+
+what are the services experience you are having under AWS?
+what is the use of snap shot?
+You have EBS in a1 region, want to copy the content to a2 region is it possible? if possible how?
+difference between ellastic block storage and instance storage
+why you want to create vpc ? explain 
+different types of services in k8
+difference btween public subnet and private subnet
+under route53 what is private and public zone
+different types of routing policies
+What is multiaz in RDS
+why mounting is used?
+what is object storage? have you worked on object storage
+what are the types of object storage?
+what is diference docker swarm and kubernetes?
+what are the services available in k8?
+Difference between ClusterIp and NodePort?
+Types of monitoring tools to monitor docker/K8s
+What is daemonset.I want to create multiple replicas how you modify the daemonset
+Type of K8s setup used to host database
+how to deploy the app in different environment like dev ,QA, Prod?
+what is the use of persistant volume and Persistent volume claim (PVC) ? explain with example?
+
+
+AWS Services Experience
+AWS Services Experience:
+
+EC2 (Elastic Compute Cloud)
+S3 (Simple Storage Service)
+RDS (Relational Database Service)
+EKS (Elastic Kubernetes Service)
+VPC (Virtual Private Cloud)
+CloudWatch
+IAM (Identity and Access Management)
+Lambda
+SQS (Simple Queue Service)
+SNS (Simple Notification Service)
+Snapshot Use
+Snapshot:
+
+A snapshot is a point-in-time copy of an EBS volume.
+It is used for backup, recovery, and migration of data.
+Copying EBS Snapshot to Another Region
+Copying EBS Snapshot:
+
+Create a snapshot of the EBS volume in the source region (a1).
+Use the AWS Management Console, CLI, or SDK to copy the snapshot to the target region (a2).
+sh
+Copy code
+aws ec2 copy-snapshot --source-region a1 --source-snapshot-id snap-1234567890abcdef0 --region a2 --description "Copy of snapshot"
+Difference Between EBS and Instance Storage
+EBS (Elastic Block Store):
+
+Persistent Storage: Data persists independently of the instance lifecycle.
+Features: Snapshots, encryption, multiple volume types.
+Use Case: Databases, file systems, application data storage.
+Instance Store:
+
+Ephemeral Storage: Data is lost when the instance stops or terminates.
+Features: High IOPS, temporary storage.
+Use Case: Caching, temporary data, scratch data.
+VPC (Virtual Private Cloud)
+Creating VPC:
+
+Purpose: Isolate network resources, secure communication, and customize network configurations.
+Components: Subnets, route tables, internet gateways, NAT gateways, security groups, network ACLs.
+Types of Services in Kubernetes
+Kubernetes Services:
+
+ClusterIP: Exposes the service on an internal IP within the cluster.
+NodePort: Exposes the service on each Node’s IP at a static port.
+LoadBalancer: Exposes the service externally using a cloud provider’s load balancer.
+ExternalName: Maps a service to a DNS name.
+Public Subnet vs Private Subnet
+Public Subnet:
+
+Access: Has a route to the internet via an internet gateway.
+Use Case: Hosting public-facing applications and services.
+Private Subnet:
+
+Access: No direct route to the internet.
+Use Case: Hosting internal applications, databases, and backend services.
+Route53 Private and Public Zone
+Route53 Zones:
+
+Public Zone: Manages DNS records for a domain that is accessible over the internet.
+Private Zone: Manages DNS records for a domain that is accessible only within one or more VPCs.
+Types of Routing Policies
+Routing Policies in Route53:
+
+Simple Routing: Single resource without health checks.
+Weighted Routing: Distributes traffic based on specified weights.
+Latency Routing: Directs traffic to the lowest latency region.
+Failover Routing: Configures active-passive failover.
+Geolocation Routing: Routes traffic based on user location.
+Geoproximity Routing: Routes traffic based on the geographic location of users and resources.
+Multi-Value Answer Routing: Returns multiple healthy records.
+Multi-AZ in RDS
+Multi-AZ in RDS:
+
+Purpose: Provides high availability and failover support for DB instances.
+Configuration: RDS automatically creates a primary DB instance and synchronously replicates data to a standby instance in a different Availability Zone.
+Mounting
+Mounting:
+
+Purpose: Attaching a storage device (e.g., disk, partition) to a specific directory in the file system hierarchy.
+Use Case: Accessing data on different storage devices.
+Object Storage
+Object Storage:
+
+Purpose: Stores unstructured data as objects (files, metadata, identifiers).
+Use Case: Storing large amounts of data such as backups, archives, multimedia files.
+Types of Object Storage:
+
+S3 (Simple Storage Service): AWS’s scalable object storage service.
+Docker Swarm vs Kubernetes
+Docker Swarm:
+
+Ease of Use: Simpler to set up and manage.
+Features: Native clustering and orchestration for Docker containers.
+Kubernetes:
+
+Complexity: More complex with a steep learning curve.
+Features: Extensive orchestration features, scalability, high availability, rich ecosystem.
+Kubernetes Services
+Kubernetes Services:
+
+ClusterIP
+NodePort
+LoadBalancer
+ExternalName
+ClusterIP vs NodePort
+ClusterIP:
+
+Access: Internal access within the cluster.
+Use Case: Inter-service communication.
+NodePort:
+
+Access: Exposes the service on each node’s IP at a static port.
+Use Case: Accessing the service from outside the cluster.
+Monitoring Tools for Docker/Kubernetes
+Monitoring Tools:
+
+Prometheus: Monitoring and alerting toolkit.
+Grafana: Visualization and analytics.
+ELK Stack: Elasticsearch, Logstash, Kibana for log management.
+Datadog: Cloud monitoring and security.
+New Relic: Application performance monitoring.
+DaemonSet
+DaemonSet:
+
+Purpose: Ensures that a copy of a pod runs on all (or some) nodes.
+Modification for Multiple Replicas: DaemonSet runs one pod per node by design, for multiple replicas on each node, consider using Deployment with node affinity.
+Kubernetes Setup for Hosting Database
+Database Hosting:
+
+StatefulSet: Manages stateful applications with stable network identities and persistent storage.
+Deploying Apps in Different Environments
+Deploying Apps:
+
+Helm Charts: Use Helm values files to define environment-specific configurations.
+Jenkins Pipelines: Define separate stages for different environments.
+Persistent Volume and Persistent Volume Claim
+Persistent Volume (PV):
+
+Purpose: Represents a piece of storage in the cluster.
+Example:
+yaml
+Copy code
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: pv-example
+spec:
+  capacity:
+    storage: 10Gi
+  accessModes:
+    - ReadWriteOnce
+  persistentVolumeReclaimPolicy: Retain
+  hostPath:
+    path: /mnt/data
+Persistent Volume Claim (PVC):
+
+Purpose: Requests storage resources for a pod.
+Example:
+yaml
+Copy code
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: pvc-example
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 10Gi
+Additional Questions
+Kubernetes Cluster Architecture:
+
+Control Plane: Manages the cluster (API server, etcd, scheduler, controller manager).
+Worker Nodes: Run applications (kubelet, kube-proxy, container runtime).
+High Traffic Pod Scaling:
+
+Horizontal Pod Autoscaler (HPA) scales pods based on resource usage.
+yaml
+Copy code
+apiVersion: autoscaling/v1
+kind: HorizontalPodAutoscaler
+metadata:
+  name: my-app
+spec:
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: my-app
+  minReplicas: 1
+  maxReplicas: 10
+  targetCPUUtilizationPercentage: 50
+Optimizing Docker Images:
+
+Use multi-stage builds, minimal base images, and remove unnecessary files.
+URL Navigation to Pod/Container:
+
+DNS -> Ingress Controller -> Service -> Pod/Container.
+Kubernetes Load Balancer:
+
+Type: LoadBalancer service type provisions an external load balancer.
+Init Container:
+
+Runs setup tasks before the main container starts.
+CrashLoopBackOff Error:
+
+Check pod status, describe the pod, view logs, check events, and verify configurations.

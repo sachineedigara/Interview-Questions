@@ -1,0 +1,318 @@
+company: Persistent systems
+1)Introduction
+2)Role in your project
+3)write jenkins pipline with all stages 
+4)I want to push pipleine to s3 bucket instead of artifactory..modify the stage accordingly
+5)do you have exposure to gitlab.
+6)what exposure do you have on argo cd ..what are the advantages of argo cd?
+7)what tests have you performed on source code to check qulaity?
+8)have you performed any image scan? what tool have you used?
+9)what are the types of pipelines .explain?
+8)i have two nodes one is linux and another is windows ..project should run only on linux node..how would you do it.
+9)write a pipeline to build docker image ..generate the jar file and push it to S3 bucket.
+10)i have two aws accounts ..i want to send it to s3 bucket of specific aws acoount..how would you do it
+11)write with credentials Syntax for this
+12)Have you variablized helm charts hpw do you do it and write a sample deployemnt yaml and wrute values.yml for it.
+10)i want to deploy 100 services at oncde using helm ..what is your approach and how would you variabelise them
+11)what do you know about Argo Workflow 
+12) how good are you with ansible..are you aware of writing playbooks and roles.
+13)what do you understand by aws lambda.
+14) i have a lambda already created in AWS. i want to trigger this lambda as a part of jenkins pipeline. write the pipeline stage to do that.
+15)how would you give credentials to connect it to the lambda services
+16)how do you connect on premise to cloud services
+17)write  a pipeline when i have x% code coverage ...only then the docker image should built in the next stage and also i want to send a mail notification that the code coverage requirement is met.
+18)how would you configure the mail to send the notification
+19)explain the probes in kubernetes ?
+20)i have an eks cluster ..i have three worker nodes running...i have three namespace and one pod in each namespace...all these three namespaces are in dofferent nodes..
+i want to restrict pod comuunication between these namespaces ..how would you do that.
+21)i want to trigger  a jenkins job only if branch3 or any soecific branch is merged to the main branch ..how would you do it.
+22)Are you aware of github actions?
+
+
+
+Introduction
+Provide a brief overview of your professional background and experience in DevOps.
+Mention the tools and technologies you have worked with, including Jenkins, Docker, Kubernetes, AWS, and others.
+Highlight key projects and achievements.
+2. Role in Your Project
+Describe your role in the project, including responsibilities like managing CI/CD pipelines, infrastructure automation, and application deployments.
+Mention specific technologies and tools you used, and any challenges you overcame.
+3. Jenkins Pipeline with All Stages
+groovy
+Copy code
+pipeline {
+    agent any
+    stages {
+        stage('Checkout') {
+            steps {
+                checkout scm
+            }
+        }
+        stage('Build') {
+            steps {
+                sh './mvnw clean package'
+            }
+        }
+        stage('Test') {
+            steps {
+                sh './mvnw test'
+            }
+        }
+        stage('Deploy') {
+            steps {
+                deployToEnvironment() // Custom function to deploy
+            }
+        }
+        stage('Notify') {
+            steps {
+                mail to: 'team@example.com',
+                     subject: "Build ${currentBuild.fullDisplayName} - ${currentBuild.currentResult}",
+                     body: "Build completed with result: ${currentBuild.currentResult}"
+            }
+        }
+    }
+}
+4. Push Pipeline to S3 Bucket Instead of Artifactory
+Modify the pipeline to include a step for uploading artifacts to an S3 bucket:
+
+groovy
+Copy code
+pipeline {
+    agent any
+    stages {
+        stage('Checkout') {
+            steps {
+                checkout scm
+            }
+        }
+        stage('Build') {
+            steps {
+                sh './mvnw clean package'
+            }
+        }
+        stage('Test') {
+            steps {
+                sh './mvnw test'
+            }
+        }
+        stage('Upload to S3') {
+            steps {
+                withCredentials([string(credentialsId: 'aws-access-key-id', variable: 'AWS_ACCESS_KEY_ID'),
+                                 string(credentialsId: 'aws-secret-access-key', variable: 'AWS_SECRET_ACCESS_KEY')]) {
+                    sh 'aws s3 cp target/my-app.jar s3://my-bucket/my-app.jar'
+                }
+            }
+        }
+        stage('Notify') {
+            steps {
+                mail to: 'team@example.com',
+                     subject: "Build ${currentBuild.fullDisplayName} - ${currentBuild.currentResult}",
+                     body: "Build completed with result: ${currentBuild.currentResult}"
+            }
+        }
+    }
+}
+5. Exposure to GitLab
+Yes, I have worked with GitLab. Describe your experience with GitLab CI/CD pipelines, repository management, and any specific features you've utilized.
+6. Exposure to Argo CD and Its Advantages
+Exposure: Experience with setting up and managing Argo CD for GitOps workflows.
+Advantages:
+Declarative GitOps: Manages Kubernetes resources using Git repositories as the source of truth.
+Automated Sync: Automatically syncs the desired state from Git to Kubernetes.
+Multi-Cluster Support: Manages deployments across multiple clusters.
+Easy Rollbacks: Facilitates easy rollbacks to previous application versions.
+7. Tests Performed on Source Code for Quality
+Unit Tests: Ensures individual components work as expected.
+Integration Tests: Verifies the interaction between different components.
+Static Code Analysis: Tools like SonarQube to identify code smells and potential issues.
+Code Coverage: Tools like JaCoCo to measure the extent of code tested.
+8. Image Scanning
+Yes, I have performed image scans using tools like Trivy or Clair to identify vulnerabilities in Docker images.
+9. Types of Pipelines
+Declarative Pipelines: Defined using a domain-specific language (DSL) in a Jenkinsfile.
+Scripted Pipelines: Written in Groovy script, offering more flexibility but less structure.
+Multibranch Pipelines: Automatically creates Jenkins jobs for each branch in a repository.
+10. Pipeline for Docker Image Build and Push to S3
+groovy
+Copy code
+pipeline {
+    agent any
+    stages {
+        stage('Checkout') {
+            steps {
+                checkout scm
+            }
+        }
+        stage('Build Docker Image') {
+            steps {
+                script {
+                    def image = docker.build('my-app')
+                }
+            }
+        }
+        stage('Generate Jar File') {
+            steps {
+                sh './mvnw clean package'
+            }
+        }
+        stage('Upload to S3') {
+            steps {
+                withCredentials([string(credentialsId: 'aws-access-key-id', variable: 'AWS_ACCESS_KEY_ID'),
+                                 string(credentialsId: 'aws-secret-access-key', variable: 'AWS_SECRET_ACCESS_KEY')]) {
+                    sh 'aws s3 cp target/my-app.jar s3://my-bucket/my-app.jar'
+                }
+            }
+        }
+    }
+}
+11. Sending Artifacts to S3 Bucket in Another AWS Account
+Cross-Account Access: Set up IAM roles and policies to allow access between AWS accounts.
+Pipeline Step:
+groovy
+Copy code
+stage('Upload to S3 in Another Account') {
+    steps {
+        withCredentials([string(credentialsId: 'aws-access-key-id', variable: 'AWS_ACCESS_KEY_ID'),
+                         string(credentialsId: 'aws-secret-access-key', variable: 'AWS_SECRET_ACCESS_KEY')]) {
+            sh 'aws s3 cp target/my-app.jar s3://target-account-bucket/my-app.jar --profile target-account'
+        }
+    }
+}
+12. Credentials Syntax for Jenkins Pipeline
+groovy
+Copy code
+withCredentials([usernamePassword(credentialsId: 'my-credentials-id', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
+    // Use the credentials here
+}
+13. Variabilizing Helm Charts
+Values File: Use values.yaml to define environment-specific variables.
+Sample deployment.yaml:
+yaml
+Copy code
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: my-app
+spec:
+  replicas: 2
+  template:
+    spec:
+      containers:
+      - name: my-app
+        image: "my-app:{{ .Values.image.tag }}"
+        ports:
+        - containerPort: 80
+Sample values.yaml:
+yaml
+Copy code
+image:
+  tag: "latest"
+14. Deploying Multiple Services Using Helm
+Use a Helm chart for each service with a common values file for configuration.
+Variable Management: Define common values in a centralized file and override per environment as needed.
+15. Argo Workflow
+Argo Workflow: An open-source Kubernetes-native workflow engine for running and managing complex workflows. It supports DAG-based workflows and can be used for batch processing, ETL, and other long-running tasks.
+16. Ansible Proficiency
+Yes, I am proficient in writing Ansible playbooks and roles. I’ve used Ansible for configuration management, application deployment, and infrastructure provisioning.
+17. AWS Lambda
+AWS Lambda: A serverless compute service that runs code in response to events and automatically manages the underlying compute resources.
+18. Triggering Lambda from Jenkins Pipeline
+groovy
+Copy code
+pipeline {
+    agent any
+    stages {
+        stage('Invoke Lambda') {
+            steps {
+                withCredentials([string(credentialsId: 'aws-access-key-id', variable: 'AWS_ACCESS_KEY_ID'),
+                                 string(credentialsId: 'aws-secret-access-key', variable: 'AWS_SECRET_ACCESS_KEY')]) {
+                    sh 'aws lambda invoke --function-name myLambdaFunction response.json'
+                }
+            }
+        }
+    }
+}
+19. Providing Credentials for Lambda
+Use Jenkins credentials and withCredentials block to securely manage AWS credentials for accessing Lambda functions.
+20. Connecting On-Premises to Cloud Services
+VPN: Establish a VPN connection between on-premises infrastructure and cloud services.
+Direct Connect: Use AWS Direct Connect or similar services for a dedicated network connection.
+21. Pipeline with Code Coverage Check
+groovy
+Copy code
+pipeline {
+    agent any
+    stages {
+        stage('Checkout') {
+            steps {
+                checkout scm
+            }
+        }
+        stage('Build') {
+            steps {
+                sh './mvnw clean package'
+            }
+        }
+        stage('Test') {
+            steps {
+                sh './mvnw test'
+            }
+        }
+        stage('Check Code Coverage') {
+            steps {
+                script {
+                    def coverage = sh(script: 'grep -Po "(?<=Coverage: )\d+" coverage.txt', returnStdout: true).trim()
+                    if (coverage.toInteger() >= 80) {
+                        echo "Code coverage requirement met."
+                    } else {
+                        error "Code coverage requirement not met."
+                    }
+                }
+            }
+        }
+        stage('Build Docker Image') {
+            when {
+                expression {
+                    return coverage.toInteger() >= 80
+                }
+            }
+            steps {
+                script {
+                    def image = docker.build('my-app')
+                }
+            }
+        }
+        stage('Notify') {
+            steps {
+                mail to: 'team@example.com',
+                     subject: "Build ${currentBuild.fullDisplayName} - ${currentBuild.currentResult}",
+                     body: "Build completed with result: ${currentBuild.currentResult}. Code coverage: ${coverage}%"
+            }
+        }
+    }
+}
+22. Configuring Mail for Notifications
+Configure the SMTP settings in Jenkins under Manage Jenkins > Configure System > E-mail Notification.
+23. Kubernetes Probes
+Liveness Probe: Checks if the container is running. If it fails, Kubernetes restarts the container.
+Readiness Probe: Checks if the container is ready to accept traffic. If it fails, the container is removed from the service’s endpoints.
+24. Restricting Pod Communication Between Namespaces
+Use Network Policies to restrict traffic between namespaces:
+yaml
+Copy code
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: deny-communication
+  namespace: namespace1
+spec:
+  podSelector: {}
+  policyTypes:
+  - Ingress
+  ingress:
+  - from: []
+25. Trigger Jenkins Job on Branch Merge
+Use GitHub/GitLab webhook to trigger Jenkins builds. Configure Jenkins to build only when a specific branch (e.g., branch3) is merged into main.
+26. Exposure to GitHub Actions
+Yes, I have experience with GitHub Actions. Describe your experience with setting up workflows, defining actions, and automating tasks using GitHub Actions.
+Feel free to tailor these responses based on your specific experience and expertise. Good luck with your interview at Persistent Systems!

@@ -1,0 +1,318 @@
+Company - Persistent Systems
+
+1.Introduce yourself.
+2.Tell me the past experience, tool worked and projects worked.
+3.What kind of scripting you are aware of like groovy,bash,python?
+4.Explain the branching stratergy in your project.
+5.Whenever you merge your branches, do you merge directly or any procedure you followed?
+6.What are conflicts? How you resolve them while merging?
+7.Explain the basic concepts of jenkins.
+8.If you want to set up a new jenkins instance, what setup you will follow?
+9.What is declarative and scripting pipeline?
+10.Share the screen and write    
+    a. I want to generate the build, save the build output to the artifactory and I want to get the mail notification that build uploaded successfull or failed.
+	b. Write the exact command to send the mail notification
+	c. Write the jenkins pipeline to schedule the job periodically, like 15 days once.
+	d. Use the shared libraries and write jenkins pipeline that job should be triggred every 15 days and write further steps.
+11. Where do you save the shared libraries ?
+12. Can we include cronjob as a stage?
+13. If you have done the build triggers in console or portal itself, then If we have a multibranch pipeline, how you will avoid other branches to trigger?
+14. How do you handle security configuration is jenkins?
+15. How you will use credentials in that particular pipeline.
+16. Do you remember the syntax how it will start? credentials generated from snippet
+17. What all the parameters are present in this with credentials format?
+18. How will you use jenkins script console to troubleshoot and perform administrative task.
+19. How will you use RestAPI in the script?
+20. Write a script to automatically  install any jenkins plugin.
+21. Do you used CLI for jenkins operations??
+22. Write a groovy script to retrive all the jenkins job running on particular node.
+23. Have you faced any challenging issues in jenkins project and how you resolved that or overcome that?
+24. If the number of jobs on the queue are increased, How you will you overcome this?
+25. Suppose 2 people triggered the same pipeline job at a time. One job is running and other is waiting or long time. How this issue will be solved as a devops engineer. What  will you do?
+
+
+Introduce yourself.
+
+I am a DevOps professional with extensive experience in infrastructure automation, CI/CD pipelines, and cloud computing. I have worked with various tools and technologies including Jenkins, Docker, Kubernetes, Ansible, Terraform, and AWS. My current role involves managing and optimizing DevOps processes, ensuring seamless integration and deployment of applications.
+Tell me the past experience, tool worked, and projects worked.
+
+I have worked on multiple projects involving cloud migration, infrastructure automation, and container orchestration. Tools I have worked with include Jenkins for CI/CD, Docker for containerization, Kubernetes for orchestration, Terraform for infrastructure as code, and AWS for cloud services. One notable project was migrating on-premises applications to AWS, which involved setting up a multi-region architecture, automated CI/CD pipelines, and continuous monitoring.
+What kind of scripting you are aware of like Groovy, Bash, Python?
+
+I am proficient in Groovy for Jenkins pipelines, Bash for scripting and automation, and Python for various automation tasks and data processing.
+Explain the branching strategy in your project.
+
+Our branching strategy follows GitFlow, which includes the following branches:
+main: The production-ready branch.
+develop: The integration branch for feature development.
+feature/*: Branches for individual features.
+release/*: Branches for preparing releases.
+hotfix/*: Branches for critical bug fixes in production.
+Whenever you merge your branches, do you merge directly or any procedure you followed?
+
+We follow a procedure where changes are first merged into the develop branch via pull requests. After thorough code reviews and testing, feature branches are merged into develop. Before a release, the develop branch is merged into a release branch for final testing. Finally, the release branch is merged into main and develop simultaneously.
+What are conflicts? How do you resolve them while merging?
+
+Conflicts occur when changes in different branches affect the same part of the code. To resolve conflicts, we:
+Identify the conflicting files.
+Manually edit the files to reconcile differences.
+Test the changes to ensure functionality is intact.
+Commit the resolved changes and complete the merge.
+Explain the basic concepts of Jenkins.
+
+Jenkins is a CI/CD tool that automates the build, test, and deployment processes. Key concepts include:
+Jobs: Define tasks to be executed.
+Pipelines: Define the flow of jobs using code.
+Nodes: Machines on which Jenkins runs jobs.
+Plugins: Extend Jenkins functionality.
+If you want to set up a new Jenkins instance, what setup will you follow?
+
+Install Jenkins on a server.
+Configure Jenkins to use a dedicated user.
+Install necessary plugins.
+Set up credentials for accessing repositories and deployment targets.
+Create and configure jobs/pipelines.
+Set up backup and security measures.
+What is declarative and scripting pipeline?
+
+Declarative Pipeline: A simplified syntax for defining pipelines using a structured, easy-to-read format.
+groovy
+Copy code
+pipeline {
+  agent any
+  stages {
+    stage('Build') {
+      steps {
+        sh 'make build'
+      }
+    }
+    stage('Test') {
+      steps {
+        sh 'make test'
+      }
+    }
+  }
+}
+Scripted Pipeline: A more flexible and powerful syntax using Groovy, suitable for complex pipelines.
+groovy
+Copy code
+node {
+  stage('Build') {
+    sh 'make build'
+  }
+  stage('Test') {
+    sh 'make test'
+  }
+}
+Share the screen and write:
+a. I want to generate the build, save the build output to the Artifactory, and I want to get the mail notification that build uploaded successfully or failed.
+
+groovy
+Copy code
+pipeline {
+  agent any
+  stages {
+    stage('Build') {
+      steps {
+        sh 'make build'
+      }
+    }
+    stage('Upload to Artifactory') {
+      steps {
+        script {
+          def server = Artifactory.server 'my-artifactory'
+          def uploadSpec = '''{
+            "files": [{
+              "pattern": "build/output/*",
+              "target": "my-repo/path/"
+            }]
+          }'''
+          server.upload(uploadSpec)
+        }
+      }
+    }
+  }
+  post {
+    success {
+      mail to: 'team@example.com',
+           subject: 'Build Successful',
+           body: 'The build has been successfully uploaded to Artifactory.'
+    }
+    failure {
+      mail to: 'team@example.com',
+           subject: 'Build Failed',
+           body: 'The build failed. Please check the Jenkins logs for details.'
+    }
+  }
+}
+b. Write the exact command to send the mail notification.
+
+groovy
+Copy code
+mail to: 'team@example.com',
+     subject: 'Build Notification',
+     body: 'The build has completed.'
+c. Write the Jenkins pipeline to schedule the job periodically, like 15 days once.
+
+groovy
+Copy code
+pipeline {
+  agent any
+  triggers {
+    cron('H H 15 * *')
+  }
+  stages {
+    stage('Example Stage') {
+      steps {
+        sh 'echo "This job runs every 15 days."'
+      }
+    }
+  }
+}
+d. Use the shared libraries and write Jenkins pipeline that job should be triggered every 15 days and write further steps.
+
+groovy
+Copy code
+@Library('my-shared-library') _
+pipeline {
+  agent any
+  triggers {
+    cron('H H 15 * *')
+  }
+  stages {
+    stage('Example Stage') {
+      steps {
+        mySharedLibraryMethod()
+      }
+    }
+  }
+}
+Where do you save the shared libraries?
+
+Shared libraries are typically stored in a version control repository (e.g., GitHub, GitLab) and referenced in the Jenkins configuration.
+Can we include cronjob as a stage?
+
+Cron jobs are not typically included as a stage within a Jenkins pipeline. Instead, they are used to trigger the pipeline itself.
+If you have done the build triggers in console or portal itself, then if we have a multibranch pipeline, how will you avoid other branches to trigger?
+
+Use branch-specific conditions within the Jenkinsfile to limit triggering.
+groovy
+Copy code
+pipeline {
+  agent any
+  stages {
+    stage('Build') {
+      when {
+        branch 'main'
+      }
+      steps {
+        sh 'make build'
+      }
+    }
+  }
+}
+How do you handle security configuration in Jenkins?
+
+Use Role-Based Access Control (RBAC) for granular permissions.
+Secure Jenkins using HTTPS.
+Regularly update Jenkins and plugins.
+Use credentials binding for sensitive information.
+How will you use credentials in that particular pipeline?
+
+Use the withCredentials block.
+groovy
+Copy code
+pipeline {
+  agent any
+  stages {
+    stage('Use Credentials') {
+      steps {
+        withCredentials([usernamePassword(credentialsId: 'my-credentials', usernameVariable: 'USER', passwordVariable: 'PASS')]) {
+          sh 'echo $USER'
+        }
+      }
+    }
+  }
+}
+Do you remember the syntax how it will start? Credentials generated from the snippet.
+
+Use the Jenkins credentials binding syntax:
+groovy
+Copy code
+withCredentials([usernamePassword(credentialsId: 'my-credentials', usernameVariable: 'USER', passwordVariable: 'PASS')]) {
+  // Your steps here
+}
+What all the parameters are present in this with credentials format?
+
+credentialsId: The ID of the Jenkins credential.
+usernameVariable: The variable to store the username.
+passwordVariable: The variable to store the password.
+How will you use Jenkins script console to troubleshoot and perform administrative tasks?
+
+Access the Jenkins script console at http://your-jenkins-url/script.
+Run Groovy scripts for troubleshooting and administrative tasks.
+groovy
+Copy code
+println Jenkins.instance.pluginManager.plugins
+How will you use RestAPI in the script?
+
+Use Jenkins RestAPI to trigger jobs, get job status, etc.
+sh
+Copy code
+curl -X POST http://your-jenkins-url/job/your-job/build --user user:token
+Write a script to automatically install any Jenkins plugin.
+
+groovy
+Copy code
+import jenkins.model.*
+import hudson.PluginManager
+import hudson.model.UpdateCenter
+import hudson.cli.InstallPluginCommand
+
+def instance = Jenkins.getInstance()
+def pm = instance.getPluginManager()
+def uc = instance.getUpdateCenter()
+
+uc.updateAllSites()
+def plugin = uc.getPlugin("greenballs")
+if (!plugin.isInstalled()) {
+  def pluginInstall = uc.install([plugin], true)
+  pluginInstall.get()
+  instance.restart()
+}
+Do you use CLI for Jenkins operations?
+
+Yes, I use Jenkins CLI for various operations like triggering jobs, managing nodes, and installing plugins.
+sh
+Copy code
+java -jar jenkins-cli.jar -s http://your-jenkins-url/ help
+Write a Groovy script to retrieve all the Jenkins jobs running on a particular node.
+
+groovy
+Copy code
+def nodeName = 'your-node-name'
+def node = Jenkins.instance.getNode(nodeName)
+def runningJobs = []
+
+Jenkins.instance.getAllItems(Job.class).each { job ->
+  job.builds.each { build ->
+    if (build.isBuilding() && build.getBuiltOn() == node) {
+      runningJobs << job.fullName
+    }
+  }
+}
+
+println "Running jobs on ${nodeName}:"
+runningJobs.each { println it }
+Have you faced any challenging issues in Jenkins project and how you resolved that or overcome that?
+
+One challenging issue was managing long-running builds that frequently timed out. We resolved this by splitting the build process into smaller, more manageable stages and utilizing Jenkins agents to distribute the workload.
+If the number of jobs on the queue are increased, how will you overcome this?
+
+Scale Jenkins horizontally by adding more nodes.
+Optimize job configurations to reduce build time.
+Use job throttling plugins to manage job concurrency.
+Suppose 2 people triggered the same pipeline job at a time. One job is running and the other is waiting for a long time. How will this issue be solved as a DevOps engineer? What will you do?
+
+Implement job concurrency controls using Jenkins plugins like the "Throttle Concurrent Builds Plugin" to limit the number of concurrent builds.
+Configure the job to queue additional builds or cancel previous ones based on requirements.

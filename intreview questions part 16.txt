@@ -1,0 +1,153 @@
+NCR 2nd Round:
+
+
+AWS:
+1. What are the AWS services you are aware of
+2. What are the resources and metrics which were monitored using cloud watch
+3. What are the networking concepts you are aware of. What is the use of a transit gateway
+4. Suppose you have multiple accounts how do you establish communication between VPC's using transit gateway in that case
+5. EKS cluster architecture created using cloud
+Kubernetes:
+1. What is the use of daemonset. Suppose I want to create multiple replicas how to modify the daemonset
+2. How did you manage releases using helm. How was helm used in your project.
+3. You have made a kubernetes deployment and the deployment failed for some reason how do you troubleshoot it.
+4. How do you ensure your Jenkins deployment deployed to the right environment of Kubernetes(suppose you have dev, QA, pre-prod and prod environments)
+5. How did you create your kubernetes cluster using IAC, explain the steps involved
+6. What is your understanding about ArgoCD.
+Management:
+1. I see you working on various roles, how come you were promoted as a Devops manager how did this transition happen
+2. How did you integrate grafana in your project
+3. The answer you said is more on the ops end for grafana, have you worked on any real time tracking and gathering the data to show the dashboard?
+4. What is a rail transit system, I don't know anything about it, help me to understand and explain interms of a layman..
+5. The same for powersystem project which I had worked for
+6. What are the cybersecurity principles you are aware of
+7. How do you segregate your activities technically as well as from people management? What is the percentage you work technically and what is the percentage you manage people
+8. How did you give constructive feedback to your reportees and how the disagreement was solved?
+9. Have you fired anyone?
+10. What is the architectural change you proposed and how was it handled and presented to the relevant srakeholders
+
+
+What are the AWS services you are aware of?
+
+Compute: EC2, Lambda, ECS, EKS
+Storage: S3, EBS, EFS, Glacier
+Database: RDS, DynamoDB, Redshift, Aurora
+Networking: VPC, Route 53, ELB, CloudFront, Direct Connect, Transit Gateway
+Management Tools: CloudWatch, CloudTrail, CloudFormation, AWS Config, Systems Manager
+Security: IAM, KMS, Shield, WAF
+Developer Tools: CodeCommit, CodeBuild, CodeDeploy, CodePipeline
+Analytics: Athena, EMR, Kinesis, QuickSight
+AI/ML: SageMaker, Rekognition, Comprehend
+Integration: SNS, SQS, Step Functions, EventBridge
+What are the resources and metrics which were monitored using CloudWatch?
+
+Resources: EC2 instances, RDS databases, EBS volumes, Lambda functions, ELB, ECS/EKS clusters, DynamoDB tables, S3 buckets
+Metrics:
+EC2: CPU utilization, disk I/O, network I/O, instance status
+RDS: CPU utilization, free storage space, read/write latency, DB connections
+EBS: Volume read/write ops, throughput, latency
+Lambda: Invocation count, duration, error count, throttles
+ECS/EKS: CPU and memory utilization of containers
+DynamoDB: Read/write capacity, throttled requests, latency
+S3: Bucket size, number of objects, GET/PUT requests
+What are the networking concepts you are aware of? What is the use of a transit gateway?
+
+Networking Concepts: Subnets, VPC, VPN, Direct Connect, Peering, Route Tables, Security Groups, NACLs, Load Balancers, NAT Gateways, CIDR blocks
+Transit Gateway: A service that enables customers to connect their Amazon VPCs and on-premises networks to a single gateway. It simplifies network architecture, reduces costs, and improves scalability by acting as a central hub for all network connections.
+Suppose you have multiple accounts, how do you establish communication between VPCs using a transit gateway in that case?
+
+Steps:
+Create a Transit Gateway: In the primary account.
+Share the Transit Gateway: Using AWS Resource Access Manager (RAM) to share the Transit Gateway with other AWS accounts.
+Attach VPCs: From different accounts to the Transit Gateway.
+Update Route Tables: In each VPC to route traffic through the Transit Gateway for communication between VPCs.
+Security Groups and NACLs: Ensure that the security configurations allow the necessary traffic between VPCs.
+EKS cluster architecture created using cloud:
+
+Control Plane: Managed by AWS, includes the Kubernetes API server, etcd, controller manager, and scheduler.
+Worker Nodes: EC2 instances running the kubelet and container runtime.
+Networking: VPC with subnets, security groups, and route tables. CNI plugins like AWS VPC CNI for pod networking.
+Storage: EBS for persistent volumes.
+Load Balancing: Application Load Balancer (ALB) or Network Load Balancer (NLB) for exposing services.
+Monitoring and Logging: CloudWatch for logs and metrics, Prometheus, and Grafana for Kubernetes-specific monitoring.
+Kubernetes:
+What is the use of a DaemonSet? Suppose I want to create multiple replicas, how to modify the DaemonSet?
+
+DaemonSet: Ensures that a copy of a pod runs on all (or some) nodes in the cluster. Used for deploying node-level components like log collectors or monitoring agents.
+Multiple Replicas: DaemonSets are designed to run a single replica per node. To run multiple replicas per node, use a Deployment instead of a DaemonSet.
+How did you manage releases using Helm? How was Helm used in your project?
+
+Managing Releases:
+Version Control: Using Helm charts to version and manage Kubernetes manifests.
+Rollbacks: Easy rollback to previous versions if needed.
+Environment Configuration: Using values files for different environments (dev, QA, prod).
+Usage:
+Packaging: Helm charts for packaging Kubernetes resources.
+Deployment: Using Helm to deploy applications across different environments.
+Templates: Dynamic templates for Kubernetes manifests, enabling parameterization.
+You have made a Kubernetes deployment and the deployment failed for some reason. How do you troubleshoot it?
+
+Check Deployment Status: kubectl get deployments
+Describe Deployment: kubectl describe deployment <deployment-name>
+Check Pod Status: kubectl get pods
+Describe Pod: kubectl describe pod <pod-name>
+Logs: kubectl logs <pod-name>
+Events: kubectl get events
+Configuration: Verify YAML/Helm chart configurations for errors.
+How do you ensure your Jenkins deployment deployed to the right environment of Kubernetes (suppose you have dev, QA, pre-prod, and prod environments)?
+
+Environment Variables: Use environment-specific variables in Jenkins pipelines.
+Context: Switch Kubernetes context to the target environment.
+Namespace: Deploy to specific namespaces for different environments.
+Configuration Files: Use separate configuration files or values files for each environment.
+Validation: Include checks in the pipeline to ensure the correct environment is targeted.
+How did you create your Kubernetes cluster using IaC, explain the steps involved?
+
+Choose IaC Tool: Terraform or AWS CloudFormation.
+VPC Setup: Define VPC, subnets, route tables, and security groups.
+EKS Cluster: Create EKS cluster resource.
+Node Groups: Define and create node groups (managed or self-managed).
+IAM Roles: Create necessary IAM roles and policies.
+Networking: Configure VPC CNI plugin for pod networking.
+Output Configuration: Save kubeconfig for accessing the cluster.
+What is your understanding of Argo CD?
+
+GitOps Tool: Manages Kubernetes deployments using Git repositories as the source of truth.
+Declarative: Uses declarative GitOps to define and automate application deployments.
+Synchronization: Automatically syncs the desired state from Git to the Kubernetes cluster.
+Monitoring and Rollbacks: Monitors application state and allows easy rollbacks if needed.
+Multi-cluster Support: Manages deployments across multiple clusters.
+Management:
+How come you were promoted as a DevOps manager, how did this transition happen?
+
+Experience and Expertise: Extensive experience in DevOps practices, tools, and methodologies.
+Leadership: Demonstrated leadership skills by taking initiative, mentoring team members, and leading projects.
+Communication: Effective communication with stakeholders, team members, and customers.
+Results: Consistent delivery of high-quality results and improvements in processes and infrastructure.
+Professional Development: Pursued continuous learning and certifications to enhance skills.
+How did you integrate Grafana in your project?
+
+Data Sources: Configured Prometheus as a data source in Grafana.
+Dashboards: Created and customized dashboards to visualize metrics.
+Alerting: Set up alerting rules in Grafana to notify on certain thresholds.
+Access Control: Managed user access and permissions for Grafana.
+Have you worked on any real-time tracking and gathering the data to show the dashboard?
+
+Real-Time Tracking: Using Prometheus to collect real-time metrics from applications and infrastructure.
+Dashboards: Creating Grafana dashboards to display real-time data and trends.
+Alerting: Setting up real-time alerts based on collected metrics.
+What is a rail transit system, I don't know anything about it, help me to understand and explain in terms of a layman.
+
+Rail Transit System: A public transportation system that uses trains to move passengers within a city or between cities.
+Components: Trains, tracks, stations, and control systems.
+Benefits: Reduces traffic congestion, provides efficient and reliable transportation, environmentally friendly.
+The same for the power system project which I had worked for.
+
+Power System: A network of electrical components to generate, transmit, and distribute electricity.
+Components: Power plants, transmission lines, substations, and distribution networks.
+Operation: Power is generated at power plants, transmitted over long distances, and distributed to homes and businesses.
+What are the cybersecurity principles you are aware of?
+
+Confidentiality: Ensuring that sensitive information is accessible only to authorized users.
+Integrity: Protecting information from being altered by unauthorized users.
+Availability: Ensuring that information and resources

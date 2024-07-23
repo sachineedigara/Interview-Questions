@@ -1,0 +1,182 @@
+
+Company: desitionminds
+
+1. *Roles and responsibilities in your job*
+2. *Types of services in Kubernetes*
+3. *Explain about Ingress*
+4. *Explain about Autoscaling Groups*
+5. *Explain about StatefulSet*
+6. *Explain about DaemonSet*
+7. *What is node selector and how to use it*
+8. *If pods in the deployment are not deployed how to troubleshoot*
+9. *Have you created Helm charts*
+10. *How to connect to or set up a cluster after it's created*
+11. *How to use vaults in Kubernetes*
+12. *Difference between PV and PVC*
+13. *How to downgrade a Helm application*
+14. *How to check the difference between two Helm versions*
+15. *What is VPC and its components*
+16. *If I have two applications in two different VPCs, how can I connect them?*
+17. *Difference between roles and policies*
+18. *How can we connect two AWS accounts in which one I have a service and the other I have an application*
+19. *What are the resources you created in Terraform*
+20. *Where you stored your state file*
+21. *What all will be there in the state file*
+22. *Have you worked on Flux and ArgoCD?*
+23. *How to push files from local to remote repo to master branch, give me entire commands*
+24. *What is git status and what is the difference between git diff and git status*
+25.what is helm lint
+26.how to connect to the private subnet
+27.how to roll out in k8s
+
+
+
+Roles and Responsibilities in Your Job
+
+[Your roles and responsibilities]: Describe your core responsibilities, such as managing CI/CD pipelines, deploying and scaling applications, automating processes, ensuring system reliability, and collaborating with development teams.
+Types of Services in Kubernetes
+
+ClusterIP: Exposes the service on a cluster-internal IP.
+NodePort: Exposes the service on each node’s IP at a static port.
+LoadBalancer: Exposes the service externally using a cloud provider’s load balancer.
+ExternalName: Maps the service to a DNS name.
+Explain About Ingress
+
+Ingress: Manages external access to services in a Kubernetes cluster, typically HTTP/HTTPS. It provides a way to define rules for routing traffic to different services based on request properties like hostname and URL path.
+Explain About Autoscaling Groups
+
+Auto Scaling Groups (ASG): Automatically scales the number of EC2 instances in response to demand. You can configure ASGs to maintain a desired number of instances, adjust based on CloudWatch metrics, and replace unhealthy instances.
+Explain About StatefulSet
+
+StatefulSet: Manages stateful applications and provides guarantees about the ordering and uniqueness of pods. Unlike Deployments, StatefulSets maintain a sticky identity for each pod and ensure stable network identities and persistent storage.
+Explain About DaemonSet
+
+DaemonSet: Ensures that a copy of a pod runs on all (or some) nodes in the cluster. It is used for running background processes like log collection or monitoring agents on every node.
+What is Node Selector and How to Use It
+
+Node Selector: A field in the pod spec that restricts pods to run only on nodes with specific labels. It is used to control pod placement.
+yaml
+Copy code
+spec:
+  nodeSelector:
+    disktype: ssd
+If Pods in the Deployment Are Not Deployed, How to Troubleshoot
+
+Troubleshooting Steps:
+Check the pod status with kubectl get pods.
+Inspect pod events with kubectl describe pod <pod-name>.
+Review logs with kubectl logs <pod-name>.
+Check deployment status with kubectl get deployments and kubectl describe deployment <deployment-name>.
+Have You Created Helm Charts?
+
+[Your experience with Helm charts]: Explain your experience creating Helm charts, including defining templates, values, and deploying applications using Helm.
+How to Connect to or Set Up a Cluster After It's Created
+
+Connecting to a Cluster: Use kubectl and configure the kubeconfig file. Example:
+bash
+Copy code
+kubectl config set-cluster <cluster-name> --server=<api-server-url>
+kubectl config set-credentials <user> --token=<token>
+kubectl config set-context <context-name> --cluster=<cluster-name> --user=<user>
+kubectl config use-context <context-name>
+How to Use Vaults in Kubernetes
+
+Vault Integration: Use Kubernetes Secrets and Vault to manage secrets. Configure Vault to provide secrets and use Kubernetes authentication methods to access them. Example with Vault Agent Injector:
+yaml
+Copy code
+apiVersion: v1
+kind: Pod
+metadata:
+  name: my-app
+spec:
+  serviceAccountName: my-app
+  containers:
+  - name: my-app
+    image: my-app-image
+    volumeMounts:
+    - name: vault-secrets
+      mountPath: /vault/secrets
+  volumes:
+  - name: vault-secrets
+    projected:
+      sources:
+      - serviceAccountToken:
+          path: vault-token
+      - configMap:
+          name: vault-config
+Difference Between PV and PVC
+
+PersistentVolume (PV): Represents a piece of storage in the cluster, provisioned by an administrator or dynamically.
+PersistentVolumeClaim (PVC): A request for storage by a user. It binds to a PV based on the requested size and access modes.
+How to Downgrade a Helm Application
+
+Downgrading: Use the helm rollback command to revert to a previous revision.
+bash
+Copy code
+helm rollback <release-name> <revision-number>
+How to Check the Difference Between Two Helm Versions
+
+Diff Command: Use helm diff plugin to compare two versions of a Helm release.
+bash
+Copy code
+helm diff upgrade <release-name> <chart> --version <new-version> --dry-run
+What is VPC and Its Components
+
+VPC (Virtual Private Cloud): A virtual network within AWS. Components include:
+Subnets: Segments of a VPC’s IP address range.
+Route Tables: Control traffic routing within the VPC.
+Internet Gateway: Enables communication with the internet.
+NAT Gateway: Allows private subnet instances to access the internet.
+If I Have Two Applications in Two Different VPCs, How Can I Connect Them?
+
+VPC Peering: Establish a peering connection between VPCs.
+Transit Gateway: Use AWS Transit Gateway to interconnect multiple VPCs.
+Difference Between Roles and Policies
+
+Roles: AWS IAM entities that define a set of permissions and can be assumed by users or services.
+Policies: Documents that define permissions, which can be attached to roles, users, or groups.
+How Can We Connect Two AWS Accounts in Which One I Have a Service and the Other I Have an Application
+
+Cross-Account Access: Use IAM roles to grant permissions to resources in one AWS account from another. Set up a trust relationship between the accounts and configure necessary permissions.
+What Are the Resources You Created in Terraform
+
+[Your resources]: Describe the types of resources you have created with Terraform, such as EC2 instances, VPCs, RDS databases, etc.
+Where You Stored Your State File
+
+State File Storage: Store Terraform state files in a remote backend like AWS S3 with state locking via DynamoDB or other supported backends.
+What All Will Be There in the State File
+
+State File Contents: Includes resource metadata, resource IDs, and the current state of managed resources. It allows Terraform to track resource changes.
+Have You Worked on Flux and ArgoCD?
+
+[Your experience with Flux and ArgoCD]: Explain how you’ve used these tools for GitOps, including setting up automated deployments and managing Kubernetes resources.
+How to Push Files from Local to Remote Repo to Master Branch, Give Me Entire Commands
+
+Commands:
+bash
+Copy code
+git add .
+git commit -m "Your commit message"
+git push origin master
+What is git status and What is the Difference Between git diff and git status
+
+git status: Shows the status of working directory and staging area, including changes staged for commit.
+git diff: Displays changes between the working directory and the index (staging area) or between commits.
+What is Helm Lint
+
+Helm Lint: A command used to check Helm charts for common issues and adherence to best practices. Example:
+bash
+Copy code
+helm lint <chart-directory>
+How to Connect to the Private Subnet
+
+Private Subnet Access: Use a VPN or Direct Connect to access instances in a private subnet from your network. Alternatively, use a bastion host or jump box.
+How to Roll Out in Kubernetes
+
+Rolling Update: Use kubectl rollout commands to manage updates to deployments.
+bash
+Copy code
+kubectl rollout status deployment/<deployment-name>
+kubectl rollout history deployment/<deployment-name>
+kubectl rollout undo deployment/<deployment-name>
+Feel free to adjust these responses based on your actual experience and specific role.

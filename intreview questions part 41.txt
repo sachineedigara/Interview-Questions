@@ -1,0 +1,138 @@
+Company: CGI
+1.Introduction.
+2.Roles and responsibilities releated to devops. Major activities in your projects.
+3.Are you guys using your github for maintaining scripts,configuration files, terraform scripts. Can you describe them.
+4.what is git stash and where do you use git stash?
+5.Can you tell me about soft and hard resets.
+6.how about merge and rebase?
+7.let's say I have around 10 files in my repository and in that I will make change for particular file daily, but I dont want this file to be tracked by SCM tool?
+8.How you are handling maven versions for your applications.
+9.How you handled the release versions.
+10.What is the output of your build file, is it .jar,.war ?
+11.Lets assume that you are currently developing one release 1.0.0-snapshot. Now you have completed the development and run the release build by removing the snapshot tag in pom.xml file.You have upload 1.0.0 in artifactory.Now their is the change incorporated in that version. If I run the build with same version 1.0.0, will it work?
+12.Will it through a error?
+13.You have mentioned npm packages is that for frontend ?
+14.What is the frontend flavour you have used?
+15.Is that nodejs or react project.
+16.Can you tell me how you are performing npm commands and how node modules are fetched.
+17.Can you explain your jenkins CI/CD flow and what are the stages involved.
+18.What does the docker scan does?
+19.Can you explain the multistage build which you have mentioned in your resume.
+20.Can you tell me what all the instructions you have written in your docker file.
+21.What is the command you have given inside the CMD in your project?
+22.If I try to run two RUN instructions and two CMD instructions inside dockerfile. What will happen?
+23.If developer creates multiple containers in  development server , which consuming more disk space so clean up has to be done everyday, is their a way to automate this process ?
+24.Can you tell me about namespace, C-groups.
+25.Have you worked and helm charts? How you can rate in k8s and helmcharts.
+26.Can you explain the components in yous k8s architecture in your project.
+27.You recently created a pod, after deployment you can see it is in pending state.How do you find out what is the issue their and how to resolve it.What are the command you use ?
+28.Pod is deployed successfully, If you access webpage, its not accessable.What might be the reason?
+29.What command you can use to check this issue?
+30.Sent one deployment.yaml file and asked to check the error in that file.
+31.Can you explain me about the init-containers.
+32.You have nginx pod, and made some changes in that index.html file.Suddenly pod crashed you recreated pod and make changes again.How do you avoid this repetive task?
+33.Can you tell me what is daemonset and usecase of it.
+34.Can you tell me the what are the files and folders you have used in your helm charts to handle multiple environment.
+35.Can you me the structure of your charts that you are using.
+36.How to you define your chart name, in your helm command
+37.What were the task involved in Ansible in your project?
+38.What are the ways to verify your playbooks before executing it?
+39.You have written a playbook, if some of the tasks fails,but it has to continue the playbook execution.What is the key word you use?
+40.If I want to run the same playbook on a different nodes, ports and user names.How can you achieve this?
+41.I have a role for webserver installation.I want to restart this service, whenever I make changes in that configuration 
+
+
+
+
+ Introduction
+Provide a brief summary of your professional background.
+Mention your expertise in DevOps and the tools/technologies you have worked with.
+Highlight your experience with various companies and key projects.
+2. Roles and Responsibilities Related to DevOps
+Describe your role in implementing and managing CI/CD pipelines.
+Mention responsibilities like infrastructure management, automation, monitoring, and deployments.
+Highlight major activities such as configuring pipelines, managing cloud resources, and troubleshooting issues.
+3. Using GitHub for Scripts and Configuration Files
+Yes, we use GitHub for version control of scripts, configuration files, and Terraform scripts.
+Describe how you organize repositories, manage branches, and handle pull requests.
+4. What is Git Stash and Where Do You Use Git Stash?
+Git Stash: A command that temporarily saves changes that are not yet committed, allowing you to switch branches or perform other tasks without losing your work.
+Usage: Useful when you need to switch branches but have uncommitted changes that you want to save temporarily.
+5. Soft and Hard Resets
+Soft Reset: Resets the index and working directory to the state of the commit but keeps changes in the working directory. (git reset --soft <commit>)
+Hard Reset: Resets the index and working directory to the state of the commit, discarding all changes. (git reset --hard <commit>)
+6. Merge and Rebase
+Merge: Combines changes from two branches, creating a new merge commit. Preserves the history of both branches.
+Rebase: Reapplies commits from one branch on top of another, creating a linear history. It’s useful for maintaining a clean commit history.
+7. Excluding a File from SCM Tracking
+Use .gitignore to exclude files from being tracked by Git. Add the file or pattern to the .gitignore file to prevent it from being included in version control.
+8. Handling Maven Versions
+Use Maven's version management features to handle versions. Specify versions in the pom.xml file and use Maven commands to update and manage versions.
+9. Handling Release Versions
+Use Maven's release plugin to handle versioning. Update the pom.xml file to the release version, run the release command, and tag the release in the repository.
+10. Output of Your Build File
+.jar (Java ARchive) or .war (Web Application Archive), depending on the application type and build configuration.
+11. Handling Version Conflicts in Artifactory
+If you try to build with the same version number (e.g., 1.0.0) after having released it, it can cause conflicts. Generally, you should use a different version or increment the version number.
+12. Will It Throw an Error?
+Yes, if you attempt to publish a new build with the same version number, it might result in an error or overwrite the existing artifact, depending on your repository configuration.
+13. NPM Packages for Frontend
+Yes, NPM packages are typically used for frontend development in JavaScript frameworks.
+14. Frontend Flavour Used
+Specify the frontend framework or technology you’ve used, such as React, Angular, or Vue.js.
+15. Node.js or React Project
+Specify the technologies used. For example, if it's a React project, mention that React is used for building the user interface.
+16. Performing NPM Commands and Fetching Node Modules
+Use commands like npm install to fetch and install dependencies. The node_modules directory is created where the dependencies are installed.
+17. Jenkins CI/CD Flow and Stages
+Describe your CI/CD pipeline stages such as code checkout, build, test, and deployment. Explain how Jenkins automates these stages.
+18. What Does Docker Scan Do?
+Docker Scan identifies vulnerabilities in Docker images. It provides security insights and recommendations for improving the security of your containerized applications.
+19. Multistage Build in Docker
+Multistage Builds: Use multiple FROM statements in a Dockerfile to optimize image size by separating the build environment from the runtime environment.
+20. Instructions in Dockerfile
+Explain common Dockerfile instructions like FROM, RUN, COPY, ADD, WORKDIR, CMD, and ENTRYPOINT that you have used.
+21. CMD Command in Dockerfile
+The CMD instruction specifies the default command to run when the container starts. It can be overridden by providing a different command when running the container.
+22. Two RUN and Two CMD Instructions in Dockerfile
+Only the last CMD instruction is used. Multiple RUN instructions will be executed in separate layers. The final image will include changes from all RUN instructions.
+23. Automating Cleanup of Docker Containers
+Use a cron job or automated script to periodically remove unused or stopped containers. Docker commands like docker system prune can help clean up resources.
+24. Namespace and Cgroups
+Namespaces: Provide isolation for processes, such as network namespaces, process namespaces, etc.
+Cgroups: Control and limit the resources (CPU, memory) that a set of processes can use.
+25. Working with Helm Charts
+Describe your experience with Helm charts for managing Kubernetes applications. Rate your proficiency based on your familiarity with creating, customizing, and managing Helm charts.
+26. Components in Kubernetes Architecture
+Describe key components such as API Server, Scheduler, Controller Manager, Kubelet, and etcd.
+27. Pod in Pending State
+Check events and logs using kubectl describe pod <pod-name> to diagnose why the pod is pending. Common issues include insufficient resources or unsatisfied constraints.
+28. Pod Deployed but Webpage Not Accessible
+Check network policies, service configurations, and ingress rules. Ensure the application is running correctly within the pod.
+29. Commands to Check Issues
+Use commands like kubectl get pods, kubectl describe pod <pod-name>, and kubectl logs <pod-name> to troubleshoot issues.
+30. Deployment.yaml File Error Checking
+Use kubectl apply --dry-run to validate the YAML file before applying. You can also use YAML linting tools for syntax checking.
+31. Init Containers
+Init Containers: Specialized containers that run before the main containers in a pod. They are used for initialization tasks such as setup or configuration.
+32. Avoiding Repetitive Pod Changes
+Use ConfigMaps or Persistent Volumes to store configuration data outside the pod. This way, changes to configurations do not require pod recreation.
+33. DaemonSet and Use Case
+DaemonSet: Ensures that a copy of a pod runs on all (or a subset) of nodes in a cluster. Useful for running background tasks like log collection or monitoring agents.
+34. Files and Folders in Helm Charts for Multiple Environments
+Use values.yaml files for different environments (e.g., values-dev.yaml, values-prod.yaml). Store environment-specific configurations and override defaults.
+35. Structure of Your Helm Charts
+Charts: Directory structure includes Chart.yaml, values.yaml, templates/, and charts/ directories.
+36. Defining Chart Name in Helm Command
+Use the --name flag or specify the chart name directly in the Helm command when installing or upgrading a chart.
+37. Ansible Roles in Your Project
+Describe specific roles you've used, such as configuration management, application deployment, or infrastructure setup.
+38. Verifying Playbooks Before Execution
+Use ansible-playbook --check to perform a dry run. Validate syntax with ansible-playbook --syntax-check.
+39. Continuing Playbook Execution Despite Failures
+Use ignore_errors: yes in your playbook tasks to continue execution even if a task fails.
+40. Running Playbooks on Different Nodes
+Use Ansible inventories to define nodes, ports, and user names. Parameterize playbooks using variables to adapt to different environments.
+41. Restarting Service on Configuration Changes
+Use Ansible handlers to restart services when configuration files change. Handlers are notified by tasks and run once at the end of the playbook.
+Feel free to adapt these answers based on your actual experience and expertise. Good luck with your interview at CGI!

@@ -1,0 +1,103 @@
+company_name: capgemini
+1.introduction
+2.write ci/cd pipeline
+3.explain control plane components
+4.explain docker
+5.docker life cycle
+6.docker file commands
+7.how ur code quality is checked in sonar qube
+8. where u r storing ur artifacts
+9.what are the plugins used in Jenkins
+10.do u have experience in GitHub action
+
+
+
+Introduction:
+
+I am [Your Name], a DevOps engineer with extensive experience in managing and automating infrastructure and deployment processes. My expertise includes using tools such as Jenkins, Docker, Kubernetes, and Terraform. I have a strong background in CI/CD, cloud platforms, and infrastructure monitoring, and I am skilled in improving operational efficiency and ensuring robust deployment pipelines.
+Write CI/CD Pipeline:
+
+yaml
+Copy code
+pipeline {
+    agent any
+    stages {
+        stage('Checkout') {
+            steps {
+                checkout scm
+            }
+        }
+        stage('Build') {
+            steps {
+                sh 'mvn clean package'
+            }
+        }
+        stage('Test') {
+            steps {
+                sh 'mvn test'
+            }
+        }
+        stage('Deploy') {
+            steps {
+                sh 'kubectl apply -f k8s/deployment.yaml'
+            }
+        }
+        stage('Notify') {
+            steps {
+                mail to: 'team@example.com',
+                     subject: "Pipeline Build ${currentBuild.currentResult}: Job ${env.JOB_NAME} build ${env.BUILD_NUMBER}",
+                     body: "Build ${env.BUILD_NUMBER} of job ${env.JOB_NAME} is ${currentBuild.currentResult}. Please check the Jenkins job for details."
+            }
+        }
+    }
+    post {
+        always {
+            cleanWs()
+        }
+    }
+}
+Explain Control Plane Components:
+
+API Server: The central component of the Kubernetes control plane that exposes the Kubernetes API and handles requests.
+Controller Manager: Runs controllers that handle routine tasks in the cluster, such as maintaining the desired state of objects (e.g., ReplicaSets).
+Scheduler: Assigns newly created pods to nodes based on resource availability and other constraints.
+etcd: A distributed key-value store used to store all cluster data, including configuration and state.
+Explain Docker:
+
+Docker is a platform that automates the deployment of applications inside lightweight, portable containers. Containers package an application and its dependencies, providing a consistent environment across different systems. Docker simplifies the creation, deployment, and management of containerized applications.
+Docker Life Cycle:
+
+Build: Create a Docker image using a Dockerfile.
+Run: Start a container from the Docker image.
+Stop: Terminate a running container.
+Remove: Delete a container or image from the system.
+Push: Upload an image to a Docker registry.
+Pull: Download an image from a Docker registry.
+Docker File Commands:
+
+FROM: Specifies the base image for the Docker image.
+RUN: Executes commands during the image build process.
+COPY: Copies files or directories from the host to the container.
+ADD: Similar to COPY but with additional features such as extracting tar files.
+CMD: Sets the default command to run when the container starts.
+ENTRYPOINT: Configures the container to run a specific executable.
+EXPOSE: Declares the port that the container listens on.
+VOLUME: Creates a mount point for data volumes.
+ENV: Sets environment variables inside the container.
+How Your Code Quality is Checked in SonarQube:
+
+SonarQube analyzes code quality by performing static code analysis. It checks for code smells, bugs, vulnerabilities, and adheres to coding standards. The results are displayed on the SonarQube dashboard, where developers can review and address issues.
+Where Are You Storing Your Artifacts:
+
+Artifacts are typically stored in artifact repositories like JFrog Artifactory, Nexus Repository, or AWS S3. These repositories manage the storage, versioning, and retrieval of build artifacts such as binaries, libraries, and other deployment packages.
+What Are the Plugins Used in Jenkins:
+
+Git Plugin: Integrates with Git for source code management.
+Pipeline Plugin: Enables defining and running Jenkins pipelines.
+Docker Pipeline Plugin: Provides Docker support in Jenkins pipelines.
+Blue Ocean Plugin: Offers a modern UI for Jenkins pipelines.
+SonarQube Scanner Plugin: Integrates SonarQube for code quality analysis.
+Email Extension Plugin: Sends email notifications based on build results.
+Do You Have Experience in GitHub Actions:
+
+Yes, I have experience using GitHub Actions for CI/CD workflows. GitHub Actions allows you to define custom workflows in your GitHub repository, automating tasks such as building, testing, and deploying code. Workflows are defined in YAML files and can be triggered by various events such as pushes, pull requests, and schedule triggers.

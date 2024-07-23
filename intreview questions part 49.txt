@@ -1,0 +1,211 @@
+GalaxE Solutions India Pvt Ltd
+
+1.Which git you are using? Git lab or github
+2.Which k8s version you have used?
+3.What is the use of etcd?
+4.Did you worked on PVCs? Tell me it is a persistant or not persistant storage.
+5.Suppose their is a particular pod and for that particular pv is associated.During the data migration,how will you maintain the data and how to ensure that data is not lost.
+6.Is their any chances of data loss over their?
+7.In configmap can we store data?
+8.What is the difference between PR and MR ?
+9.How many approvals are their before MR ?
+10.How do you push your change and comment out? Tell the commands
+11.Share the screen and write the docker file.
+12.Explain the instructions, you have written.
+13.What are the docker commands you know?
+14.Have you worked on azure? worked on redhat openshift?
+15.In your CI/CD pipeline how many profiles are their?
+16.Did you create CI or CD pipeline?
+17.Explain about CI pipeline.
+18.In your jfrog artifactory, how many images are their?
+19.Do you use multiple version of same images?
+20.How did you handle the redundency in your artifactory?
+21.How did you manage multiple environments in jenkins.
+22.How you access the jenkins logs?
+23.Any other way other than console output?
+24.Where does jenkins pipeline run?
+25.How many pipeline are their in your projects?
+26.Which version of terraform you are using?
+27.How do you define variables in terraform.
+28.What all the objects created in terraform?
+29.How can you connect to s3 bucket using java?
+30.Have you worked on production deployments.
+31.Any automated process to handle the merge conflicts??
+32.Did you given any interview before in galaxy? how many years of experience.
+33.what is the command to check the logs in k8s?
+34.How to get inside the pod?
+33.Why sh required in that command?
+34.Did you worked on k8s upgradation?
+
+
+
+
+Which Git Are You Using? GitLab or GitHub
+
+[Your Git Experience]: Specify which version control system you primarily use, GitHub or GitLab, and your experience with it.
+Which Kubernetes Version Have You Used?
+
+[Your Kubernetes Version]: Provide the Kubernetes version(s) you have worked with. For example, "I have used Kubernetes 1.18, 1.21, and 1.23."
+What is the Use of etcd?
+
+etcd: It is a distributed key-value store used by Kubernetes to store all cluster data, including configuration, state, and metadata.
+Did You Work on PVCs? Tell Me If It Is Persistent or Non-Persistent Storage.
+
+PersistentVolumeClaims (PVCs): Yes, I have worked with PVCs. PVCs are used to request and manage persistent storage in Kubernetes, meaning the storage is persistent and survives pod restarts.
+Suppose There Is a Particular Pod and for That Particular PV Is Associated. During the Data Migration, How Will You Maintain the Data and How to Ensure That Data Is Not Lost?
+
+Data Migration: Ensure that the PersistentVolume (PV) is properly backed up before migration. Use storage replication features or snapshots if available. Verify that the new PV is properly bound to the existing PersistentVolumeClaim (PVC) and that the pod is configured to use the PVC correctly.
+Is There Any Chance of Data Loss Over There?
+
+Data Loss Risks: There is always a risk of data loss if not handled properly. Ensure you have backups and perform thorough testing to verify data integrity during migration.
+In ConfigMap Can We Store Data?
+
+ConfigMap: Yes, ConfigMaps can be used to store non-sensitive configuration data in key-value pairs.
+What Is the Difference Between PR and MR?
+
+Pull Request (PR): GitHub terminology for requesting changes to be merged into a branch.
+Merge Request (MR): GitLab terminology for the same purpose as PRs in GitHub.
+How Many Approvals Are There Before MR?
+
+Approvals for MR: This depends on your repository's configuration and policies. It can be set to require one or more approvals before merging.
+How Do You Push Your Change and Comment Out? Tell the Commands
+
+Commands:
+bash
+Copy code
+git add .
+git commit -m "Your commit message"
+git push origin <branch-name>
+Share the Screen and Write the Dockerfile
+
+Dockerfile Example:
+dockerfile
+Copy code
+# Use an official Python runtime as a parent image
+FROM python:3.8-slim
+
+# Set the working directory in the container
+WORKDIR /app
+
+# Copy the current directory contents into the container at /app
+COPY . /app
+
+# Install any needed packages specified in requirements.txt
+RUN pip install --no-cache-dir -r requirements.txt
+
+# Make port 80 available to the world outside this container
+EXPOSE 80
+
+# Define environment variable
+ENV NAME World
+
+# Run app.py when the container launches
+CMD ["python", "app.py"]
+Explain the Instructions You Have Written
+
+Instructions Explained:
+FROM: Sets the base image.
+WORKDIR: Defines the working directory.
+COPY: Copies files from the host to the container.
+RUN: Executes commands during the image build (e.g., installing packages).
+EXPOSE: Exposes a port to the outside.
+ENV: Sets environment variables.
+CMD: Specifies the default command to run when the container starts.
+What Are the Docker Commands You Know?
+
+Common Docker Commands:
+docker build
+docker run
+docker ps
+docker stop
+docker rm
+docker rmi
+docker logs
+docker exec
+Have You Worked on Azure? Worked on RedHat OpenShift?
+
+[Your Experience]: Detail your experience with Azure and RedHat OpenShift, including specific tasks or projects.
+In Your CI/CD Pipeline How Many Profiles Are There?
+
+Profiles in CI/CD Pipeline: Describe the different profiles or stages used in your CI/CD pipeline, such as development, staging, and production.
+Did You Create CI or CD Pipeline?
+
+[Your Experience]: Confirm if you have created CI/CD pipelines and describe your experience with the creation and management of these pipelines.
+Explain About CI Pipeline
+
+CI Pipeline: The Continuous Integration pipeline involves building, testing, and integrating code changes automatically to ensure that they work with the existing codebase.
+In Your JFrog Artifactory, How Many Images Are There?
+
+[Your Artifactory Usage]: Provide details on how many images you have managed in JFrog Artifactory.
+Do You Use Multiple Versions of the Same Images?
+
+Multiple Versions: Yes, it is common to use multiple versions of the same image for different environments or stages in the development process.
+How Did You Handle the Redundancy in Your Artifactory?
+
+Handling Redundancy: Implement strategies such as replication and backup policies to ensure redundancy and high availability of your artifacts in Artifactory.
+How Did You Manage Multiple Environments in Jenkins?
+
+Managing Environments: Use Jenkins pipelines and environment-specific configurations or credentials to handle deployments across multiple environments.
+How Do You Access the Jenkins Logs?
+
+Accessing Jenkins Logs: View logs directly in the Jenkins UI under the specific job or build. You can also access log files on the Jenkins server.
+Any Other Way Other Than Console Output?
+
+Alternative Log Access: Use log management tools or systems that integrate with Jenkins to aggregate and analyze logs, such as ELK Stack or Splunk.
+Where Does Jenkins Pipeline Run?
+
+Pipeline Execution: Jenkins pipelines run on Jenkins agents or nodes that execute the steps defined in the pipeline.
+How Many Pipelines Are There in Your Projects?
+
+Number of Pipelines: Describe the number of pipelines and their purposes in your projects.
+Which Version of Terraform Are You Using?
+
+Terraform Version: Provide the specific version(s) of Terraform you use.
+How Do You Define Variables in Terraform?
+
+Defining Variables:
+hcl
+Copy code
+variable "instance_type" {
+  description = "Type of EC2 instance"
+  default     = "t2.micro"
+}
+What All the Objects Created in Terraform?
+
+Terraform Objects: Describe the Terraform resources you create, such as EC2 instances, VPCs, S3 buckets, etc.
+How Can You Connect to S3 Bucket Using Java?
+
+Java S3 Connection Example:
+java
+Copy code
+AmazonS3 s3Client = AmazonS3ClientBuilder.standard().build();
+S3Object s3object = s3Client.getObject(new GetObjectRequest(bucketName, key));
+InputStream inputStream = s3object.getObjectContent();
+Have You Worked on Production Deployments?
+
+[Your Experience]: Confirm your experience with production deployments and any relevant details.
+Any Automated Process to Handle the Merge Conflicts?
+
+Automated Merge Conflict Handling: Use CI tools and Git hooks to detect and alert merge conflicts early, and consider using automated tools or scripts to resolve common conflicts.
+Did You Give Any Interview Before in Galaxy? How Many Years of Experience?
+
+[Your Interview Experience]: Provide details of any previous interviews with Galaxy and your total years of experience.
+What Is the Command to Check the Logs in Kubernetes?
+
+Command to Check Logs:
+bash
+Copy code
+kubectl logs <pod-name>
+How to Get Inside the Pod?
+
+Accessing a Pod:
+bash
+Copy code
+kubectl exec -it <pod-name> -- /bin/sh
+Why sh Required in That Command?
+
+sh Explanation: /bin/sh (or /bin/bash) is required to start a shell session inside the container. It allows you to run commands interactively.
+Did You Work on Kubernetes Upgradation?
+
+[Your Experience]: Describe your experience with upgrading Kubernetes clusters, including any tools or procedures used.
+Feel free to adjust these responses based on your actual experience and specific role.

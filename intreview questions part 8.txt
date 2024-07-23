@@ -1,0 +1,219 @@
+Capegemini Interview questions
+
+DevOps Overview
+
+1. What is DevOps and why do we need it?
+DevOps is a set of practices that combines software development (Dev) and IT operations (Ops). It aims to shorten the development lifecycle and deliver high-quality software continuously. DevOps is needed to enhance collaboration between development and operations teams, automate processes, improve deployment speed and reliability, and foster a culture of continuous improvement and innovation.
+
+2. Before DevOps, how was the software development?
+Before DevOps, software development followed a more traditional approach with distinct phases (Waterfall model) such as planning, coding, testing, and deployment. Operations and development teams worked in silos, leading to longer release cycles, inefficiencies, and a higher likelihood of errors during deployment. Manual processes were prevalent, and there was a lack of continuous feedback.
+
+3. Explain the stages in the DevOps lifecycle.
+The DevOps lifecycle includes the following stages:
+
+Planning: Define the objectives and requirements.
+Development: Write and refine the code.
+Building: Compile and package the code.
+Testing: Run automated tests to ensure quality.
+Release: Deploy the application to production environments.
+Deploy: Make the application available to end-users.
+Operate: Manage and maintain the application in production.
+Monitor: Continuously monitor the application's performance and gather feedback for improvements.
+
+Jenkins Pipeline and Plugins
+
+4. Give a brief of the Jenkins pipeline you used and what style it was written in.
+
+I used a declarative Jenkins pipeline, which includes stages like Checkout, Build, Test, Deploy, and Run Ansible Playbook. Here's an example:
+
+groovy
+Copy code
+pipeline {
+    agent any
+    stages {
+        stage('Checkout') {
+            steps {
+                git 'https://github.com/myrepo.git'
+            }
+        }
+        stage('Build') {
+            steps {
+                script {
+                    docker.build('myapp')
+                }
+            }
+        }
+        stage('Test') {
+            steps {
+                script {
+                    docker.image('myapp').inside {
+                        sh 'npm test'
+                    }
+                }
+            }
+        }
+        stage('Deploy') {
+            steps {
+                script {
+                    docker.image('myapp').inside {
+                        sh 'kubectl apply -f k8s/'
+                    }
+                }
+            }
+        }
+        stage('Run Ansible Playbook') {
+            steps {
+                ansiblePlaybook(
+                    playbook: 'playbook.yml',
+                    inventory: 'inventory.ini'
+                )
+            }
+        }
+    }
+    post {
+        always {
+            cleanWs()
+        }
+    }
+}
+
+5. What plugins did you use?
+
+Pipeline
+Git
+GitHub
+Docker
+Blue Ocean
+Ansible
+Kubernetes
+
+
+6. For integrating Kubernetes with Jenkins, what plugin did you use?
+The Kubernetes Plugin for Jenkins was used to integrate Kubernetes with Jenkins.
+
+Terraform Questions
+
+
+7. What Terraform commands are you familiar with?
+
+terraform init
+terraform plan
+terraform apply
+terraform destroy
+terraform fmt
+terraform validate
+terraform taint
+terraform import
+terraform refresh
+terraform state
+
+
+8. What kind of resources have you provisioned through Terraform?
+
+EC2 instances
+S3 buckets
+VPCs
+Subnets
+Security groups
+IAM roles and policies
+RDS instances
+Elastic Load Balancers (ALB/NLB)
+EKS clusters
+SQS queues
+SNS topics
+
+
+9. Why did you choose Terraform over CloudFormation?
+Terraform is chosen over CloudFormation due to its multi-cloud capabilities, flexibility, and the ability to manage resources from different providers. Terraform's HCL language is also more concise and easier to use.
+
+10. How do you use the environment variable present on a server which was created manually inside the Terraform configuration file?
+You can use the remote-exec provisioner to retrieve environment variables from a server and pass them to the Terraform configuration. Another method is to manually set environment variables and access them using the env function in Terraform.
+
+
+Shell Scripts
+
+
+11. What shell scripts have you written and explain any one in detail?
+
+I've written shell scripts for tasks such as automated deployments, backups, system monitoring, and configuration management. For example, a deployment script might automate the process of pulling the latest code, building the project, and restarting the application services.
+
+12. Did you manually run your shell scripts?
+
+Initially, yes. But in most projects, shell scripts are integrated into CI/CD pipelines to be triggered automatically.
+
+Docker
+
+13. Multi-stage Dockerfile Explanation
+
+Multi-stage Dockerfile helps in reducing the final image size by separating the build environment from the runtime environment.
+
+Dockerfile
+Copy code
+# Build stage
+FROM golang:1.16 as builder
+WORKDIR /app
+COPY . .
+RUN go build -o myapp
+
+# Runtime stage
+FROM alpine:latest
+WORKDIR /app
+COPY --from=builder /app/myapp .
+CMD ["./myapp"]
+
+
+14. Use of Multi-stage Dockerfile and Can We Use Two FROM Images
+Yes, multi-stage Dockerfile helps in creating leaner Docker images by separating the build and runtime stages. You can use multiple FROM statements to define different stages in a Dockerfile.
+
+
+15. What do you mean by hardening the Docker image?
+Hardening a Docker image involves securing the image by:
+
+Minimizing the image size.
+Using non-root users.
+Regularly updating the base image.
+Scanning for vulnerabilities.
+Removing unnecessary packages and files.
+Kubernetes
+
+
+16. Use of Kubernetes
+Kubernetes provides orchestration for deploying, scaling, and managing containerized applications across clusters of hosts. While Docker manages individual containers, Kubernetes automates the deployment of many containers, providing high availability and scalability.
+
+17. Explain Ingress Controller and How You Specify the Routes
+An Ingress Controller manages external access to services in a Kubernetes cluster, typically through HTTP/HTTPS. It routes traffic based on rules defined in an Ingress resource.
+
+yaml
+Copy code
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: example-ingress
+spec:
+  rules:
+  - host: example.com
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: example-service
+            port:
+              number: 80
+
+
+
+Hosting a Web Application
+
+
+18. Explain How You Host Your Web Application and Overall Steps Involved
+
+Code Development: Write and commit code.
+Build: Create a Docker image of the application.
+Push to Registry: Push the Docker image to a container registry.
+Deploy: Use Kubernetes to deploy the application using manifests or Helm charts.
+Ingress Configuration: Set up Ingress to expose the application.
+Monitoring and Logging: Set up tools like Prometheus and ELK stack.
+Scaling and Auto-scaling: Configure horizontal and vertical scaling as needed.
+Updates and Maintenance: Use CI/CD pipelines for continuous deployment and updates.

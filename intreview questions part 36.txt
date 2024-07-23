@@ -1,0 +1,286 @@
+Company - Nielsen
+
+1. Start with introduction
+2. Share your screen and write the docker file and explain each instructions
+3. How will build the docker image and push to docker hub. Write all the commands innolved
+4. When you push to dokcer hub or ECR how the authentication happen ?
+5. Write the jenkins pipeline to login to docker hub ?
+6. write a deployment YAML file
+7. what are the different deployment strategies you are aware of ?
+8. diff between git pull and git clone ?
+9. expalin the Pull request process ?
+10. Diff between rebase and merge ?
+11. diffrence between COPY and ADD ?
+12. difference between RUN and CMD ?
+13. what are the commands used to login to docker hub ?
+14. where were the credentials stored in organization ?
+15. how will you handle secrets in kubernetes ?
+16. what are livliness and readiness prob in kubernetes ? How does it work ?
+17. what kind of errors you can across in kubernetes ?
+18. Suppose POD is not working how will you troubleshoot ?
+19. can you about namespaces in k8 ?
+20. what are some best practises for securing for k8 cluster ?
+21. where do you store the logs ?
+22. suppose Jenkins installed in instance is not working and how will you troubleshoot ?
+23. how do you access roll based access control in jenkins ?
+24. what are the commands you use to troubleshoot ?
+25. what are the service you are aware of in AWS ?
+26. types of EC2 instances ?
+27. types of storages in AWS ?
+28. difference between efs and EBS ?
+29. S3 storageclasees and expalin ?
+30. diff between SG and NACL ?
+31. explain terraform workflow ?
+32. what are modules in terraform ?
+33. how do you secure the state file ?
+34. what are dependencies in terraform ?
+35. How will you upgrade plugins on Terraform 
+36. what are the monitioring tools you are aware of ?
+
+
+
+Start with introduction
+
+I am a DevOps professional with extensive experience in managing and automating infrastructure, implementing CI/CD pipelines, and working with containerization and orchestration tools. I have a strong background in AWS services, Jenkins, Docker, Kubernetes, Terraform, and Ansible. In my current role, I am responsible for ensuring seamless application deployments and maintaining a highly available and scalable infrastructure.
+Share your screen and write the Dockerfile and explain each instruction
+
+Dockerfile
+Copy code
+# Use an official Nginx image as the base image
+FROM nginx:latest
+
+# Copy the Nginx configuration file to the container
+COPY nginx.conf /etc/nginx/nginx.conf
+
+# Copy static website files to the container
+COPY . /usr/share/nginx/html
+
+# Expose port 80 to the outside world
+EXPOSE 80
+
+# Start the Nginx server
+CMD ["nginx", "-g", "daemon off;"]
+FROM nginx:latest: This sets the base image to the latest official Nginx image from Docker Hub.
+COPY nginx.conf /etc/nginx/nginx.conf: This copies a custom Nginx configuration file from the host to the container.
+COPY . /usr/share/nginx/html: This copies the content of the current directory (assumed to be website files) to the container's web directory.
+EXPOSE 80: This exposes port 80 on the container to allow access to the web server.
+CMD ["nginx", "-g", "daemon off;"]: This command starts Nginx in the foreground.
+How will you build the docker image and push to Docker Hub? Write all the commands involved
+
+sh
+Copy code
+# Build the Docker image
+docker build -t my-nginx-image .
+
+# Log in to Docker Hub
+docker login --username myusername --password mypassword
+
+# Tag the image for Docker Hub
+docker tag my-nginx-image myusername/my-nginx-image:latest
+
+# Push the image to Docker Hub
+docker push myusername/my-nginx-image:latest
+When you push to Docker Hub or ECR, how does the authentication happen?
+
+Authentication happens using credentials stored either locally (e.g., ~/.docker/config.json for Docker Hub) or via AWS CLI for ECR. For Docker Hub, the docker login command stores the credentials. For ECR, the AWS CLI command aws ecr get-login-password retrieves a temporary authentication token.
+Write the Jenkins pipeline to login to Docker Hub
+
+groovy
+Copy code
+pipeline {
+  agent any
+  environment {
+    DOCKER_HUB_CREDENTIALS = credentials('docker-hub-credentials-id')
+  }
+  stages {
+    stage('Login to Docker Hub') {
+      steps {
+        script {
+          docker.withRegistry('https://index.docker.io/v1/', DOCKER_HUB_CREDENTIALS) {
+            echo 'Logged in to Docker Hub'
+          }
+        }
+      }
+    }
+  }
+}
+Write a deployment YAML file
+
+yaml
+Copy code
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nginx-deployment
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: nginx
+  template:
+    metadata:
+      labels:
+        app: nginx
+    spec:
+      containers:
+      - name: nginx
+        image: nginx:latest
+        ports:
+        - containerPort: 80
+What are the different deployment strategies you are aware of?
+
+Recreate: Terminates all old instances and then starts new ones.
+Rolling Update: Gradually replaces old instances with new ones.
+Blue-Green Deployment: Maintains two environments, one active (blue) and one idle (green). Swaps the traffic between them.
+Canary Deployment: Releases the new version to a small subset of users before rolling it out completely.
+Difference between git pull and git clone?
+
+git pull: Fetches changes from a remote repository and merges them into the current branch.
+git clone: Creates a copy of an entire repository in a new directory.
+Explain the Pull request process
+
+Developers create a feature branch and make changes.
+A pull request (PR) is created to merge changes into the main branch.
+Code reviews are performed, and feedback is provided.
+Once approved, the PR is merged, and the branch is typically deleted.
+Difference between rebase and merge?
+
+Merge: Combines two branches, keeping the history of both.
+Rebase: Moves or re-applies commits from one branch onto another, creating a linear history.
+Difference between COPY and ADD?
+
+COPY: Copies files/directories from the host to the container.
+ADD: Copies files/directories and can also extract compressed files and download remote files.
+Difference between RUN and CMD?
+
+RUN: Executes commands to build the image (used in the Dockerfile's build stage).
+CMD: Specifies the command to run when the container starts (runtime stage).
+What are the commands used to login to Docker Hub?
+
+sh
+Copy code
+docker login --username myusername --password mypassword
+Where were the credentials stored in the organization?
+
+Credentials are typically stored in secure storage solutions like AWS Secrets Manager, HashiCorp Vault, or Jenkins credentials store.
+How will you handle secrets in Kubernetes?
+
+Secrets are managed using Kubernetes Secrets.
+yaml
+Copy code
+apiVersion: v1
+kind: Secret
+metadata:
+  name: my-secret
+type: Opaque
+data:
+  username: YWRtaW4=
+  password: MWYyZDFlMmU2N2Rm
+What are liveness and readiness probes in Kubernetes? How do they work?
+
+Liveness Probe: Checks if a container is running. If the liveness probe fails, Kubernetes restarts the container.
+Readiness Probe: Checks if a container is ready to accept traffic. If the readiness probe fails, the container is removed from service endpoints.
+yaml
+Copy code
+livenessProbe:
+  httpGet:
+    path: /healthz
+    port: 8080
+  initialDelaySeconds: 3
+  periodSeconds: 3
+readinessProbe:
+  httpGet:
+    path: /ready
+    port: 8080
+  initialDelaySeconds: 3
+  periodSeconds: 3
+What kind of errors you can come across in Kubernetes?
+
+Pod failures, image pull errors, insufficient resources, network issues, and configuration errors.
+Suppose POD is not working. How will you troubleshoot?
+
+Check pod status using kubectl get pods.
+Describe the pod using kubectl describe pod <pod-name>.
+Check logs using kubectl logs <pod-name>.
+Verify configuration files and events.
+Can you talk about namespaces in K8s?
+
+Namespaces provide a mechanism to isolate resources within a single cluster, allowing separation of concerns and avoiding name collisions.
+What are some best practices for securing a K8s cluster?
+
+Use RBAC for access control.
+Enable network policies.
+Secure etcd with TLS and authentication.
+Use namespaces for isolation.
+Regularly update Kubernetes and its components.
+Scan images for vulnerabilities.
+Where do you store the logs?
+
+Logs can be stored in centralized logging systems like Elasticsearch, Fluentd, Kibana (EFK stack), or cloud-based solutions like AWS CloudWatch.
+Suppose Jenkins installed in an instance is not working. How will you troubleshoot?
+
+Check the Jenkins service status.
+Review Jenkins logs located at /var/log/jenkins/jenkins.log.
+Verify system resources (CPU, memory).
+Check network connectivity.
+Restart the Jenkins service.
+How do you access role-based access control in Jenkins?
+
+Role-based access control (RBAC) in Jenkins is managed using plugins like "Role-based Authorization Strategy". Configure roles and permissions under "Manage Jenkins" > "Manage and Assign Roles".
+What are the commands you use to troubleshoot?
+
+kubectl describe pod <pod-name>
+kubectl logs <pod-name>
+docker logs <container-id>
+systemctl status <service>
+journalctl -u <service>
+What are the services you are aware of in AWS?
+
+EC2, S3, RDS, Lambda, ECS, EKS, CloudFormation, CloudWatch, IAM, VPC, Route 53, DynamoDB, and more.
+Types of EC2 instances?
+
+General Purpose (e.g., T3, M5)
+Compute Optimized (e.g., C5)
+Memory Optimized (e.g., R5)
+Storage Optimized (e.g., I3)
+GPU Instances (e.g., P3)
+Types of storages in AWS?
+
+S3, EBS, EFS, Glacier, Storage Gateway.
+Difference between EFS and EBS?
+
+EBS: Block storage, single instance attachment, suitable for databases and applications.
+EFS: File storage, multiple instance attachments, scalable, suitable for file sharing and big data.
+S3 storage classes and explain?
+
+Standard: General-purpose storage for frequently accessed data.
+Intelligent-Tiering: Automatically moves data between two access tiers.
+Standard-IA: Infrequently accessed data, lower cost, retrieval fee.
+One Zone-IA: Infrequently accessed data in a single AZ, lower cost.
+Glacier: Low-cost storage for archival, retrieval time in minutes to hours.
+Glacier Deep Archive: Lowest-cost storage, retrieval time in hours.
+Difference between SG and NACL?
+
+Security Group (SG): Acts as a virtual firewall for instances, stateful, applied at instance level.
+Network ACL (NACL): Acts as a firewall for the subnet, stateless, applied at the subnet level.
+Explain Terraform workflow?
+
+Write: Define infrastructure as code in .tf files.
+Plan: Generate an execution plan with terraform plan.
+Apply: Execute the plan with terraform apply.
+Destroy: Remove infrastructure with terraform destroy.
+What are modules in Terraform?
+
+Modules are reusable, self-contained packages of Terraform configuration that can be shared and used across projects.
+How do you secure the state file?
+
+Use remote state backends like S3 with encryption, enable state locking, and limit access via IAM policies.
+What are dependencies in Terraform?
+
+Dependencies are defined using depends_on to ensure resources are created in the correct order. Implicit dependencies are inferred from resource references.
+How will you upgrade plugins on Terraform?
+
+Use terraform init -upgrade to upgrade provider plugins.
+What are the monitoring tools you are aware of?
+
+Prometheus, Grafana, ELK stack (Elasticsearch, Logstash, Kibana), CloudWatch, Datadog, New Relic, Nagios.

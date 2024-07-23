@@ -1,0 +1,142 @@
+Company: Nest Digital
+1. Introduction
+2.describe recent issue you faced and your contribution you maid to fixed that issue ?
+3.tell me what was the cause for that issue and wat is the resolution you took to fix that issue?
+4.security is paramount concern when using docker container in production environment how would you design 
+and impliment the comprehensive security strategy for dockerised obrevation and discuss the technique for 
+security container  runtime security, network segmentation, and vulnarability scanning, access control
+and profile quality
+5. what are the monitoring tool available
+6. monitoring and login are essentialand diagnozing issues in dockerised importance how would design a monitoring 
+and logging solution that provide inside into container help a reource utilization and application performance
+discuss the tools and details for collecting container matrix agregating log setting up alerts and provisioning issues
+7. The organization wants to adopt a hybrid cloud strategy running k8 cluster both on permises, cloud and public cloud
+how would you design a k8's deplyment architecture that expand multiple environment by ensuring consistency operative availability
+and data synchronization such as hybrid cloud networking goal that has reduandancy and security
+8. tell me about consideration such as hybrid cloud, networking, work-load probability 
+9.organization has legacy application that need to be modernized and migrated to k8's for improve agility, scalability and efficiency
+how would you approach application modernization including synchronization, microservices, decomposition and k8's related deplymen has 
+best practices and discuss strategy for legacy application for asynchronization and synchrnization tool k8's migration pattern 
+nd effective efficiency.
+10. discuss r abnormal condition is critical for proactive maintainance how would you design shell script for monitor system resource, 
+check service availability,and generate  altert based on predefined condition discuss technique for implementing cron jobs sending
+notification and integarting the monitoring system like promothesis
+11. the organization uses the orcestration platform like k8's / docker swarm to manage containerised work load 
+how would you design shell script to interact with these platform nd deploy appln scales services and performance rolling update
+discuss technique interact with api and managing configuration file and integrating with container registory
+12. organization wants to adopt a multi cloud strategy to laverage the 
+13. strength of different load providers how would you design deployment archi that span aws azure while ensuring data consistency
+and cost obrevation. discuss abbrevation such as work load probability, network connectivity and deployment orchestration
+14. optimizing cost is essential in cloud env where the resources are allocated where on demand how woild you design optimization 
+strategy that laverage cloud services like aws, cost exploror, azure cost management cost calculator to identify cost drivers, optimization
+resouce usage and cost saving.
+15. your team has task with implimenting CI/CD pipeline for a new apex module how would you design nd configure pipeline to ensure
+ seamless integration nd deplyment of the module.
+16. company is emprasing infrastructure as code to automate provisioning and configuraing along application delployment how would you integrate
+the tool like terraform/ aws with ci/cd pipeline to provision nd manage with app deployment discuss strategy of versioning nd testing orcestrating
+infrastructure resources changes.
+17. working on a project where multiple team are collaborating different microservices but need to communicate with each other how would you design 
+networking architecture to communicate with each other
+
+
+Nest Digital: Detailed Responses
+1. Introduction
+At Nest Digital, I work on various projects involving cloud infrastructure, container orchestration, and CI/CD pipelines. My role includes designing and implementing solutions for cloud migrations, optimizing resource usage, and ensuring system reliability and security.
+
+2. Recent Issue and Contribution
+Issue: We faced an issue with intermittent downtime in a critical microservice due to resource exhaustion.
+Contribution: Diagnosed the problem by analyzing resource metrics and logs. Implemented horizontal scaling for the affected microservice and optimized resource allocation based on usage patterns.
+3. Cause and Resolution
+Cause: The issue was caused by insufficient resource allocation and lack of auto-scaling configuration.
+Resolution: Added auto-scaling policies and adjusted resource limits to better handle peak loads. Implemented more detailed monitoring to proactively address similar issues in the future.
+4. Comprehensive Security Strategy for Docker
+Runtime Security: Use tools like Docker Bench for Security, and container-specific firewalls.
+Network Segmentation: Implement Docker networks to isolate container communication, using custom bridge networks.
+Vulnerability Scanning: Use tools like Clair, Anchore, or Trivy to scan container images for vulnerabilities.
+Access Control: Implement least privilege principles for container access, use Docker secrets for sensitive data, and manage user roles with Docker's native security features.
+Profile Quality: Define and enforce security profiles using tools like AppArmor or SELinux.
+5. Monitoring Tools
+Prometheus: For monitoring metrics and generating alerts.
+Grafana: For visualizing metrics.
+Elasticsearch, Logstash, and Kibana (ELK): For log aggregation and visualization.
+Datadog: For integrated monitoring, logging, and alerting.
+6. Monitoring and Logging Solution
+Monitoring: Use Prometheus to collect metrics from containers, set up Grafana dashboards for visualization, and configure alerting rules for anomaly detection.
+Logging: Use ELK stack or Fluentd to aggregate logs from containers. Set up centralized logging to capture all container logs.
+Alerts and Provisioning: Configure alerts in Prometheus or Datadog for critical conditions. Use automated scaling policies to provision resources based on metrics.
+7. Hybrid Cloud Kubernetes Deployment
+Design:
+Cluster Setup: Deploy Kubernetes clusters on-premises, in the cloud, and across public clouds.
+Networking: Implement a unified networking strategy using VPNs or dedicated connections to ensure connectivity and security.
+Data Synchronization: Use tools like Velero for backup and restore, or multi-cloud databases with replication capabilities.
+Availability: Configure multi-cluster setups with tools like Istio for service mesh to handle failover and load balancing.
+8. Considerations for Hybrid Cloud
+Hybrid Cloud: Ensure seamless integration between on-premises and cloud resources.
+Networking: Use secure connections, manage latency, and ensure high availability.
+Workload Probability: Balance workloads between on-premises and cloud based on capacity and performance requirements.
+9. Application Modernization and Migration to Kubernetes
+Approach:
+Microservices: Decompose the monolithic application into microservices.
+Synchronization: Use tools like Kafka or RabbitMQ for asynchronous communication between services.
+Deployment: Use Helm charts for Kubernetes deployments.
+Best Practices: Implement CI/CD pipelines, use Kubernetes-native features for scaling and management.
+10. Shell Script for Monitoring
+Script:
+bash
+Copy code
+#!/bin/bash
+# Check CPU and Memory usage
+cpu_usage=$(top -bn1 | grep "Cpu(s)" | sed "s/.*, *\([0-9.]*\)%* id.*/\1/" | awk '{print 100 - $1}')
+mem_usage=$(free | grep Mem | awk '{print $3/$2 * 100.0}')
+
+# Check service availability
+service_status=$(systemctl is-active my-service)
+
+# Generate Alerts
+if [ $(echo "$cpu_usage > 80" | bc) -eq 1 ] || [ $(echo "$mem_usage > 80" | bc) -eq 1 ] || [ "$service_status" != "active" ]; then
+  echo "Alert: Resource usage high or service down"
+  # Send alert (example: email, Slack)
+fi
+Cron Job: Schedule the script to run periodically.
+Integration: Use Prometheus for more advanced monitoring and alerting.
+11. Shell Script for Orchestration Platforms
+Script for Kubernetes:
+bash
+Copy code
+#!/bin/bash
+# Scale Deployment
+kubectl scale deployment my-deployment --replicas=3
+
+# Perform Rolling Update
+kubectl rollout restart deployment my-deployment
+
+# Interact with API
+curl -X GET http://kubernetes-api/v1/namespaces/default/pods
+Configuration Management: Use YAML files for Kubernetes configurations and Helm charts for deployment.
+12. Multi-Cloud Strategy
+Design:
+Deployment Architecture: Use a multi-cloud management platform or tools like Kubernetes Federation to manage resources across AWS and Azure.
+Data Consistency: Implement data replication and synchronization strategies.
+Cost Optimization: Use cost management tools provided by AWS and Azure to track and optimize expenditures.
+13. Cost Optimization Strategy
+Design:
+AWS Cost Explorer: Analyze spending and usage patterns.
+Azure Cost Management: Monitor and manage costs.
+Cost Calculators: Use tools to estimate and plan budgets.
+Optimization: Right-size resources, leverage reserved instances, and use spot instances.
+14. CI/CD Pipeline Design for Apex Module
+Pipeline Design:
+Stages: Code Commit, Build, Test, Deploy.
+Tools: Use Jenkins, GitLab CI, or GitHub Actions.
+Integration: Implement automated testing, artifact management, and deployment.
+15. Infrastructure as Code with Terraform
+Integration:
+Terraform: Use Terraform for provisioning infrastructure.
+CI/CD Integration: Incorporate Terraform into CI/CD pipelines to apply infrastructure changes.
+Versioning: Maintain version control for Terraform configurations and apply changes through automated pipelines.
+Testing: Use tools like terraform validate and terraform plan for testing configurations.
+16. Networking Architecture for Microservices Communication
+Design:
+Service Mesh: Implement a service mesh (e.g., Istio) for inter-service communication.
+Networking Policies: Define network policies to control traffic between microservices.
+Load Balancers: Use load balancers to distribute traffic and handle failovers.

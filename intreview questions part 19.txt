@@ -1,0 +1,226 @@
+Altimetrik;
+1. What type of cluster your using in your organization? How many cluster your maintaining in your organization
+2. In 10 nodes I want to change 3 nodes as instance type t2 to t3 series. How can I change it ? where I have this option?
+3. Explain how your going to setup & monitor your cluser step by step . Explain each process
+4. What is the command to loggining into pod 
+5. what is exec stands for
+6. How you will allocate the metrix? 
+7. Do you have any check in CICD?
+8. Difference b/w play and playbook
+9. Difference b/w resource & module in terraform 
+10. I want to deploy 3 environment(dev,prod,test) using single module, how can I do that, how do you do this configuration?Explain
+11. How you maintain secrets in Terraform what are the options you have
+12. Difference b/w state file & log file
+13. What is Lambda function
+14. In route 53 what are the configurations are there 
+15. What are the rules mention in s3 bucket which rule I need to select for static website
+16. Write a IAM policy for s3 bucket ? What are the actions you will mention in it?
+17. I have created resource using terraform. later I change terraform version  1.3 to 1.5 , I changed this value in all *.tf files. When I do terraform init          	and apply what happens? Weather it will change or if you will get error, what error you will get 
+18. How you configure load balancer using route 53 
+19. what is service account
+20. I have s3 bucket in one region ang KMS in another region? 
+21. How would you set up monitoring and logging using tools like Prometheus, Grafana and set up alerts for abnormal behavior?
+  What are the things you monitor in grafana board 
+22. How you connect 5 vpc ? 
+23. In declerative pipeline I can write groovy script? can you write sample CICD for that?
+24. In ansible I want to execute single task, how can I execute that 
+Write ansible playbook
+25. what is adhoc commands , tell me some adhoc commands
+26. How do you declare variables in ansible, write sample ansible playbook for it
+27. How do you clean up your EC2 instance.
+28. How do you do clean up activity in K8s cluster. what are the things you will do
+29. What is namespace & its uses.
+30. I want to create a namespace and I want to restrict it for 4 persons. Others should not able to login for that namespace.
+ How can I do that?
+
+
+
+
+
+
+Altimetrik: Detailed Responses
+1. Type and Number of Clusters
+Cluster Type:
+
+Typically, Kubernetes clusters (EKS or self-managed).
+Number of Clusters:
+This varies, but let's assume there are multiple clusters for different environments (dev, test, prod).
+2. Change Instance Type from T2 to T3
+Steps:
+
+Identify the Nodes: Find the nodes that need the change.
+Drain the Nodes: Safely drain the nodes to move pods.
+sh
+Copy code
+kubectl drain <node-name> --ignore-daemonsets
+Stop Instances: Stop the instances in the AWS console.
+Change Instance Type: Modify the instance type from T2 to T3 in the AWS console.
+Restart Instances: Start the instances again.
+Uncordon the Nodes: Make the nodes schedulable.
+sh
+Copy code
+kubectl uncordon <node-name>
+3. Setting Up and Monitoring Clusters
+Setup:
+
+Provisioning Infrastructure: Use Terraform/CloudFormation to create VPC, subnets, etc.
+EKS Cluster: Create EKS cluster using AWS CLI or Terraform.
+Node Groups: Configure node groups (EC2 instances).
+Deploy Kubernetes Components: Helm, Ingress controllers, etc.
+Monitoring:
+
+Prometheus: Install Prometheus for metrics collection.
+Grafana: Set up Grafana for visualization.
+Alertmanager: Configure alerts based on Prometheus metrics.
+Cluster Logging: Use Fluentd/Fluent Bit to collect logs and store them in Elasticsearch or CloudWatch.
+4. Command to Log into a Pod
+sh
+Copy code
+kubectl exec -it <pod-name> -- /bin/bash
+5. exec Command
+exec: Execute a command in a container.
+
+6. Allocating Metrics
+Configure metrics server, Prometheus, and custom metrics using Kubernetes resources like Horizontal Pod Autoscaler (HPA).
+7. CICD Checks
+Integration tests, linting, security scans, deployment validations.
+8. Play vs Playbook
+Play: Single set of tasks executed on hosts.
+Playbook: YAML file containing multiple plays.
+9. Resource vs Module in Terraform
+Resource: Single infrastructure component.
+Module: Group of resources used together.
+10. Deploying Multiple Environments Using a Single Module
+Use variable files (dev.tfvars, prod.tfvars, test.tfvars) and pass them during Terraform apply.
+sh
+Copy code
+terraform apply -var-file=dev.tfvars
+11. Maintaining Secrets in Terraform
+Use AWS Secrets Manager or HashiCorp Vault. Reference secrets using data blocks.
+12. State File vs Log File
+State File: Maintains the state of infrastructure.
+Log File: Records events or messages.
+13. Lambda Function
+AWS Lambda is a serverless compute service that runs code in response to events.
+14. Route 53 Configurations
+Hosted zones, records, routing policies, health checks.
+15. S3 Bucket Static Website Rules
+Enable static website hosting and set the index and error documents.
+16. IAM Policy for S3 Bucket
+json
+Copy code
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Effect": "Allow",
+      "Action": ["s3:ListBucket"],
+      "Resource": ["arn:aws:s3:::example-bucket"]
+    },
+    {
+      "Effect": "Allow",
+      "Action": ["s3:GetObject", "s3:PutObject"],
+      "Resource": ["arn:aws:s3:::example-bucket/*"]
+    }
+  ]
+}
+17. Changing Terraform Version
+Terraform will reinitialize the backend and revalidate the configuration. If incompatible changes exist, it may throw errors.
+18. Configuring Load Balancer Using Route 53
+Create an ALB/NLB and add it to Route 53 DNS records.
+19. Service Account
+Provides an identity for processes running in a pod to communicate with the Kubernetes API.
+20. S3 and KMS in Different Regions
+Use cross-region replication and ensure permissions for KMS key.
+21. Setting Up Monitoring and Logging
+Prometheus: Deploy Prometheus Operator.
+Grafana: Integrate with Prometheus and set up dashboards.
+Alerts: Configure Alertmanager with Prometheus for alerting.
+22. Connecting 5 VPCs
+Use Transit Gateway or VPC Peering.
+23. Groovy Script in Declarative Pipeline
+groovy
+Copy code
+pipeline {
+    agent any
+    stages {
+        stage('Build') {
+            steps {
+                sh 'make build'
+            }
+        }
+        stage('Test') {
+            steps {
+                sh 'make test'
+            }
+        }
+        stage('Deploy') {
+            steps {
+                sh 'make deploy'
+            }
+        }
+    }
+}
+24. Executing a Single Task in Ansible
+sh
+Copy code
+ansible <host-pattern> -m <module> -a "<module-arguments>"
+25. Adhoc Commands
+ansible all -m ping
+ansible all -m shell -a 'uptime'
+26. Declaring Variables in Ansible
+yaml
+Copy code
+---
+- hosts: all
+  vars:
+    http_port: 80
+  tasks:
+    - name: Start service
+      service:
+        name: httpd
+        state: started
+        enabled: true
+27. Cleaning Up EC2 Instance
+Terminate unused instances, delete old volumes and snapshots.
+28. Cleaning Up Kubernetes Cluster
+Remove unused resources: pods, services, volumes, images.
+29. Namespace
+Namespace: Provides a scope for resources in a cluster.
+30. Restricting Namespace Access
+Use RBAC to grant access to specific users.
+yaml
+Copy code
+kind: Role
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  namespace: my-namespace
+  name: my-role
+rules:
+  - apiGroups: [""]
+    resources: ["pods"]
+    verbs: ["get", "list", "watch"]
+---
+kind: RoleBinding
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: my-role-binding
+  namespace: my-namespace
+subjects:
+  - kind: User
+    name: user1
+  - kind: User
+    name: user2
+  - kind: User
+    name: user3
+  - kind: User
+    name: user4
+roleRef:
+  kind: Role
+  name: my-role
+  apiGroup: rbac.authorization.k8s.io
+
+
+
+
+

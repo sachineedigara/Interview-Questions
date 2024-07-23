@@ -1,0 +1,214 @@
+Company- Coforge
+
+Terraform Questions
+
+1. What is the chance of recovering the state file if I am not managing the backup of the state file?
+The chance of recovering the state file without a backup is very low. If the state file is deleted or corrupted and no backup exists, you would need to reconstruct it manually by re-importing resources with terraform import. However, this process is complex and prone to errors. It's critical to regularly back up the state file.
+
+2. What is the use of gather facts in Ansible?
+gather_facts is a module in Ansible that collects system information (facts) about the managed nodes. These facts include details about the operating system, network interfaces, memory, CPU, and more. They can be used to make decisions within playbooks.
+
+3. Ansible Playbook to Check HTTP Server Status on Target Hosts
+
+yaml
+Copy code
+---
+- name: Check HTTP server status
+  hosts: webservers
+  gather_facts: no
+  tasks:
+    - name: Check if HTTP server is running
+      shell: systemctl is-active httpd
+      register: httpd_status
+      ignore_errors: yes
+
+    - name: Report HTTP server status
+      debug:
+        msg: "HTTP server is {{ httpd_status.stdout }} on {{ inventory_hostname }}"
+
+4. Copy a File from Host Machine to Target Host Machine Playbook
+
+yaml
+Copy code
+---
+- name: Copy file to target hosts
+  hosts: webservers
+  gather_facts: no
+  tasks:
+    - name: Copy file from local to remote
+      copy:
+        src: /path/to/local/file.txt
+        dest: /path/to/remote/file.txt
+
+5. Ansible Modules You Have Used
+
+copy
+shell
+service
+file
+package
+user
+group
+git
+yum
+apt
+systemd
+lineinfile
+
+Kubernetes Questions
+
+1. Difference Between Service and Ingress in Kubernetes
+
+Service: Exposes a set of Pods as a network service. Commonly used to manage internal communication within the cluster and expose applications to external traffic (using types like NodePort and LoadBalancer).
+Ingress: Manages external access to services, typically HTTP and HTTPS. Provides load balancing, SSL termination, and name-based virtual hosting.
+
+2. Can You Expose Pods Without Ingress?
+Yes, you can expose Pods to the outside world using Services with types NodePort or LoadBalancer.
+
+3. Use of DaemonSet
+A DaemonSet ensures that all (or some) nodes run a copy of a Pod. Common use cases include log collection, monitoring agents, and other node-specific services.
+
+4. Troubleshooting Pod Creation Issues
+To troubleshoot why a pod is stuck in the "ContainerCreating" state, you can:
+
+Check the events: kubectl describe pod <pod-name>
+Check the logs: kubectl logs <pod-name> -c <container-name>
+Verify the node status: kubectl describe node <node-name>
+Ensure the necessary resources and permissions are available on the node.
+
+5. Use of Docker ENTRYPOINT
+ENTRYPOINT in Docker specifies a command that will always be executed when the container starts. It allows you to configure a container that will run as an executable.
+
+6. Helm Chart in Kubernetes Deployment
+Helm is a package manager for Kubernetes that allows you to define, install, and upgrade even the most complex Kubernetes applications. Helm Charts are pre-configured packages of Kubernetes resources.
+
+AWS Questions
+
+1. Difference Between AWS Snapshot and AMI
+
+Snapshot: A backup of an EBS volume at a point in time.
+AMI: A snapshot plus additional configuration information (like the OS and installed software) used to create EC2 instances.
+
+2. Have You Ever Created Security Groups?
+Yes, security groups are used to control inbound and outbound traffic to AWS resources.
+
+3. Types of Load Balancers You Have Used
+
+Classic Load Balancer (CLB)
+Application Load Balancer (ALB)
+Network Load Balancer (NLB)
+
+4. Difference Between Git Pull and Git Fetch
+
+Git Fetch: Downloads objects and refs from another repository but does not integrate them into your working directory.
+Git Pull: Fetches from a remote repository and then merges or rebases the changes into your current branch.
+
+5. Use of CloudFront
+Amazon CloudFront is a content delivery network (CDN) service that delivers content with low latency and high transfer speeds. It caches content at edge locations worldwide.
+
+6. Common Errors in Jenkins and How to Fix Them
+
+Build Failures: Due to misconfigurations, missing dependencies, or errors in the build script.
+Plugin Issues: Outdated or incompatible plugins.
+Configuration Errors: Incorrect settings in Jenkins or build jobs.
+
+7. Guide to Creating a CI/CD Pipeline
+
+Install Jenkins: Set up Jenkins server.
+Configure SCM: Connect Jenkins to your version control system.
+Create a Pipeline Job: Define stages (Build, Test, Deploy).
+Add Stages: Include necessary stages in your pipeline script.
+Run and Monitor: Trigger the pipeline and monitor the results.
+
+8. Jenkins Plugins for CI/CD
+
+Pipeline
+Git
+GitHub
+Docker
+Blue Ocean
+Ansible
+
+
+Additional Questions
+
+1. CloudWatch Insights
+
+CloudWatch Insights is used to query logs and create visualizations for monitoring and troubleshooting applications and infrastructure.
+
+2. Jenkins Pipeline Example
+
+groovy
+Copy code
+pipeline {
+    agent any
+    stages {
+        stage('Checkout') {
+            steps {
+                git 'https://github.com/myrepo.git'
+            }
+        }
+        stage('Build') {
+            steps {
+                script {
+                    docker.build('myapp')
+                }
+            }
+        }
+        stage('Test') {
+            steps {
+                script {
+                    docker.image('myapp').inside {
+                        sh 'npm test'
+                    }
+                }
+            }
+        }
+        stage('Deploy') {
+            steps {
+                script {
+                    docker.image('myapp').inside {
+                        sh 'kubectl apply -f k8s/'
+                    }
+                }
+            }
+        }
+        stage('Run Ansible Playbook') {
+            steps {
+                ansiblePlaybook(
+                    playbook: 'playbook.yml',
+                    inventory: 'inventory.ini'
+                )
+            }
+        }
+    }
+    post {
+        always {
+            cleanWs()
+        }
+    }
+}
+
+
+3. Types of Auto Scaling in AWS
+
+EC2 Auto Scaling: Automatically adjusts the number of EC2 instances.
+Application Auto Scaling: Scales services like DynamoDB, ECS, and Lambda.
+Elastic Load Balancing (ELB): Distributes incoming application traffic across multiple targets.
+
+4. Route 53 Overview
+Amazon Route 53 is a scalable and highly available DNS and domain name registration service. It translates domain names into IP addresses and routes end-user requests to the appropriate resources in AWS.
+
+5. Project Overview
+
+Project Overview: Implementing a multi-region architecture for a web application with containerized microservices, automated CI/CD pipelines, and continuous monitoring.
+AWS Services Used:
+EC2
+S3
+RDS
+ECS/EKS
+CloudWatch
+IAM
+VPC
+Route 53
+Feel free to ask if you have more questions or need further details on any topic!

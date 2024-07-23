@@ -1,0 +1,144 @@
+company: InfoVision
+what is git stash?
+difference git pull and fetch?
+what aws services you have worked?
+explain about vpc and sub component?
+have you get chance to work with lamdas?
+have you heard about waf?
+what data base have you worked on? can you explain mogo db
+what are the CI/CD tools have you worked and explain complete pipeline work?
+how do you save the sensitive information in jenkins? 
+what are the deployment strategy you  have used?
+can you explain the docker file instructions?
+explain terraform life cycle
+what information details will state file contains?
+what if we lost the state file can we generate back?
+explain terraform backend?
+how frequently your writting terraform template
+How were you passing environment variables to kubernetes via your Jenkins
+explain k8's architeture?
+explain cluster architecture
+explain pod life cycle?
+why do we need pod?
+how do you manage the secrets in k8's?
+what programming languages are you comfortable?
+Can we manage Windows Nano Server using Ansible?
+Explain ansible architecture?
+Explain how you will copy files recursively on a host?
+expalin ansible modules each
+what is idempotency
+Explain Callback_plugin in Ansible
+What is ask sudo pass and explain
+
+
+
+InfoVision: Detailed Responses
+1. What is Git Stash?
+Git Stash: A Git command that temporarily saves changes in your working directory and index without committing them. This allows you to switch branches or pull changes without losing your current work. You can apply the stashed changes later using git stash apply or git stash pop.
+2. Difference Between git pull and git fetch
+git pull: Fetches changes from a remote repository and merges them into the current branch. It’s a combination of git fetch and git merge.
+git fetch: Retrieves changes from the remote repository but does not automatically merge them. It updates the local copies of remote branches.
+3. What AWS Services Have You Worked With?
+AWS Services: EC2, S3, RDS, Lambda, VPC, IAM, CloudFormation, CloudWatch, SQS, SNS, DynamoDB, EKS, and more.
+4. Explain About VPC and Its Subcomponents
+VPC (Virtual Private Cloud): A virtual network dedicated to your AWS account, isolated from other networks.
+Subnets: Divide the VPC's IP address range into smaller segments.
+Route Tables: Direct network traffic within the VPC.
+Internet Gateway: Allows communication between instances in the VPC and the internet.
+NAT Gateway: Allows instances in private subnets to access the internet.
+Security Groups: Act as virtual firewalls to control inbound and outbound traffic.
+Network ACLs: Provide an additional layer of security at the subnet level.
+5. Have You Worked with AWS Lambda?
+AWS Lambda: Yes, I have experience with AWS Lambda. It's a serverless compute service that allows you to run code in response to events without provisioning or managing servers.
+6. Have You Heard About WAF?
+AWS WAF (Web Application Firewall): Yes, AWS WAF helps protect web applications from common web exploits by allowing you to create custom security rules.
+7. What Databases Have You Worked On? Can You Explain MongoDB?
+Databases: MySQL, PostgreSQL, MongoDB.
+MongoDB: A NoSQL database that stores data in flexible, JSON-like documents. It allows for scalable and high-performance data management.
+8. CI/CD Tools You Have Worked With and Explain Complete Pipeline Work
+CI/CD Tools: Jenkins, GitLab CI, GitHub Actions, AWS CodePipeline.
+Pipeline Work:
+Source Stage: Code is committed to a repository.
+Build Stage: Code is compiled or packaged.
+Test Stage: Automated tests are run.
+Deploy Stage: The application is deployed to the environment (e.g., staging or production).
+Monitoring: Post-deployment monitoring and validation.
+9. How Do You Save Sensitive Information in Jenkins?
+Sensitive Information: Use Jenkins Credentials Plugin to securely store and manage sensitive data like passwords, API keys, and certificates.
+10. What Deployment Strategies Have You Used?
+Deployment Strategies: Blue-Green Deployment, Canary Deployment, Rolling Updates.
+11. Can You Explain Dockerfile Instructions?
+Dockerfile Instructions:
+FROM: Specifies the base image.
+RUN: Executes commands during the build process.
+COPY: Copies files from the host to the container.
+ADD: Similar to COPY, but can also handle URLs and tar files.
+CMD: Provides default commands to run when the container starts.
+ENTRYPOINT: Configures a container to run as an executable.
+EXPOSE: Informs Docker that the container listens on specified network ports.
+12. Explain Terraform Lifecycle
+Terraform Lifecycle:
+terraform init: Initializes a Terraform configuration.
+terraform plan: Creates an execution plan showing what will be done.
+terraform apply: Applies changes required to reach the desired state.
+terraform destroy: Removes all resources defined in the configuration.
+13. What Information Details Will State File Contain?
+State File: Contains the current state of the resources managed by Terraform, including resource IDs, configurations, and metadata.
+14. What If We Lose the State File? Can We Generate It Back?
+State File Loss: If the state file is lost, you can’t manage resources with Terraform. You may need to manually recreate the state file using terraform import for existing resources or restore from a backup if available.
+15. Explain Terraform Backend
+Terraform Backend: Determines where Terraform stores its state files. Common backends include local files, S3, and Terraform Cloud. Backends support state locking and collaboration.
+16. How Frequently Are You Writing Terraform Templates?
+Frequency: It varies based on project requirements, but typically involves writing or updating Terraform templates during infrastructure changes or new deployments.
+17. How Were You Passing Environment Variables to Kubernetes via Jenkins?
+Environment Variables: Set environment variables in Jenkins pipelines and pass them to Kubernetes pods using ConfigMaps or Secrets.
+18. Explain Kubernetes Architecture
+Kubernetes Architecture:
+Master Node: Manages the Kubernetes cluster, running components like API Server, Scheduler, Controller Manager.
+Worker Nodes: Run containerized applications and services, running components like Kubelet and Kube-Proxy.
+Pods: The smallest deployable units that contain one or more containers.
+Services: Abstracts and exposes applications running in pods.
+19. Explain Cluster Architecture
+Cluster Architecture: Consists of master and worker nodes. The master node manages the cluster, while worker nodes run the application workloads. The architecture includes networking components, storage, and compute resources.
+20. Explain Pod Lifecycle
+Pod Lifecycle:
+Pending: Pod is being created.
+Running: Pod is running and its containers are executing.
+Succeeded: Pod has completed successfully.
+Failed: Pod has terminated due to an error.
+Unknown: Status of the pod could not be determined.
+21. Why Do We Need Pods?
+Pods: Pods are used to run containerized applications. They provide a way to manage and scale containers, allowing for easy deployment and orchestration.
+22. How Do You Manage Secrets in Kubernetes?
+Secrets Management: Use Kubernetes Secrets to store sensitive information such as passwords, tokens, and SSH keys. Secrets can be mounted as volumes or exposed as environment variables.
+23. What Programming Languages Are You Comfortable With?
+Programming Languages: Python, Shell scripting, Java, JavaScript.
+24. Can We Manage Windows Nano Server Using Ansible?
+Windows Nano Server: Yes, Ansible can manage Windows Nano Server using the winrm connection plugin.
+25. Explain Ansible Architecture
+Ansible Architecture:
+Control Node: Runs Ansible commands and playbooks.
+Managed Nodes: Target machines that Ansible manages.
+Inventory: Lists managed nodes and their configurations.
+Playbooks: YAML files defining the tasks and configurations.
+Modules: Units of work that Ansible executes on managed nodes.
+26. Explain How You Will Copy Files Recursively on a Host
+Copy Files Recursively:
+bash
+Copy code
+# Using `cp` command
+cp -r /source/directory /destination/directory
+27. Explain Ansible Modules
+Ansible Modules:
+File: Manages files and directories.
+Command: Executes commands on remote nodes.
+Yum: Manages packages using YUM.
+Service: Manages services on remote nodes.
+Template: Renders Jinja2 templates.
+28. What Is Idempotency?
+Idempotency: An operation is idempotent if running it multiple times has the same effect as running it once. In Ansible, this means that running a playbook multiple times will not change the outcome.
+29. Explain Callback Plugin in Ansible
+Callback Plugin: Used to define custom actions to be taken when certain events occur during playbook execution, such as logging or notifications.
+30. What Is ask_sudo_pass and Explain?
+ask_sudo_pass: A configuration option in Ansible to prompt for the sudo password when running tasks that require elevated privileges. This is useful for running tasks with administrative rights.
+Feel free to ask if you need more details on any topic!

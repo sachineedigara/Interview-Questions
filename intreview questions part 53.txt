@@ -1,0 +1,99 @@
+company_name:happiest mind technology[2nd round]
+1.introduction
+2.what are the environment present in ur organization
+3.expalin branching strategy?
+4.why git cherry pick is used
+5.expalin git stash
+6.expalin ci/cd
+7.expalin argo cd
+8.have u worked in production env?
+9.explain Kubernetes component?
+10.expalin pod
+11.expalin ingress-controller
+12.expalin cloud front
+13.explain autoscaling policy
+14.expalin messaging services
+15.expalin vpc concepts
+16.expalin helm chart
+17.which monitoring tool ur using
+18.how code is scaned in ur organisation?
+19.why docker compose is used?
+20.tell me what automation scripts u r written
+
+
+
+Introduction
+
+Introduction: Briefly introduce yourself, including your background, experience in DevOps, cloud technologies, and any notable projects you’ve worked on.
+What Are the Environments Present in Your Organization?
+
+Environments: Describe the different environments typically present, such as development, testing, staging, and production. Explain their purpose and how they are managed in your organization.
+Explain Branching Strategy
+
+Branching Strategy: Discuss the branching strategy used in your version control system. Common strategies include:
+Git Flow: Feature branches, release branches, and hotfix branches.
+GitHub Flow: Master branch with short-lived feature branches and pull requests.
+GitLab Flow: Variations of Git Flow with additional integration of issue tracking and merge requests.
+Why Git Cherry-Pick Is Used
+
+Git Cherry-Pick: Cherry-picking allows you to apply a specific commit from one branch to another. It is useful for applying bug fixes or small changes to multiple branches without merging the entire branch.
+Explain Git Stash
+
+Git Stash: Stashing allows you to save your uncommitted changes temporarily, so you can switch branches or work on something else without committing your changes. You can later apply the stashed changes to your working directory.
+Explain CI/CD
+
+CI/CD: Continuous Integration (CI) involves regularly integrating code changes into a shared repository, followed by automated builds and tests. Continuous Deployment (CD) extends CI by automating the deployment of code changes to production environments. Together, CI/CD pipelines streamline development and deployment processes.
+Explain Argo CD
+
+Argo CD: A declarative, GitOps continuous delivery tool for Kubernetes. It synchronizes Kubernetes applications with their configurations stored in Git repositories, providing automated deployment, rollbacks, and monitoring.
+Have You Worked in Production Environments?
+
+Production Environments: Share your experience working in production environments, including handling production deployments, monitoring, incident response, and ensuring high availability and reliability.
+Explain Kubernetes Components
+
+Kubernetes Components:
+API Server: Exposes the Kubernetes API.
+Controller Manager: Manages controllers to regulate the cluster’s state.
+Scheduler: Schedules Pods onto Nodes based on resource availability.
+etcd: Key-value store for cluster state.
+Kubelet: Ensures containers are running in Pods.
+Kube-Proxy: Maintains network rules for Pods.
+Explain Pod
+
+Pod: The smallest deployable unit in Kubernetes, which can contain one or more containers. Pods share network namespaces and storage volumes, allowing containers to communicate and share data.
+Explain Ingress-Controller
+
+Ingress-Controller: Manages ingress resources and handles routing of external HTTP/S traffic to services within the Kubernetes cluster. It is typically implemented as a load balancer or reverse proxy.
+Explain CloudFront
+
+CloudFront: A Content Delivery Network (CDN) service by AWS that distributes content to edge locations around the world. It speeds up the delivery of static and dynamic content, such as web pages and videos.
+Explain Autoscaling Policy
+
+Autoscaling Policy: Defines rules for automatically adjusting the number of instances or Pods based on metrics like CPU usage or request count. In AWS, this can involve Auto Scaling Groups for EC2 instances or Horizontal Pod Autoscaler for Kubernetes Pods.
+Explain Messaging Services
+
+Messaging Services: Refers to systems that facilitate communication between applications and services, often through queues or topics. Examples include AWS SQS (Simple Queue Service), AWS SNS (Simple Notification Service), and Kafka.
+Explain VPC Concepts
+
+VPC: A Virtual Private Cloud is a logically isolated network within AWS. Key components include:
+Subnets: Divided sections of a VPC.
+Route Tables: Direct traffic within and outside the VPC.
+Internet Gateway: Allows internet access.
+NAT Gateway: Provides internet access to private subnets.
+Security Groups: Virtual firewalls for instances.
+Network ACLs: Stateless filters for subnets.
+Explain Helm Chart
+
+Helm Chart: A package manager for Kubernetes that simplifies the deployment and management of applications. Charts are collections of YAML files defining Kubernetes resources, such as deployments, services, and configurations.
+Which Monitoring Tool Are You Using?
+
+Monitoring Tools: Describe the monitoring tools used in your organization, such as Prometheus, Grafana, Datadog, or others. Explain how they are used for tracking application and infrastructure performance.
+How Is Code Scanned in Your Organization?
+
+Code Scanning: Explain the tools and processes used for code quality and security scanning, such as SonarQube, Snyk, or static code analysis tools. Describe how they are integrated into the CI/CD pipeline.
+Why Docker Compose Is Used?
+
+Docker Compose: Used for defining and running multi-container Docker applications. It simplifies the configuration and management of multi-container setups through a single docker-compose.yml file, enabling easier orchestration and deployment.
+Tell Me What Automation Scripts You Have Written
+
+Automation Scripts: Discuss the automation scripts you’ve written, including shell scripts and Python scripts. Provide examples of tasks automated, such as deployment, configuration management, or data processing.

@@ -1,0 +1,143 @@
+company- LandMarkGroup
+1.introduce about your self, tools you have worked on, companies you are associated with, automations you have done?
+2.explain CI-CD 
+3.what have you used for monitoring?
+4.what have you worked on jenkins, type of pipeline?
+5.can you write a shared library and call it in pipeline?
+6.how to setup k8s from scratch(eks)?
+7.how to create a node port?
+8.how to use node affinity in the yml file?
+9.how to use config map?
+10.what is pvc used for?
+11.where have you stored you state files?
+12.what does terraform init does?
+13.how you store your acces keys and secret keys in terraform?
+14.how to set up hashicorp vault?
+15.how to set up promethus and grafana from scratch?
+16.what are dashboards?
+17.have you created dashboards?
+18.what are the dashboards you used?
+19.how to read the values the user is passing in cicd pipeline?
+20.any experince in azure devops(ci-cd tool)?
+
+
+Introduce Yourself:
+
+Background: Start with a brief introduction of your professional background and experience. Mention your current role and company (LandMarkGroup).
+Tools: Highlight the tools you have worked with such as AWS, Kubernetes, Docker, Terraform, Jenkins, Prometheus, Grafana, etc.
+Companies: Mention notable companies you've worked with, emphasizing any relevant experience that aligns with the job you're applying for.
+Automations: Discuss automations you’ve implemented, like CI/CD pipelines, infrastructure provisioning with Terraform, or application deployments with Kubernetes.
+Explain CI/CD:
+
+CI (Continuous Integration): The practice of frequently integrating code changes into a shared repository, where automated builds and tests are run to detect issues early.
+CD (Continuous Deployment/Delivery): The practice of automatically deploying code changes to production (Continuous Deployment) or preparing them for a release (Continuous Delivery), ensuring that software can be released reliably and frequently.
+What Have You Used for Monitoring:
+
+Tools: Describe monitoring tools such as Prometheus, Grafana, ELK Stack (Elasticsearch, Logstash, Kibana), and any other relevant tools you’ve used.
+Purpose: Explain how these tools help in monitoring system performance, application health, and generating alerts.
+What Have You Worked on Jenkins:
+
+Types of Pipelines: Detail the types of Jenkins pipelines you’ve worked with, including Declarative and Scripted pipelines. Mention any customizations or integrations with other tools.
+Examples: Give examples of pipelines you’ve built for continuous integration, deployment, or other tasks.
+Writing a Shared Library in Jenkins:
+
+Shared Libraries: Explain how to create a shared library in Jenkins using Groovy scripts, and how to call these libraries within Jenkins pipelines to reuse common code and functions.
+Setting Up Kubernetes from Scratch (EKS):
+
+Steps:
+Create an EKS cluster using AWS Management Console or CLI.
+Configure kubectl to interact with the cluster.
+Deploy networking solutions (e.g., Calico).
+Install Helm for managing Kubernetes applications.
+Deploy necessary applications and services.
+Creating a NodePort:
+
+Definition: A NodePort exposes a service on a static port on each node’s IP address.
+Example YAML:
+yaml
+Copy code
+apiVersion: v1
+kind: Service
+metadata:
+  name: my-service
+spec:
+  type: NodePort
+  ports:
+    - port: 80
+      targetPort: 80
+      nodePort: 30000
+  selector:
+    app: my-app
+Using Node Affinity in YAML:
+
+Example:
+yaml
+Copy code
+apiVersion: v1
+kind: Pod
+metadata:
+  name: my-pod
+spec:
+  affinity:
+    nodeAffinity:
+      requiredDuringSchedulingIgnoredDuringExecution:
+        nodeSelectorTerms:
+          - matchExpressions:
+              - key: kubernetes.io/hostname
+                operator: In
+                values:
+                  - node1
+                  - node2
+Using ConfigMap:
+
+Example YAML:
+yaml
+Copy code
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: my-config
+data:
+  my-config-key: my-config-value
+What is PVC Used For:
+
+Persistent Volume Claims (PVCs): Used for requesting storage resources from a Persistent Volume (PV) in Kubernetes. It abstracts the underlying storage and allows dynamic provisioning of storage.
+Where Have You Stored Your State Files:
+
+Examples: Mention locations like AWS S3 for Terraform state files, or remote backends like Terraform Cloud or Azure Blob Storage.
+What Does Terraform Init Do:
+
+Initialization: Initializes the working directory containing Terraform configuration files. It downloads provider plugins and sets up the backend.
+Storing Access Keys and Secret Keys in Terraform:
+
+Methods: Use environment variables, .tfvars files, or secure storage solutions like HashiCorp Vault. Ensure sensitive data is managed securely and not hard-coded in configuration files.
+Setting Up HashiCorp Vault:
+
+Steps:
+Install Vault.
+Start the Vault server.
+Initialize and unseal the Vault.
+Configure access policies and secrets engines.
+Store and manage secrets.
+Setting Up Prometheus and Grafana:
+
+Steps:
+Deploy Prometheus and Grafana using Helm charts or manifests.
+Configure Prometheus to scrape metrics from your applications.
+Set up Grafana dashboards to visualize Prometheus metrics.
+What Are Dashboards:
+
+Definition: Visual representations of metrics and logs that help monitor and analyze the health and performance of systems and applications.
+Have You Created Dashboards:
+
+Details: Provide examples of dashboards you’ve created, including the metrics and visualizations used.
+What Are the Dashboards You Used:
+
+Examples: Mention specific dashboards you’ve used in Grafana or other tools, focusing on the key metrics they display.
+Reading Values Passed in CI/CD Pipeline:
+
+Examples: Use Jenkins environment variables, pipeline parameters, or script arguments to access values passed into the pipeline.
+Experience in Azure DevOps:
+
+Details: Describe your experience with Azure DevOps, including setting up CI/CD pipelines, managing repositories, and using Azure Pipelines for automation.
+Feel free to adjust or expand on these points based on your specific experiences and expertise!

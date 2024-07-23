@@ -1,0 +1,173 @@
+LTI Mindtree:
+
+1. Write deployment manifest file Including the deployment strategy
+2. How do you check crashloopback error and identify the cause of it
+3. How do you scale if the number of microservices increases
+4. Suppose two persons change the terraform file and apply their changes what would happen, how do you prevent such a thing from happening
+5. A developer does some wrong changes but he hasn't committed his changes, what are the steps he would perform to rectify it
+6. Where to find Linux debug logs
+7. Are you aware of what SID, gid could you explain
+8. Explain you CI/CD pipeline
+9. Are you aware of Amazon code pipeline
+10. You have EBS in one region, how do you take a backup to another region
+11. What are the commands you are aware of to check the Linux machine performance
+13. How many Target host you have managed via ansible
+14. Explain ansible facts
+15. Explain server provisioning+configurationanagement you used in your project
+16. What is the backend you used for terraform, could you write your backend config - for this he was interested in the Dynamo db table
+17. What do you understand when a file has permission 0774
+18.What are the cost optimization steps you have taken for your AWS services
+
+
+Here’s the updated list with question numbers included:
+
+Write deployment manifest file Including the deployment strategy
+
+A deployment manifest file in Kubernetes can define how applications are deployed, including the deployment strategy. Here’s an example of a deployment manifest using the rolling update strategy:
+
+yaml
+Copy code
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: example-deployment
+  labels:
+    app: example
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: example
+  template:
+    metadata:
+      labels:
+        app: example
+    spec:
+      containers:
+      - name: example-container
+        image: example-image:latest
+        ports:
+        - containerPort: 80
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 1
+      maxSurge: 1
+Deployment Strategy:
+
+RollingUpdate: Replaces old pods with new ones gradually, ensuring that some pods are always available.
+Recreate: Terminates all existing pods before creating new ones (not recommended for high-availability applications).
+How do you check CrashLoopBackOff error and identify the cause of it?
+
+To troubleshoot a CrashLoopBackOff error:
+
+bash
+Copy code
+kubectl describe pod <pod-name>
+kubectl logs <pod-name> --previous
+kubectl describe pod <pod-name>: Provides detailed information about the pod’s status and events.
+kubectl logs <pod-name> --previous: Shows logs of the previous container instance to diagnose the cause.
+How do you scale if the number of microservices increases?
+
+As the number of microservices increases:
+
+Use a Service Mesh: Tools like Istio or Linkerd can manage traffic and inter-service communication.
+Adopt Kubernetes Namespaces: Organize microservices into namespaces for better management.
+Implement Auto-scaling: Use Horizontal Pod Autoscalers (HPA) to adjust the number of pod replicas based on resource usage.
+Suppose two persons change the Terraform file and apply their changes. What would happen, and how do you prevent such a thing from happening?
+
+When multiple people apply changes to Terraform configurations:
+
+Use Remote State: Store the state file in a remote backend like AWS S3 with state locking via DynamoDB.
+Implement CI/CD Pipelines: Integrate Terraform changes into a CI/CD pipeline to ensure that changes are reviewed and tested.
+Collaboration Practices: Use version control systems (e.g., Git) to manage changes and coordinate among team members.
+A developer does some wrong changes, but he hasn't committed his changes. What are the steps he would perform to rectify it?
+
+If a developer has made changes but hasn’t committed them:
+
+Check Changes: Use git status and git diff to review uncommitted changes.
+Discard Changes: Use git restore . to revert changes or git checkout -- <file> for specific files.
+Recommit Correctly: If the changes are correct, use git add <file> and git commit -m "message" to save them.
+Where to find Linux debug logs?
+
+System Logs: /var/log/syslog, /var/log/messages
+Kernel Logs: /var/log/kern.log
+Application Logs: Location varies by application, typically within /var/log/.
+Are you aware of what SID and GID are? Could you explain?
+
+SID (Security Identifier): A unique identifier used by Windows operating systems to manage user, group, and computer accounts.
+GID (Group Identifier): A unique identifier for groups in Unix/Linux systems used for managing group permissions.
+Explain your CI/CD pipeline.
+
+A typical CI/CD pipeline includes:
+
+Source: Code repository (e.g., Git).
+Build: Compile or package code (e.g., using Jenkins or GitLab CI).
+Test: Run automated tests.
+Deploy: Deploy code to staging or production environments.
+Monitor: Track application performance and health.
+Are you aware of Amazon CodePipeline?
+
+Amazon CodePipeline is a continuous integration and delivery service that automates the build, test, and deploy phases of your release process. It integrates with other AWS services and third-party tools to automate end-to-end application delivery.
+
+You have EBS in one region; how do you take a backup to another region?
+
+Create a Snapshot: Create a snapshot of your EBS volume.
+Copy Snapshot to Another Region: Use the AWS CLI or Management Console to copy the snapshot to another region.
+bash
+Copy code
+aws ec2 copy-snapshot --source-region <source-region> --source-snapshot-id <snapshot-id> --destination-region <destination-region>
+What are the commands you are aware of to check the Linux machine performance?
+
+top: Displays real-time system summary and process information.
+htop: An interactive process viewer.
+vmstat: Reports virtual memory statistics.
+iostat: Reports CPU and I/O statistics.
+free: Displays memory usage.
+How many target hosts have you managed via Ansible?
+
+The number of target hosts managed by Ansible can vary widely. Ansible is designed to scale from small to very large environments. For specific numbers, check your inventory files or Ansible Tower/AWX configuration.
+
+Explain Ansible facts.
+
+Ansible facts are variables collected from managed nodes, including system information such as IP addresses, OS version, and available memory. These facts are gathered using the setup module and are used to make decisions in playbooks.
+
+Explain server provisioning and configuration management you used in your project.
+
+Provisioning: Creating and configuring servers (e.g., using Terraform for infrastructure setup).
+Configuration Management: Managing server configurations and software (e.g., using Ansible for deploying applications and ensuring configurations).
+
+What is the backend you used for Terraform? Could you write your backend config?
+
+For DynamoDB, the backend configuration in Terraform might look like:
+
+hcl
+Copy code
+terraform {
+  backend "s3" {
+    bucket         = "my-terraform-state"
+    key            = "terraform.tfstate"
+    region         = "us-west-2"
+    dynamodb_table = "terraform-lock-table"
+  }
+}
+What do you understand when a file has permission 0774?
+
+0: No special permissions.
+7: Read, write, and execute permissions.
+4: Read permissions only.
+0774: Owner can read, write, and execute; group can read, write, and execute; others can read only.
+What are the cost optimization steps you have taken for your AWS services?
+
+Right-Sizing: Choose appropriate instance types based on usage.
+Reserved Instances: Purchase reserved instances for long-term workloads.
+Auto-Scaling: Automatically adjust capacity based on demand.
+Cost Explorer: Use AWS Cost Explorer to monitor and analyze spending.
+Spot Instances: Use spot instances for non-critical workloads.
+Feel free to ask for more details or any additional questions you have!
+
+
+
+
+
+

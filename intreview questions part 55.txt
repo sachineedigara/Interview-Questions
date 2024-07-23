@@ -1,0 +1,138 @@
+Zucisystems
+1. Tell me about yourself?
+2.What are your day to day activities?
+3.Do you experience in writing CI-CD pipeline?
+4.Scripted or declarative pipeline? Explain the stages
+5.Do you work on all the stages or on any particular stages?
+6.Explain me how you build the docker image with the help of pipeline and share the screen and write the stage.
+7.Do you have any scripting knowledge?
+8.How can you rate in that?
+9.Explain why we use k8s compared to docker swarm?
+10.What all the AWS services you have used ?
+11.Explain how to write a dockerfile.
+12.What are the basic commands in git?
+13.What is the major difference between git merge and rebase?
+14.What are the types of deployments in k8s?
+15.Why you are using rollingupdate?
+16.What are the basic docker commands you have used?
+17.Why you are using Terraform?
+18.Do you know, how to write a playbook?
+
+
+Tell Me About Yourself
+
+Introduction: Provide a concise overview of your professional background, highlighting your experience in DevOps, cloud technologies, and any specific projects or accomplishments relevant to the role.
+What Are Your Day-to-Day Activities?
+
+Day-to-Day Activities: Describe your typical tasks and responsibilities, such as managing CI/CD pipelines, deploying applications, monitoring infrastructure, troubleshooting issues, and collaborating with development and operations teams.
+Do You Have Experience in Writing CI/CD Pipelines?
+
+CI/CD Pipelines Experience: Discuss your experience in designing, implementing, and managing CI/CD pipelines. Mention tools like Jenkins, GitLab CI/CD, or GitHub Actions, and provide examples of pipelines you’ve created.
+Scripted or Declarative Pipeline? Explain the Stages
+
+Scripted vs Declarative Pipeline:
+Scripted Pipeline: Written in Groovy, offering more flexibility but can be complex. Stages are defined programmatically.
+Declarative Pipeline: Provides a simpler syntax using a structured format. Stages are defined using a declarative syntax.
+Stages: Common stages include Build, Test, Deploy, and Post (for cleanup).
+Do You Work on All the Stages or on Any Particular Stages?
+
+Pipeline Stages: Explain your involvement in various stages of the CI/CD pipeline, such as building, testing, deploying, or monitoring. Mention any specific stages you focus on or manage end-to-end.
+Explain How You Build the Docker Image with the Help of Pipeline and Share the Screen and Write the Stage
+
+Building Docker Image in Pipeline:
+groovy
+Copy code
+pipeline {
+  agent any
+  stages {
+    stage('Build Docker Image') {
+      steps {
+        script {
+          docker.build('my-image')
+        }
+      }
+    }
+  }
+}
+Explanation: This stage defines a pipeline that uses a Docker agent to build an image named my-image.
+Do You Have Any Scripting Knowledge?
+
+Scripting Knowledge: Discuss your experience with scripting languages like Bash, Python, or PowerShell. Mention tasks you’ve automated and any notable scripts you’ve written.
+How Can You Rate Yourself in That?
+
+Self-Rating: Provide a self-assessment of your scripting skills, including specific projects or tasks that demonstrate your proficiency.
+Explain Why We Use Kubernetes Compared to Docker Swarm?
+
+Kubernetes vs Docker Swarm:
+Kubernetes: Offers more advanced features for orchestration, scaling, and management of containerized applications. Provides a robust ecosystem, including Helm charts and a large community.
+Docker Swarm: Simpler setup, less feature-rich compared to Kubernetes, suitable for smaller or less complex deployments.
+What All AWS Services Have You Used?
+
+AWS Services: List the AWS services you’ve worked with, such as EC2, S3, RDS, EKS, Lambda, and CloudFormation, and describe your experience with each.
+Explain How to Write a Dockerfile
+
+Dockerfile Explanation:
+Dockerfile
+Copy code
+# Use an official base image
+FROM nginx:latest
+# Copy files into the container
+COPY . /usr/share/nginx/html
+# Expose port
+EXPOSE 80
+# Define default command
+CMD ["nginx", "-g", "daemon off;"]
+Explanation: This Dockerfile uses the Nginx base image, copies the application files, exposes port 80, and defines the default command to run Nginx.
+What Are the Basic Commands in Git?
+
+Basic Git Commands:
+git init: Initialize a new Git repository.
+git clone <repo-url>: Clone a repository.
+git add <file>: Add file changes to the staging area.
+git commit -m "message": Commit changes with a message.
+git push: Push changes to a remote repository.
+git pull: Pull changes from a remote repository.
+What Is the Major Difference Between Git Merge and Rebase?
+
+Git Merge vs Rebase:
+Merge: Combines changes from different branches, creating a merge commit. Preserves history.
+Rebase: Applies changes from one branch onto another, rewriting history. Creates a linear history but can complicate history if used improperly.
+What Are the Types of Deployments in Kubernetes?
+
+Types of Deployments:
+Rolling Update: Updates Pods incrementally without downtime.
+Recreate: Terminates existing Pods and creates new ones.
+Blue-Green Deployment: Deploys a new version alongside the old one and switches traffic once the new version is validated.
+Canary Release: Releases changes to a subset of users before a full rollout.
+Why Are You Using RollingUpdate?
+
+Rolling Update: Provides a strategy for updating applications with minimal or no downtime by gradually replacing old Pods with new ones.
+What Are the Basic Docker Commands You Have Used?
+
+Basic Docker Commands:
+docker run: Run a container from an image.
+docker build: Build an image from a Dockerfile.
+docker ps: List running containers.
+docker stop <container-id>: Stop a running container.
+docker images: List available images.
+Why Are You Using Terraform?
+
+Terraform: A tool for infrastructure-as-code that allows you to define and provision infrastructure using a declarative configuration language. It helps with managing and versioning infrastructure.
+Do You Know How to Write a Playbook?
+
+Ansible Playbook:
+yaml
+Copy code
+- name: Install and start nginx
+  hosts: webservers
+  become: yes
+  tasks:
+    - name: Install nginx
+      apt:
+        name: nginx
+        state: present
+    - name: Start nginx service
+      service:
+        name: nginx
+        state: started
+Explanation: This playbook installs and starts the Nginx web server on specified hosts.
