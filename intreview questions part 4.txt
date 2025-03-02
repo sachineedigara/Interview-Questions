@@ -40,6 +40,13 @@ resource "aws_instance" "example" {
   }
 }
 
+Which Approach to Choose?
+Scenario	Solution
+You want Terraform to ignore manual changes to specific attributes	Use ignore_changes
+You don't want Terraform to manage the resource anymore	Use terraform state rm
+You want to prevent Terraform from destroying the resource	Use prevent_destroy
+
+
 
 6. What is a root module and child module in Terraform?
 
